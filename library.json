@@ -1,0 +1,33 @@
+{
+	"name": "VT100 based arduino console library.",
+	"version": "1.0.0",
+	"keywords": "Console, Serial, VT100, UART, Color",
+	"description": "VT100 based arduino console library.",
+	"authors":
+	{
+		"name": "Mehmet Gunce Akkoyun",
+		"email": "akkoyun@me.com",
+		"url": ""
+	},
+	"license": "MIT",
+	"frameworks": "arduino",
+	"platforms":
+	[
+		"atmelavr",
+		"atmelmegaavr"
+	],
+	"repository":
+	{
+		"type": "git",
+		"url": "https://github.com/akkoyun/Console.git"
+	},
+	"examples": [
+		{
+			"name": "Demo",
+			"base": "examples/demo",
+			"files": [
+				"demo.ino"
+			]
+		}
+	]
+}
