@@ -7,10 +7,11 @@
 	{
 		"name": "Mehmet Gunce Akkoyun",
 		"email": "akkoyun@me.com",
-		"url": ""
+		"url": "https://github.com/akkoyun"
 	},
 	"license": "MIT",
 	"frameworks": "arduino",
+	"headers": "Console.h",
 	"platforms":
 	[
 		"atmelavr",

@@ -31,7 +31,7 @@
 			],
 			"cStandard": "c11",
 			"cppStandard": "c++11",
-			"compilerPath": "/Users/gunceakkoyun_macmini/.platformio/packages/toolchain-atmelavr/bin/avr-gcc",
+			"compilerPath": "~/.platformio/packages/toolchain-atmelavr/bin/avr-gcc",
 			"compilerArgs": [
 				"-mmcu=atmega2560"
 			]
