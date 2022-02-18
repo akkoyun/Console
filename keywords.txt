@@ -6,10 +6,34 @@
 # Datatypes (KEYWORD1)
 #######################################
 
+Terminal						KEYWORD1
+
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
 
+Begin							KEYWORD2
+Cursor							KEYWORD2
+Clear							KEYWORD2
+Set_Cursor						KEYWORD2
+Text							KEYWORD2
+Text_Color						KEYWORD2
+Text_Format						KEYWORD2
+Print							KEYWORD2
+Print							KEYWORD2
+Background_Color				KEYWORD2
+Draw_Box						KEYWORD2
+Draw_Box_Header					KEYWORD2
+Draw_Box_Footer					KEYWORD2
+Print_Box_Title					KEYWORD2
+Draw_Horizontal_Divider			KEYWORD2
+Draw_Vertical_Divider			KEYWORD2
+Draw_3Row_Stat_Table			KEYWORD2
+Draw_1Row_Stat_Table			KEYWORD2
+B100BB							KEYWORD2
+
 #######################################
 # Constants (LITERAL1)
 #######################################
+
+_Console						LITERAL1

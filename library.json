@@ -24,10 +24,10 @@
 	},
 	"examples": [
 		{
-			"name": "Demo",
-			"base": "examples/demo",
+			"name": "B100BB_Demo",
+			"base": "examples/B100BB_Demo",
 			"files": [
-				"demo.ino"
+				"B100BB_Demo.ino"
 			]
 		}
 	]
