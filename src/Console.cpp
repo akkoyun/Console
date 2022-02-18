@@ -26,6 +26,11 @@ void Console::Clear(uint8_t _Type) {
 	if (_Type == ALL) _Console->write(CLR_ALL);
 
 }
+void Console::Beep(void) {
+
+	_Console->write("\x07");
+	
+}
 
 // Cursor Functions
 void Console::Cursor(bool _State) {
@@ -185,7 +190,7 @@ void Console::Print_Box_Title(uint8_t _X1, uint8_t _Y1, uint8_t _Y2, String _Tit
 	Terminal.Text_Format(BRIGHT);
 	Terminal.Set_Cursor(_X1 + 1, _Position); 
 	Serial.println(_Title);
-	Terminal.Text_Format(RESET);
+	Terminal.Text_Format(RST);
 
 }
 
@@ -253,7 +258,7 @@ void Console::_Format_Text(uint8_t _val) {
 void Console::B100BB(void) {
 
 	// Draw Main Screen
-    Terminal.Draw_Box(1, 1, 52, 120, "", 0, true, true);
+    Terminal.Draw_Box(1, 1, 54, 120, "", 0, true, true);
     Terminal.Print_Box_Title(1,1,60,"PowerStat V2");
 
 	// Header Titles
@@ -261,82 +266,82 @@ void Console::B100BB(void) {
 
 	// Draw Hardware Diagnostic
     Terminal.Draw_Box(4, 2, 12, 39, "Hardware Diagnostic", 1, false, false);
-	Terminal.Text(5, 4, WHITE, "I2C Multiplexer (0x70)......[    ]");
-	Terminal.Text(6, 4, WHITE, "I2C RTC (0x52)..............[    ]");
-	Terminal.Text(7, 4, WHITE, "I2C Serial ID (0x50)........[    ]");
-	Terminal.Text(8, 4, WHITE, "I2C Temperature (0x40)......[    ]");
-	Terminal.Text(9, 4, WHITE, "I2C Battery Gauge (0x36)....[    ]");
-	Terminal.Text(10, 4, WHITE, "I2C Battery Charger (0x6B)..[    ]");
-	Terminal.Text(11, 4, WHITE, "SD Card Connection..........[    ]");
+	Terminal.Text(5, 4, WHITE, F("I2C Multiplexer (0x70)......[    ]"));
+	Terminal.Text(6, 4, WHITE, F("I2C RTC (0x52)..............[    ]"));
+	Terminal.Text(7, 4, WHITE, F("I2C Serial ID (0x50)........[    ]"));
+	Terminal.Text(8, 4, WHITE, F("I2C Temperature (0x40)......[    ]"));
+	Terminal.Text(9, 4, WHITE, F("I2C Battery Gauge (0x36)....[    ]"));
+	Terminal.Text(10, 4, WHITE, F("I2C Battery Charger (0x6B)..[    ]"));
+	Terminal.Text(11, 4, WHITE, F("SD Card Connection..........[    ]"));
 
 	// Draw Detail Box
     Terminal.Draw_Box(4, 40, 12, 79, "Detail", 2, false, false);
-	Terminal.Text(5, 42, WHITE, "Serial ID.........[                ]");
-	Terminal.Text(6, 42, WHITE, "Firmware Version..........[        ]");
-	Terminal.Text(7, 42, WHITE, "Hardware Version..........[        ]");
-	Terminal.Text(8, 42, WHITE, "Module Temperature.........[      C]");
-	Terminal.Text(9, 42, WHITE, "Module Humidity............[      %]");
-	Terminal.Text(10, 42, WHITE, "Device State...................[   ]");
-	Terminal.Text(11, 42, WHITE, "Fault State....................[   ]");
+	Terminal.Text(5, 42, WHITE, F("Serial ID.........[                ]"));
+	Terminal.Text(6, 42, WHITE, F("Firmware Version..........[        ]"));
+	Terminal.Text(7, 42, WHITE, F("Hardware Version..........[        ]"));
+	Terminal.Text(8, 42, WHITE, F("Module Temperature.........[      C]"));
+	Terminal.Text(9, 42, WHITE, F("Module Humidity............[      %]"));
+	Terminal.Text(10, 42, WHITE, F("Device State...................[   ]"));
+	Terminal.Text(11, 42, WHITE, F("Fault State....................[   ]"));
 
 	// Draw Battery Box
     Terminal.Draw_Box(4, 80, 12, 119, "Battery", 3, false, false);
-	Terminal.Text(5, 82, WHITE, "Instant Voltage.............[     V]");
-	Terminal.Text(6, 82, WHITE, "Temperature................[      C]");
-	Terminal.Text(7, 82, WHITE, "Average Current..........[       mA]");
-	Terminal.Text(8, 82, WHITE, "State of Charge..............[    %]");
-	Terminal.Text(9, 82, WHITE, "Full Battery Capacity......[     mA]");
-	Terminal.Text(10, 82, WHITE, "Instant Battery Capacity...[     mA]");
-	Terminal.Text(11, 82, WHITE, "Cycle Count.....................[  ]");
+	Terminal.Text(5, 82, WHITE, F("Instant Voltage.............[     V]"));
+	Terminal.Text(6, 82, WHITE, F("Temperature................[      C]"));
+	Terminal.Text(7, 82, WHITE, F("Average Current..........[       mA]"));
+	Terminal.Text(8, 82, WHITE, F("State of Charge..............[    %]"));
+	Terminal.Text(9, 82, WHITE, F("Full Battery Capacity......[     mA]"));
+	Terminal.Text(10, 82, WHITE, F("Instant Battery Capacity...[     mA]"));
+	Terminal.Text(11, 82, WHITE, F("Cycle Count...................[  ]"));
 
 	// Draw GSM Setup Box
     Terminal.Draw_Box(13, 2, 27, 39, "GSM Setup", 4, false, false);
-	Terminal.Text(14, 4, WHITE, "ATE=0.......................[    ]");
-	Terminal.Text(15, 4, WHITE, "AT+CMEE=1...................[    ]");
-	Terminal.Text(16, 4, WHITE, "AT+FCLASS=0.................[    ]");
-	Terminal.Text(17, 4, WHITE, "AT&K0.......................[    ]");
-	Terminal.Text(18, 4, WHITE, "AT+CPIN?....................[    ]");
-	Terminal.Text(19, 4, WHITE, "AT+CGSN.....................[    ]");
-	Terminal.Text(20, 4, WHITE, "AT+GSN......................[    ]");
-	Terminal.Text(21, 4, WHITE, "AT+CCID.....................[    ]");
-	Terminal.Text(22, 4, WHITE, "AT+GMI......................[    ]");
-	Terminal.Text(23, 4, WHITE, "AT+GMM......................[    ]");
-	Terminal.Text(24, 4, WHITE, "AT+GMR......................[    ]");
-	Terminal.Text(25, 4, WHITE, "AT+SLED=2...................[    ]");
-	Terminal.Text(26, 4, WHITE, "AT#E2SLRI=50................[    ]");
+	Terminal.Text(14, 4, WHITE, F("ATE=0.......................[    ]"));
+	Terminal.Text(15, 4, WHITE, F("AT+CMEE=1...................[    ]"));
+	Terminal.Text(16, 4, WHITE, F("AT+FCLASS=0.................[    ]"));
+	Terminal.Text(17, 4, WHITE, F("AT&K0.......................[    ]"));
+	Terminal.Text(18, 4, WHITE, F("AT+CPIN?....................[    ]"));
+	Terminal.Text(19, 4, WHITE, F("AT+CGSN.....................[    ]"));
+	Terminal.Text(20, 4, WHITE, F("AT+GSN......................[    ]"));
+	Terminal.Text(21, 4, WHITE, F("AT+CCID.....................[    ]"));
+	Terminal.Text(22, 4, WHITE, F("AT+GMI......................[    ]"));
+	Terminal.Text(23, 4, WHITE, F("AT+GMM......................[    ]"));
+	Terminal.Text(24, 4, WHITE, F("AT+GMR......................[    ]"));
+	Terminal.Text(25, 4, WHITE, F("AT+SLED=2...................[    ]"));
+	Terminal.Text(26, 4, WHITE, F("AT#E2SLRI=50................[    ]"));
 
 	// GSM Connection Box
     Terminal.Draw_Box(13, 40, 27, 79, "GSM Connection", 5, false, false);
-	Terminal.Text(14, 42, WHITE, "AT#REGMODE=1..................[    ]");
-	Terminal.Text(15, 42, WHITE, "AT#TXMONMODE=1................[    ]");
-	Terminal.Text(16, 42, WHITE, "AT+CREG=0.....................[    ]");
-	Terminal.Text(17, 42, WHITE, "AT+CGREG=0....................[    ]");
-	Terminal.Text(18, 42, WHITE, "AT#SCFG=1,1,1500,90,600,50....[    ]");
-	Terminal.Text(19, 42, WHITE, "AT#SCFG=2,1,1500,90,300,50....[    ]");
-	Terminal.Text(20, 42, WHITE, "AT#SCFGEXT=2,1,0,1,0,0........[    ]");
-	Terminal.Text(21, 42, WHITE, "AT+CGDCONT=1,\"IP\",\"mgbs\"......[    ]");
-	Terminal.Text(22, 42, WHITE, "AT#SERVIFO....................[    ]");
-	Terminal.Text(23, 42, WHITE, "AT+CGACT=1,1..................[    ]");
-	Terminal.Text(24, 42, WHITE, "AT+CGPADDR=1..................[    ]");
-	Terminal.Text(25, 42, WHITE, "AT#HTTPCFG=1,\"*****\",80,0.....[    ]");
-	Terminal.Text(26, 42, WHITE, "AT#ICMP=1.....................[    ]");
+	Terminal.Text(14, 42, WHITE, F("AT#REGMODE=1..................[    ]"));
+	Terminal.Text(15, 42, WHITE, F("AT#TXMONMODE=1................[    ]"));
+	Terminal.Text(16, 42, WHITE, F("AT+CREG=0.....................[    ]"));
+	Terminal.Text(17, 42, WHITE, F("AT+CGREG=0....................[    ]"));
+	Terminal.Text(18, 42, WHITE, F("AT#SCFG=1,1,1500,90,600,50....[    ]"));
+	Terminal.Text(19, 42, WHITE, F("AT#SCFG=2,1,1500,90,300,50....[    ]"));
+	Terminal.Text(20, 42, WHITE, F("AT#SCFGEXT=2,1,0,1,0,0........[    ]"));
+	Terminal.Text(21, 42, WHITE, F("AT+CGDCONT=1,\"IP\",\"mgbs\"......[    ]"));
+	Terminal.Text(22, 42, WHITE, F("AT#SERVIFO....................[    ]"));
+	Terminal.Text(23, 42, WHITE, F("AT+CGACT=1,1..................[    ]"));
+	Terminal.Text(24, 42, WHITE, F("AT+CGPADDR=1..................[    ]"));
+	Terminal.Text(25, 42, WHITE, F("AT#HTTPCFG=1,\"*****\",80,0.....[    ]"));
+	Terminal.Text(26, 42, WHITE, F("AT#ICMP=1.....................[    ]"));
 
 	// GSM Detail Box
     Terminal.Draw_Box(13, 80, 20, 119, "GSM Detail", 6, false, false);
-	Terminal.Text(14, 82, WHITE, "Manufacturer.....................[ ]");
-	Terminal.Text(15, 82, WHITE, "Model...................[          ]");
-	Terminal.Text(16, 82, WHITE, "Firmware................[          ]");
-	Terminal.Text(17, 82, WHITE, "IMEI...............[               ]");
-	Terminal.Text(18, 82, WHITE, "Serial ID...............[          ]");
-	Terminal.Text(19, 82, WHITE, "SIM ICCID......[                   ]");
+	Terminal.Text(14, 82, WHITE, F("Manufacturer.....................[ ]"));
+	Terminal.Text(15, 82, WHITE, F("Model............................[ ]"));
+	Terminal.Text(16, 82, WHITE, F("Firmware................[          ]"));
+	Terminal.Text(17, 82, WHITE, F("IMEI...............[               ]"));
+	Terminal.Text(18, 82, WHITE, F("Serial ID...............[          ]"));
+	Terminal.Text(19, 82, WHITE, F("SIM ICCID......[                   ]"));
 
 	// Connection Box
 	Terminal.Draw_Box(21, 80, 27, 119, "Connection", 7, false, false);
-	Terminal.Text(22, 82, WHITE, "GSM Connection Time...........[    ]");
-	Terminal.Text(23, 82, WHITE, "RSSI Level......................[  ]");
-	Terminal.Text(24, 82, WHITE, "GSM Operator.................[     ]");
-	Terminal.Text(25, 82, WHITE, "IP Address.........[               ]");
-	Terminal.Text(26, 82, WHITE, "Socket Listen Status.....[         ]");
+	Terminal.Text(22, 82, WHITE, F("GSM Connection Time...........[    ]"));
+	Terminal.Text(23, 82, WHITE, F("RSSI Level......................[  ]"));
+	Terminal.Text(24, 82, WHITE, F("GSM Operator.................[     ]"));
+	Terminal.Text(25, 82, WHITE, F("IP Address.........[               ]"));
+	Terminal.Text(26, 82, WHITE, F("Socket Listen Status.....[         ]"));
 
 	// Power Box
     Terminal.Draw_Box(31, 2, 43, 119, "Power", 0, false, false);
@@ -349,7 +354,10 @@ void Console::B100BB(void) {
 
 	// JSON Data Box
     Terminal.Draw_Box(28, 2, 30, 119, "", 8, false, false);
-    Terminal.Draw_Box(44, 2, 49, 119, "Data", 0, false, false);
+    Terminal.Draw_Box(44, 2, 51, 119, "Data", 0, false, false);
+
+	// Print Instant Value
+	Terminal.Text(53, 115, WHITE, "Bar");
 
 }
 
