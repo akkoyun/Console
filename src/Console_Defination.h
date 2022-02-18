@@ -46,7 +46,7 @@ typedef enum
 
 typedef enum
 {
-	RESET		        = 0,
+	RST			        = 0,
 	BRIGHT		        = 1,
 	DIM			        = 2,
 	UNDERSCORE	        = 4,

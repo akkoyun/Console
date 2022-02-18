@@ -24,6 +24,7 @@ class Console {
 
 		void Begin(Stream &_Serial);
 		void Cursor(bool _State);
+		void Beep(void);
 		void Clear(uint8_t _Type);
 		void Set_Cursor(uint8_t _x, uint8_t _y);
 		
