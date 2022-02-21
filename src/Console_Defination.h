@@ -55,7 +55,7 @@ typedef enum
 	HIDDEN		        = 8	
 } TextFormat;
 
-enum STATUS_Bits {
+enum Clear_Type {
 	LINE_AFTER_CURSOR 	= 0,
 	LINE_TO_CURSOR 		= 1,
 	LINE 		    	= 2,
