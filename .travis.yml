@@ -1,17 +1,26 @@
-language: python
-
+language: c
+os: linux
+dist: xenial
 cache:
   directories:
-  - "~/.platformio"
-
-install:
-- pip install -U platformio
-- platformio lib install 986 # LSM303
-
+    - ~/arduino_ide
+    - ~/.arduino15/packages/
+git:
+  depth: false
+  quiet: true
 env:
-- BOARD=megaatmega2560
-
+  global:
+     # You can uncomment this to explicitly choose an (old) version of the Arduino IDE
+     #- ARDUINO_IDE_VERSION="1.8.10"
+before_install:
+  - source <(curl -SLs https://raw.githubusercontent.com/akkoyun/Console/Master/install.sh)
+install:
+  # Note that every library should be installed in a seperate command
+  # - arduino --install-library "Adafruit SleepyDog Library"
+  # - arduino --install-library "Adafruit FONA Library"
 script:
-- for e in examples/*; do
-    platformio ci --board=$BOARD --lib=. $e/*;
-  done
+  - build_main_platforms
+notifications:
+  email:
+    on_success: change
+    on_failure: change
