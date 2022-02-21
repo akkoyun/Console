@@ -1,6 +1,6 @@
 {
 	"name": "Console",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"keywords": "Console, Serial, VT100, UART, Color",
 	"description": "VT100 based arduino console library.",
 	"authors":
