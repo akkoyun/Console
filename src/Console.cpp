@@ -83,6 +83,16 @@ void Console::Text_Format(TextFormat _Format) {
 
 }
 
+void Console::OK_Decide(bool _Result, uint8_t _X, uint8_t _Y) {
+
+	// Print Command State
+	if (_Result) {
+		Terminal.Text(_X, _Y+1, GREEN, "OK");
+	} else {
+		Terminal.Text(_X, _Y, RED, "FAIL");
+	}
+	
+}
 
 void Console::Background_Color(Colors _Color) {
 
@@ -358,6 +368,35 @@ void Console::B100BB(void) {
 
 	// Print Instant Value
 	Terminal.Text(53, 115, WHITE, "Bar");
+
+	// GSM Placeholders
+	Terminal.Text(14, 33, YELLOW, " ** ");
+	Terminal.Text(15, 33, YELLOW, " ** ");
+	Terminal.Text(16, 33, YELLOW, " ** ");
+	Terminal.Text(17, 33, YELLOW, " ** ");
+	Terminal.Text(18, 33, YELLOW, " ** ");
+	Terminal.Text(19, 33, YELLOW, " ** ");
+	Terminal.Text(20, 33, YELLOW, " ** ");
+	Terminal.Text(21, 33, YELLOW, " ** ");
+	Terminal.Text(22, 33, YELLOW, " ** ");
+	Terminal.Text(23, 33, YELLOW, " ** ");
+	Terminal.Text(24, 33, YELLOW, " ** ");
+	Terminal.Text(25, 33, YELLOW, " ** ");
+	Terminal.Text(26, 33, YELLOW, " ** ");
+	Terminal.Text(14, 73, YELLOW, " ** ");
+	Terminal.Text(15, 73, YELLOW, " ** ");
+	Terminal.Text(16, 73, YELLOW, " ** ");
+	Terminal.Text(17, 73, YELLOW, " ** ");
+	Terminal.Text(18, 73, YELLOW, " ** ");
+	Terminal.Text(19, 73, YELLOW, " ** ");
+	Terminal.Text(20, 73, YELLOW, " ** ");
+	Terminal.Text(21, 73, YELLOW, " ** ");
+	Terminal.Text(22, 73, YELLOW, " ** ");
+	Terminal.Text(23, 73, YELLOW, " ** ");
+	Terminal.Text(24, 73, YELLOW, " ** ");
+	Terminal.Text(25, 73, YELLOW, " ** ");
+	Terminal.Text(26, 73, YELLOW, " ** ");
+
 
 }
 

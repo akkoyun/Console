@@ -33,6 +33,7 @@ class Console {
 		void Text_Format(TextFormat _Format);
 		void Print(String _Value);
 		void Print(const uint32_t _Value);
+		void OK_Decide(bool _Result, uint8_t _X, uint8_t _Y);
 
 		void Background_Color(Colors _Color);
 
