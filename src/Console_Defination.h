@@ -30,8 +30,7 @@
 #define	CLR_SCREEN				"\e[2J"
 #define CLR_ALL					"\e[1;1H\e[2J"
 
-typedef enum
-{
+typedef enum {
 	BLACK	            = 30,
 	RED		            = 31,
 	GREEN	            = 32,
@@ -41,11 +40,9 @@ typedef enum
 	CYAN	            = 36,
 	WHITE	            = 37,
 	GRAY	            = 90
-
 } Colors;
 
-typedef enum
-{
+typedef enum {
 	RST			        = 0,
 	BRIGHT		        = 1,
 	DIM			        = 2,
