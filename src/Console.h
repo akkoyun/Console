@@ -46,7 +46,9 @@ class Console {
 		void Draw_3Row_Stat_Table(uint8_t _X1, uint8_t _Y1);
 		void Draw_1Row_Stat_Table(uint8_t _X1, uint8_t _Y1, String _Variable);
 
+		// Predefined Drawing Functions
 		void B100BB(void);
+		void I2C_Scanner_Table(void);
 
 };
 

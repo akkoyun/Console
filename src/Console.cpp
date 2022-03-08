@@ -273,6 +273,10 @@ void Console::B100BB(void) {
 
 	// Header Titles
 	Terminal.Text(2, 3, WHITE, "Up Time : ");
+	Terminal.Text(2, 96, WHITE, "/");
+	Terminal.Text(2, 99, WHITE, "/");
+	Terminal.Text(2, 108, WHITE, ":");
+	Terminal.Text(2, 111, WHITE, ":");
 
 	// Draw Hardware Diagnostic
     Terminal.Draw_Box(4, 2, 12, 39, "Hardware Diagnostic", 1, false, false);
@@ -397,6 +401,49 @@ void Console::B100BB(void) {
 	Terminal.Text(25, 73, YELLOW, " ** ");
 	Terminal.Text(26, 73, YELLOW, " ** ");
 
+
+}
+void Console::I2C_Scanner_Table(void) {
+
+	// Draw Console Table
+	for (uint8_t i = 1; i <= 23; i = i + 2) {Draw_Horizontal_Divider(i, 1, 120, false);}
+	Draw_Vertical_Divider(1, 1, 22);
+	for (uint8_t i = 9; i <= 120; i = i + 7) {Draw_Vertical_Divider(3, i, 18);}
+	Draw_Vertical_Divider(1, 121, 22);
+
+	// Draw Corners
+	Set_Cursor(1,1); Serial.print("┌");
+	Set_Cursor(1,121); Serial.print("┐");
+	Set_Cursor(23,1); Serial.print("└");
+	Set_Cursor(23,121); Serial.print("┘");
+
+	// Draw T
+	for (uint8_t i = 3; i <= 21; i = i + 2) {Set_Cursor(i,1); Serial.print("├");}
+	for (uint8_t i = 3; i <= 21; i = i + 2) {Set_Cursor(i,121); Serial.print("┤");}
+	
+	// Draw CrosSection
+	for (uint8_t i = 5; i <= 19; i = i + 2) {for (uint8_t j = 9; j <= 120; j = j + 7) {Set_Cursor(i,j); Serial.print("┼");}}
+	
+	// Write Text
+	Print_Box_Title(1,1,60,"I2C DEVICE EXPLORER");
+	Text(22,3,WHITE,"Total connected device :");
+	Text(22,86,WHITE,"Current Mux Channel [0-8] :");
+	Text(24,100,WHITE,"github.com/akkoyun");
+
+	// Print headers
+	uint8_t _C = 0;
+	for (uint8_t i = 6; i <= 21; i = i + 2) {
+		Set_Cursor(i,3); Serial.print("0x");
+		Set_Cursor(i,5); Serial.print(_C);
+		Set_Cursor(i,6); Serial.print("_");
+		_C++;
+	}
+	uint8_t _R = 0;
+	for (uint8_t i = 11; i <= 121; i = i + 7) {
+		Set_Cursor(4,i); Serial.print("0x_");
+		Set_Cursor(4,i+3); Serial.print(_R, HEX);
+		_R++;
+	}
 
 }
 
