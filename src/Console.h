@@ -6,15 +6,40 @@
 #include <Arduino.h>
 #endif
 
-// Define Registers
-#ifndef __Console_Defination__
-#include <Console_Defination.h>
-#endif
+typedef enum {
+	BLACK	            = 30,
+	RED		            = 31,
+	GREEN	            = 32,
+	YELLOW	            = 33,
+	BLUE	            = 34,
+	MAGENTA	            = 35,
+	CYAN	            = 36,
+	WHITE	            = 37,
+	GRAY	            = 90
+} Colors;
+
+typedef enum {
+	RST			        = 0,
+	BRIGHT		        = 1,
+	DIM			        = 2,
+	UNDERSCORE	        = 4,
+	BLINK		        = 5,
+	REVERSE		        = 7,
+	HIDDEN		        = 8	
+} TextFormat;
 
 class Console {
 
 	private:
-	
+
+		enum Clear_Type {
+			LINE_AFTER_CURSOR 	= 0,
+			LINE_TO_CURSOR 		= 1,
+			LINE 		    	= 2,
+			SCREEN 			    = 3,
+			ALL 			    = 4
+		};
+
 		Stream *_Console;
 
 		void _Send_CMD(uint8_t _val);
@@ -44,11 +69,18 @@ class Console {
 		void Draw_Horizontal_Divider(uint8_t _X1, uint8_t _Y1, uint8_t _Length, bool _End);
 		void Draw_Vertical_Divider(uint8_t _X1, uint8_t _Y1, uint8_t _Length);
 		void Draw_3Row_Stat_Table(uint8_t _X1, uint8_t _Y1);
+		void Draw_3Row_Abstract_Table(uint8_t _X1, uint8_t _Y1);
 		void Draw_1Row_Stat_Table(uint8_t _X1, uint8_t _Y1, String _Variable);
+		void Draw_3Row_Limit_Table(uint8_t _X1, uint8_t _Y1);
 
 		// Predefined Drawing Functions
+		void Dot(uint8_t _X, uint8_t _Y, uint8_t _Count);
+		void Bracket(uint8_t _X, uint8_t _Y, uint8_t _Space);
 		void B100BB(void);
 		void I2C_Scanner_Table(void);
+		void MAX78630(void);
+		void Telit_xE910(void);
+		void MAX78630_Voltmeter(void);
 
 };
 
