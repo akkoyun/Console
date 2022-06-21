@@ -77,7 +77,11 @@ class Console {
 		void Dot(uint8_t _X, uint8_t _Y, uint8_t _Count);
 		void Bracket(uint8_t _X, uint8_t _Y, uint8_t _Space);
 		void FilterStat(void);
-
+		void B100BB(void);
+		void I2C_Scanner_Table(void);
+		void MAX78630(void);
+		void Telit_xE910(void);
+		void MAX78630_Voltmeter(void);
 };
 
 extern Console Terminal;
