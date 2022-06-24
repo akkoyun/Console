@@ -1,82 +1,9 @@
 // Include Header File
 #include "Console.h"
 
-void Console::Begin(Stream &_Serial) {
 
-	//Set serial port
-	_Console = &_Serial;
-
-	// Cursor Off
-	Cursor(false);
-
-	// Clear Screen
-	Clear(SCREEN);
-
-	// Reset Delay
-	delay(5);
-
-}
-void Console::Clear(uint8_t _Type) {
-
-	// Clear Screen
-	if (_Type == LINE_AFTER_CURSOR) _Console->print(F("\e[K"));
-	if (_Type == LINE_TO_CURSOR) _Console->print(F("\e[1K"));
-	if (_Type == LINE) _Console->print(F("\e[2K"));
-	if (_Type == SCREEN) _Console->print(F("\e[2J"));
-	if (_Type == ALL) _Console->print(F("\e[1;1H\e[2J"));
-
-}
-void Console::Beep(void) {
-
-	_Console->print(F("\x07"));
-	
-}
-
-// Cursor Functions
-void Console::Cursor(bool _State) {
-
-	// Cursor On
-	if (_State == true) _Console->print(F("\e[?25h"));	
-
-	// Cursor Off
-	if (_State == false) _Console->print(F("\e[?25l"));	
-
-}
-void Console::Set_Cursor(uint8_t _x, uint8_t _y) {
-
-	_Send_CMD(_x);
-	_Console->print(F(";"));
-	_Console->print(_y);
-	_Console->print(F("H"));
-
-}
 
 // Print Functions
-void Console::Text(uint8_t _x, uint8_t _y, Colors _Color, String _Value) {
-
-	// Print Text
-	Text_Color(_Color); 
-	Set_Cursor(_x, _y); 
-	_Console->println(_Value);
-
-}
-void Console::Print(String _Value) {
-
-	// Cursor On
-	_Console->print(_Value);
-
-}
-void Console::Print(const uint32_t _Value) {
-
-	// Cursor On
-	_Console->print(_Value);
-
-}
-void Console::Text_Color(Colors _Color) {
-
-	_Format_Text((uint8_t)_Color);
-
-}
 void Console::Text_Format(TextFormat _Format) {
 
 	_Format_Text((uint8_t)_Format);
@@ -94,70 +21,7 @@ void Console::OK_Decide(bool _Result, uint8_t _X, uint8_t _Y) {
 	
 }
 
-void Console::Background_Color(Colors _Color) {
 
-	_Format_Text((uint8_t)_Color + 10);
-
-}
-
-// Box Drawing Functions
-void Console::Draw_Box(uint8_t _X1, uint8_t _Y1, uint8_t _X2, uint8_t _Y2, String _Text, uint8_t _Number, bool _Header, bool _Footer) {
-
-	//Set Color
-	Text_Color(WHITE);
-	Text_Format(DIM);
-
-	// Print Corners
-	Set_Cursor(_X1, _Y1); _Console->println(F("┌"));
-	Set_Cursor(_X1, _Y2); _Console->println(F("┐"));
-	Set_Cursor(_X2, _Y1); _Console->println(F("└"));
-	Set_Cursor(_X2, _Y2); _Console->println(F("┘"));
-
-	// Print Lines
-	for (uint8_t i = _X1 + 1; i <= _X2 - 1; i++) {Set_Cursor(i, _Y1); _Console->println(F("│"));}
-	for (uint8_t i = _X1 + 1; i <= _X2 - 1; i++) {Set_Cursor(i, _Y2); _Console->println(F("│"));}
-	for (uint8_t i = _Y1 + 1; i <= _Y2 - 1; i++) {Set_Cursor(_X1, i); _Console->println(F("─"));}
-	for (uint8_t i = _Y1 + 1; i <= _Y2 - 1; i++) {Set_Cursor(_X2, i); _Console->println(F("─"));}
-
-	// Print Header
-	Text_Color(YELLOW); Set_Cursor(_X1, _Y1 + 2); _Console->println(_Text);
-	Text_Color(WHITE); Set_Cursor(_X1, _Y2 - 4); _Console->println(F("["));
-	Text_Color(YELLOW); Set_Cursor(_X1, _Y2 - 3); _Console->println(_Number);
-	Text_Color(WHITE); Set_Cursor(_X1, _Y2 - 2); _Console->println(F("]"));
-
-	// Draw Footer
-	if (_Header) Draw_Box_Header(_X1, _Y1, _X2, _Y2);
-	if (_Footer) Draw_Box_Footer(_X1, _Y1, _X2, _Y2);
-
-}
-void Console::Draw_Box_Footer(uint8_t _X1, uint8_t _Y1, uint8_t _X2, uint8_t _Y2) {
-
-	//Set Color
-	Text_Color(WHITE);
-	Text_Format(DIM);
-
-	// Print Corners
-	Set_Cursor(_X2 - 2, _Y1); _Console->println(F("├"));
-	Set_Cursor(_X2 - 2, _Y2); _Console->println(F("┤"));
-
-	// Print Lines
-	for (uint8_t i = _Y1 + 1; i <= _Y2 - 1; i++) {Set_Cursor(_X2 - 2, i); _Console->println(F("─"));}
-
-}
-void Console::Draw_Box_Header(uint8_t _X1, uint8_t _Y1, uint8_t _X2, uint8_t _Y2) {
-
-	//Set Color
-	Text_Color(WHITE);
-	Text_Format(DIM);
-
-	// Print Corners
-	Set_Cursor(_X1 + 2, _Y1); _Console->println(F("├"));
-	Set_Cursor(_X1 + 2, _Y2); _Console->println(F("┤"));
-
-	// Print Lines
-	for (uint8_t i = _Y1 + 1; i <= _Y2 - 1; i++) {Set_Cursor(_X1 + 2, i); _Console->println(F("─"));}
-
-}
 void Console::Draw_Horizontal_Divider(uint8_t _X1, uint8_t _Y1, uint8_t _Length, bool _End) {
 
 	//Set Color
@@ -307,7 +171,7 @@ void Console::Draw_1Row_Stat_Table(uint8_t _X1, uint8_t _Y1, String _Variable) {
 }
 
 // Private Functions
-void Console::_Send_CMD(uint8_t _val) {
+void Console::_Send_CMD(uint8_t _val) {	
 
 	_Console->print(F("\e["));
 	_Console->print(_val);
@@ -321,22 +185,6 @@ void Console::_Format_Text(uint8_t _val) {
 }
 
 // Batch Functions
-void Console::Dot(uint8_t _X, uint8_t _Y, uint8_t _Count) {
-
-	for (uint8_t i = 0; i < _Count; i++) {
-
-		Text(_X, _Y + i, WHITE, F("."));
-
-	}
-
-}
-void Console::Bracket(uint8_t _X, uint8_t _Y, uint8_t _Space) {
-
-	Text(_X, _Y, WHITE, F("["));
-	for (uint8_t i = 0; i < _Space; i++) Text(_X, _Y + i + 1, WHITE, F(" "));
-	Text(_X, _Y + _Space, WHITE, F("]"));
-
-}
 void Console::FilterStat(void) {
 
 	// Draw Main Screen
@@ -489,122 +337,6 @@ void Console::FilterStat(void) {
 	//Text(44, 101, WHITE, F("IDLE..........[ ]"));
 
 	Draw_Vertical_Divider(47,99,2);
-
-}
-void Console::B100BB(void) {
-
-	// Draw Main Screen
-    Draw_Box(1, 1, 52, 120, "", 0, true, true);
-    Print_Box_Title(1,1,60,F("PowerStat V2"));
-
-	// Header Titles
-	Text(2, 3, WHITE, F("Up Time : "));
-	Text(2, 96, WHITE, F("/"));
-	Text(2, 99, WHITE, F("/"));
-	Text(2, 108, WHITE, F(":"));
-	Text(2, 111, WHITE, F(":"));
-
-	// Draw Hardware Diagnostic
-    Draw_Box(4, 2, 12, 39, "Hardware Diagnostic", 1, false, false);
-	Text(5, 4, WHITE, F("I2C Multiplexer (0x70)")); Dot(5, 26, 6); Bracket(5, 32, 5);
-	Text(6, 4, WHITE, F("I2C RTC (0x52)")); Dot(6, 18, 14); Bracket(6, 32, 5);
-	Text(7, 4, WHITE, F("I2C Serial ID (0x50)")); Dot(7, 24, 8); Bracket(7, 32, 5);
-	Text(8, 4, WHITE, F("I2C Temperature (0x40)")); Dot(8, 26, 6); Bracket(8, 32, 5);
-	Text(9, 4, WHITE, F("I2C Battery Gauge (0x36)")); Dot(9, 28, 4); Bracket(9, 32, 5);
-	Text(10, 4, WHITE, F("I2C Battery Charger (0x6B)")); Dot(10, 30, 2); Bracket(10, 32, 5);
-	Text(11, 4, WHITE, F("SD Card Connection")); Dot(11, 22, 10); Bracket(11, 32, 5);
-
-	// Draw Detail Box
-    Draw_Box(4, 40, 12, 79, "Detail", 2, false, false);
-	Text(5, 42, WHITE, F("Serial ID")); Dot(5, 51, 9); Bracket(5, 60, 17);
-	Text(6, 42, WHITE, F("Firmware Version")); Dot(6, 58, 10); Bracket(6, 68, 9);
-	Text(7, 42, WHITE, F("Hardware Version")); Dot(7, 58, 10); Bracket(7, 68, 9);
-	Text(8, 42, WHITE, F("Module Temperature")); Dot(8, 60, 9); Bracket(8, 69, 8); Text(8, 76, WHITE, F("C"));
-	Text(9, 42, WHITE, F("Module Humidity")); Dot(9, 57, 12); Bracket(9, 69, 8); Text(9, 76, WHITE, F("%"));
-	Text(10, 42, WHITE, F("Device State")); Dot(10, 54, 19); Bracket(10, 73, 4);
-	Text(11, 42, WHITE, F("Fault State")); Dot(11, 53, 20); Bracket(11, 73, 4);
-
-	// Draw Battery Box
-    Draw_Box(4, 80, 12, 119, "Battery", 3, false, false);
-	Text(5, 82, WHITE, F("Instant Voltage")); Dot(5, 97, 13); Bracket(5, 110, 7);  Text(5, 116, WHITE, F("V"));
-	Text(6, 82, WHITE, F("Temperature")); Dot(6, 93, 16); Bracket(6, 109, 8); Text(6, 116, WHITE, F("C"));
-	Text(7, 82, WHITE, F("Average Current")); Dot(7, 97, 10); Bracket(7, 107, 10); Text(7, 115, WHITE, F("mA"));
-	Text(8, 82, WHITE, F("State of Charge")); Dot(8, 97, 14); Bracket(8, 111, 6); Text(8, 116, WHITE, F("%"));
-	Text(9, 82, WHITE, F("Full Battery Capacity")); Dot(9, 103, 6); Bracket(9, 109, 8); Text(9, 115, WHITE, F("mA"));
-	Text(10, 82, WHITE, F("Instant Battery Capacity")); Dot(10, 106, 3); Bracket(10, 109, 8); Text(10, 115, WHITE, F("mA"));
-	Text(11, 82, WHITE, F("Cycle Count")); Dot(11, 93, 19); Bracket(11, 112, 5);
-
-	// Draw GSM Setup Box
-    Draw_Box(13, 2, 27, 39, "GSM Setup", 4, false, false);
-	Text(14, 4, WHITE, F("ATE=0")); Dot(14, 9, 23); Bracket(14, 32, 5); Text(14, 33, YELLOW, F(" ** "));
-	Text(15, 4, WHITE, F("AT+CMEE=1")); Dot(15, 13, 19); Bracket(15, 32, 5); Text(15, 33, YELLOW, F(" ** "));
-	Text(16, 4, WHITE, F("AT+FCLASS=0")); Dot(16, 15, 17); Bracket(16, 32, 5); Text(16, 33, YELLOW, F(" ** "));
-	Text(17, 4, WHITE, F("AT&K0")); Dot(17, 9, 23); Bracket(17, 32, 5); Text(17, 33, YELLOW, F(" ** "));
-	Text(18, 4, WHITE, F("AT+CPIN?")); Dot(18, 12, 20); Bracket(18, 32, 5); Text(18, 33, YELLOW, F(" ** "));
-	Text(19, 4, WHITE, F("AT+CGSN")); Dot(19, 11, 21); Bracket(19, 32, 5); Text(19, 33, YELLOW, F(" ** "));
-	Text(20, 4, WHITE, F("AT+GSN")); Dot(20, 10, 22); Bracket(20, 32, 5); Text(20, 33, YELLOW, F(" ** "));
-	Text(21, 4, WHITE, F("AT+CCID")); Dot(21, 11, 21); Bracket(21, 32, 5); Text(21, 33, YELLOW, F(" ** "));
-	Text(22, 4, WHITE, F("AT+GMI")); Dot(22, 10, 22); Bracket(22, 32, 5); Text(22, 33, YELLOW, F(" ** "));
-	Text(23, 4, WHITE, F("AT+GMM")); Dot(23, 10, 22); Bracket(23, 32, 5); Text(23, 33, YELLOW, F(" ** "));
-	Text(24, 4, WHITE, F("AT+GMR")); Dot(24, 10, 22); Bracket(24, 32, 5); Text(24, 33, YELLOW, F(" ** "));
-	Text(25, 4, WHITE, F("AT+SLED=2")); Dot(25, 13, 19); Bracket(25, 32, 5); Text(25, 33, YELLOW, F(" ** "));
-	Text(26, 4, WHITE, F("AT#E2SLRI=50")); Dot(26, 16, 16); Bracket(26, 32, 5); Text(26, 33, YELLOW, F(" ** "));
-
-	// GSM Connection Box
-    Draw_Box(13, 40, 27, 79, "GSM Connection", 5, false, false);
-	Text(14, 42, WHITE, F("AT#REGMODE=1")); Dot(14, 54, 18); Bracket(14, 72, 5); Text(14, 73, YELLOW, F(" ** "));
-	Text(15, 42, WHITE, F("AT#TXMONMODE=1")); Dot(15, 56, 16); Bracket(15, 72, 5); Text(15, 73, YELLOW, F(" ** "));
-	Text(16, 42, WHITE, F("AT+CREG=0")); Dot(16, 51, 21); Bracket(16, 72, 5); Text(16, 73, YELLOW, F(" ** "));
-	Text(17, 42, WHITE, F("AT+CGREG=0")); Dot(17, 52, 20); Bracket(17, 72, 5); Text(17, 73, YELLOW, F(" ** "));
-	Text(18, 42, WHITE, F("AT#SCFG=1,1,1500,90,600,50")); Dot(18, 68, 4); Bracket(18, 72, 5); Text(18, 73, YELLOW, F(" ** "));
-	Text(19, 42, WHITE, F("AT#SCFG=2,1,1500,90,300,50")); Dot(19, 68, 4); Bracket(19, 72, 5); Text(19, 73, YELLOW, F(" ** "));
-	Text(20, 42, WHITE, F("AT#SCFGEXT=2,1,0,1,0,0")); Dot(20, 64, 8); Bracket(20, 72, 5); Text(20, 73, YELLOW, F(" ** "));
-	Text(21, 42, WHITE, F("AT+CGDCONT=1,\"IP\",\"mgbs\"")); Dot(21, 66, 6); Bracket(21, 72, 5); Text(21, 73, YELLOW, F(" ** "));
-	Text(22, 42, WHITE, F("AT#SERVIFO")); Dot(22, 52, 20); Bracket(22, 72, 5); Text(22, 73, YELLOW, F(" ** "));
-	Text(23, 42, WHITE, F("AT+CGACT=1,1")); Dot(23, 54, 18); Bracket(23, 72, 5); Text(23, 73, YELLOW, F(" ** "));
-	Text(24, 42, WHITE, F("AT+CGPADDR=1")); Dot(24, 54, 18); Bracket(24, 72, 5); Text(24, 73, YELLOW, F(" ** "));
-	Text(25, 42, WHITE, F("AT#HTTPCFG=1,\"*****\",80,0")); Dot(25, 67, 5); Bracket(25, 72, 5); Text(25, 73, YELLOW, F(" ** "));
-	Text(26, 42, WHITE, F("AT#ICMP=1")); Dot(26, 51, 21); Bracket(26, 72, 5); Text(26, 73, YELLOW, F(" ** "));
-
-	// GSM Detail Box
-    Draw_Box(13, 80, 20, 119, "GSM Detail", 6, false, false);
-	Text(14, 82, WHITE, F("Manufacturer")); Dot(14, 94, 21); Bracket(14, 115, 2);
-	Text(15, 82, WHITE, F("Model")); Dot(15, 87, 28); Bracket(15, 115, 2);
-	Text(16, 82, WHITE, F("Firmware")); Dot(16, 90, 16); Bracket(16, 106, 11);
-	Text(17, 82, WHITE, F("IMEI")); Dot(17, 86, 15); Bracket(17, 101, 16);
-	Text(18, 82, WHITE, F("Serial ID")); Dot(18, 91, 15); Bracket(18, 106, 11);
-	Text(19, 82, WHITE, F("SIM ICCID")); Dot(19, 91, 6); Bracket(19, 97, 20);
-
-	// Connection Box
-	Draw_Box(21, 80, 27, 119, "Connection", 7, false, false);
-	Text(22, 82, WHITE, F("GSM Connection Time")); Dot(22, 101, 11); Bracket(22, 112, 5);
-	Text(23, 82, WHITE, F("RSSI Level")); Dot(23, 92, 22); Bracket(23, 114, 3);
-	Text(24, 82, WHITE, F("GSM Operator")); Dot(24, 94, 17); Bracket(24, 111, 6);
-	Text(25, 82, WHITE, F("IP Address")); Dot(25, 92, 9); Bracket(25, 101, 16);
-	Text(26, 82, WHITE, F("Socket Listen Status")); Dot(26, 102, 5); Bracket(26, 107, 10);
-
-	// Power Box
-    Draw_Box(31, 2, 38, 60, "Power", 0, false, false);
-	Draw_3Row_Abstract_Table(32,6);
-    Draw_Box(31, 61, 38, 119, "Power Check", 0, false, false);
-	Draw_3Row_Limit_Table(32,64);
-
-	Text(40, 4, WHITE, F("R [ ] -"));
-	Text(40, 12, WHITE, F("S [ ] -"));
-	Text(40, 20, WHITE, F("T [ ] -"));
-	Text(40, 28, WHITE, F("M1 [ ] -"));
-	Text(40, 37, WHITE, F("M2 [ ] -"));
-	Text(40, 46, WHITE, F("M3 [ ] -"));
-	Text(40, 55, WHITE, F("Th [ ] -"));
-	Text(40, 64, WHITE, F("Mp [ ]"));
-
-	// JSON Data Box
-    Draw_Box(28, 2, 30, 119, "", 8, false, false);
-    Draw_Box(42, 2, 49, 119, "Data", 0, false, false);
-    Draw_Box(39, 2, 41, 119, "", 8, false, false);
-
-	// Print Instant Value
-	Text(40, 115, WHITE, F("Bar"));
 
 }
 void Console::I2C_Scanner_Table(void) {
