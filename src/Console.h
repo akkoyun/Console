@@ -95,6 +95,9 @@ class Console {
 			// Draw Header
 			if (_Header) {
 
+				// Set Text Color
+				Text_Color(WHITE);
+
 				// Print Corners
 				Set_Cursor(_X1 + 2, _Y1); _Console->println(F("├"));
 				Set_Cursor(_X1 + 2, _Y2); _Console->println(F("┤"));
@@ -110,6 +113,9 @@ class Console {
 			
 			// Draw Footer			
 			if (_Footer) {
+
+			// Set Text Color
+			Text_Color(WHITE);
 
 				// Print Corners
 				Set_Cursor(_X2 - 2, _Y1); _Console->println(F("├"));
@@ -329,8 +335,8 @@ class Console {
 
 			// Print Text
 			Text(_X1 + 1, _Y1 + 2, WHITE, F("Serial ID")); 			Dot(_X1 + 1, _Y1 + 11, (_Y2 - 19) - (_Y1 + 11)); 	Bracket(_X1 + 1, _Y2 - 19, 17);
-			Text(_X1 + 2, _Y1 + 2, WHITE, F("Firmware Version")); 	Dot(_X1 + 2, _Y1 + 18, (_Y2 - 12) - (_Y1 + 18)); 	Bracket(_X1 + 2, _Y2 - 11, 9);
-			Text(_X1 + 3, _Y1 + 2, WHITE, F("Hardware Version")); 	Dot(_X1 + 3, _Y1 + 18, (_Y2 - 12) - (_Y1 + 18)); 	Bracket(_X1 + 3, _Y2 - 11, 9);
+			Text(_X1 + 2, _Y1 + 2, WHITE, F("Firmware Version")); 	Dot(_X1 + 2, _Y1 + 18, (_Y2 - 11) - (_Y1 + 18)); 	Bracket(_X1 + 2, _Y2 - 11, 9);
+			Text(_X1 + 3, _Y1 + 2, WHITE, F("Hardware Version")); 	Dot(_X1 + 3, _Y1 + 18, (_Y2 - 11) - (_Y1 + 18)); 	Bracket(_X1 + 3, _Y2 - 11, 9);
 			Text(_X1 + 4, _Y1 + 2, WHITE, F("Module Temperature")); Dot(_X1 + 4, _Y1 + 20, (_Y2 - 6) - (_Y1 + 20)); 	Bracket(_X1 + 4, _Y2 - 10, 8);	Text(_X1 + 4, _Y2 - 3, WHITE, F("C"));
 			Text(_X1 + 5, _Y1 + 2, WHITE, F("Module Humidity")); 	Dot(_X1 + 5, _Y1 + 17, (_Y2 - 6) - (_Y1 + 17)); 	Bracket(_X1 + 5, _Y2 - 10, 8);	Text(_X1 + 5, _Y2 - 3, WHITE, F("%"));
 			Text(_X1 + 6, _Y1 + 2, WHITE, F("Device State")); 		Dot(_X1 + 6, _Y1 + 14, (_Y2 - 6) - (_Y1 + 14)); 	Bracket(_X1 + 6, _Y2 - 6, 4);
@@ -351,13 +357,13 @@ class Console {
 			Draw_Box(_X1, _Y1, _X2, _Y2, "Battery", 3, false, false);
 
 			// Print Text
-			Text(_X1 + 1, _Y1 + 2, WHITE, F("Instant Voltage")); 			Dot(_X1 + 1, _Y1 + 17, (_Y2 - 19) - (_Y1 + 17)); 	Bracket(_X1 + 1, _Y2 - 9, 7);
-			Text(_X1 + 2, _Y1 + 2, WHITE, F("Temperature")); 				Dot(_X1 + 2, _Y1 + 13, (_Y2 - 12) - (_Y1 + 13)); 	Bracket(_X1 + 2, _Y2 - 8, 8);
-			Text(_X1 + 3, _Y1 + 2, WHITE, F("Average Current")); 			Dot(_X1 + 3, _Y1 + 17, (_Y2 - 12) - (_Y1 + 17)); 	Bracket(_X1 + 3, _Y2 - 6, 10);
-			Text(_X1 + 4, _Y1 + 2, WHITE, F("State of Charge")); 			Dot(_X1 + 4, _Y1 + 17, (_Y2 - 3) - (_Y1 + 17)); 	Bracket(_X1 + 4, _Y2 - 10, 6);
-			Text(_X1 + 5, _Y1 + 2, WHITE, F("Full Battery Capacity")); 		Dot(_X1 + 5, _Y1 + 23, (_Y2 - 3) - (_Y1 + 23)); 	Bracket(_X1 + 5, _Y2 - 8, 8);
-			Text(_X1 + 6, _Y1 + 2, WHITE, F("Instant Battery Capacity")); 	Dot(_X1 + 6, _Y1 + 26, (_Y2 - 6) - (_Y1 + 26)); 	Bracket(_X1 + 6, _Y2 - 8, 8);
-			Text(_X1 + 7, _Y1 + 2, WHITE, F("Cycle Count")); 				Dot(_X1 + 7, _Y1 + 11, (_Y2 - 6) - (_Y1 + 11)); 	Bracket(_X1 + 7, _Y2 - 11, 5);
+			Text(_X1 + 1, _Y1 + 2, WHITE, F("Instant Voltage")); 			Dot(_X1 + 1, _Y1 + 17, (_Y2 - 9) - (_Y1 + 17)); 	Bracket(_X1 + 1, _Y2 - 9, 7);	Text(_X1 + 1, _Y2 - 3, WHITE, F("V"));
+			Text(_X1 + 2, _Y1 + 2, WHITE, F("Temperature")); 				Dot(_X1 + 2, _Y1 + 13, (_Y2 - 8) - (_Y1 + 13)); 	Bracket(_X1 + 2, _Y2 - 8, 8);	Text(_X1 + 2, _Y2 - 3, WHITE, F("C"));
+			Text(_X1 + 3, _Y1 + 2, WHITE, F("Average Current")); 			Dot(_X1 + 3, _Y1 + 17, (_Y2 - 12) - (_Y1 + 17)); 	Bracket(_X1 + 3, _Y2 - 12, 10);	Text(_X1 + 3, _Y2 - 2, WHITE, F("mA"));
+			Text(_X1 + 4, _Y1 + 2, WHITE, F("State of Charge")); 			Dot(_X1 + 4, _Y1 + 17, (_Y2 - 10) - (_Y1 + 17)); 	Bracket(_X1 + 4, _Y2 - 10, 8);	Text(_X1 + 4, _Y2 - 3, WHITE, F("%"));
+			Text(_X1 + 5, _Y1 + 2, WHITE, F("Full Battery Capacity")); 		Dot(_X1 + 5, _Y1 + 23, (_Y2 - 10) - (_Y1 + 23)); 	Bracket(_X1 + 5, _Y2 - 10, 8);	Text(_X1 + 5, _Y2 - 2, WHITE, F("mA"));
+			Text(_X1 + 6, _Y1 + 2, WHITE, F("Instant Battery Capacity")); 	Dot(_X1 + 6, _Y1 + 26, (_Y2 - 10) - (_Y1 + 26)); 	Bracket(_X1 + 6, _Y2 - 10, 8);	Text(_X1 + 6, _Y2 - 2, WHITE, F("mA"));
+			Text(_X1 + 7, _Y1 + 2, WHITE, F("Cycle Count")); 				Dot(_X1 + 7, _Y1 + 11, (_Y2 - 7) - (_Y1 + 11)); 	Bracket(_X1 + 7, _Y2 - 7, 5);
 
 		}
 
