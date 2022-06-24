@@ -425,6 +425,48 @@ class Console {
 
 		}
 
+		/**
+		 * @brief Battery GSM Detail Function.
+		 * @param _X1 Left Upper Cursor X Position
+		 * @param _Y1 Left Upper Cursor Y Position
+		 * @param _X2 Right Lower Cursor X Position
+		 * @param _Y2 Right Lower Cursor Y Position
+		 */
+		void Print_GSM_Detail(uint8_t _X1, uint8_t _Y1, uint8_t _X2, uint8_t _Y2) {
+
+			// Draw GSM Connection Diagnostic Box
+			Draw_Box(_X1, _Y1, _X2, _Y2, "GSM Detail", 6, false, false);
+
+			// Print Text	
+			Text(_X1 + 1, _Y1 + 2, WHITE, F("Manufacturer"));	Dot(_X1 + 1, _Y1 + 14, (_Y2 - 4) - (_Y1 + 14)); 	Bracket(_X1 + 1, _Y2 - 4, 1);
+			Text(_X1 + 2, _Y1 + 2, WHITE, F("Model"));			Dot(_X1 + 2, _Y1 + 7, (_Y2 - 4) - (_Y1 + 7)); 		Bracket(_X1 + 2, _Y2 - 4, 1);
+			Text(_X1 + 3, _Y1 + 2, WHITE, F("Firmware"));		Dot(_X1 + 3, _Y1 + 10, (_Y2 - 12) - (_Y1 + 10)); 	Bracket(_X1 + 3, _Y2 - 12, 9);
+			Text(_X1 + 4, _Y1 + 2, WHITE, F("IMEI"));			Dot(_X1 + 4, _Y1 + 6, (_Y2 - 18) - (_Y1 + 6)); 		Bracket(_X1 + 4, _Y2 - 18, 15);
+			Text(_X1 + 5, _Y1 + 2, WHITE, F("Serial ID"));		Dot(_X1 + 5, _Y1 + 11, (_Y2 - 13) - (_Y1 + 11)); 	Bracket(_X1 + 5, _Y2 - 13, 10);
+			Text(_X1 + 6, _Y1 + 2, WHITE, F("ICCID"));			Dot(_X1 + 6, _Y1 + 7, (_Y2 - 22) - (_Y1 + 7)); 		Bracket(_X1 + 6, _Y2 - 22, 19);
+
+		}
+
+		/**
+		 * @brief GSM Connection Detail Function.
+		 * @param _X1 Left Upper Cursor X Position
+		 * @param _Y1 Left Upper Cursor Y Position
+		 * @param _X2 Right Lower Cursor X Position
+		 * @param _Y2 Right Lower Cursor Y Position
+		 */
+		void Print_GSM_Connection_Detail(uint8_t _X1, uint8_t _Y1, uint8_t _X2, uint8_t _Y2) {
+
+			// Draw GSM Connection Diagnostic Box
+			Draw_Box(_X1, _Y1, _X2, _Y2, "Connection", 7, false, false);
+
+			// Print Text	
+			Text(_X1 + 1, _Y1 + 2, WHITE, F("GSM Connection Time"));	Dot(_X1 + 1, _Y1 + 21, (_Y2 - 7) - (_Y1 + 21)); 	Bracket(_X1 + 1, _Y2 - 7, 1);
+			Text(_X1 + 2, _Y1 + 2, WHITE, F("RSSI Level"));				Dot(_X1 + 2, _Y1 + 12, (_Y2 - 5) - (_Y1 + 12)); 	Bracket(_X1 + 2, _Y2 - 5, 1);
+			Text(_X1 + 3, _Y1 + 2, WHITE, F("GSM Operator"));			Dot(_X1 + 3, _Y1 + 14, (_Y2 - 8) - (_Y1 + 14)); 	Bracket(_X1 + 3, _Y2 - 8, 9);
+			Text(_X1 + 4, _Y1 + 2, WHITE, F("IP Address"));				Dot(_X1 + 4, _Y1 + 12, (_Y2 - 18) - (_Y1 + 12)); 	Bracket(_X1 + 4, _Y2 - 18, 15);
+			Text(_X1 + 5, _Y1 + 2, WHITE, F("Socket Status"));			Dot(_X1 + 5, _Y1 + 15, (_Y2 - 12) - (_Y1 + 15)); 	Bracket(_X1 + 5, _Y2 - 12, 10);
+
+		}
 
 		/**
 		 * @brief PowerStat Terminal Batch
@@ -455,23 +497,18 @@ class Console {
 			// Draw GSM Connection Box
 			this->Print_GSM_Connection(13, 40, 27, 79);
 
+			// Draw GSM Detail Box
+			this->Print_GSM_Detail(13, 80, 20, 119);
 
-			// GSM Detail Box
-			Draw_Box(13, 80, 20, 119, "GSM Detail", 6, false, false);
-			Text(14, 82, WHITE, F("Manufacturer")); Dot(14, 94, 21); Bracket(14, 115, 2);
-			Text(15, 82, WHITE, F("Model")); Dot(15, 87, 28); Bracket(15, 115, 2);
-			Text(16, 82, WHITE, F("Firmware")); Dot(16, 90, 16); Bracket(16, 106, 11);
-			Text(17, 82, WHITE, F("IMEI")); Dot(17, 86, 15); Bracket(17, 101, 16);
-			Text(18, 82, WHITE, F("Serial ID")); Dot(18, 91, 15); Bracket(18, 106, 11);
-			Text(19, 82, WHITE, F("SIM ICCID")); Dot(19, 91, 6); Bracket(19, 97, 20);
+			// Draw GSM Connection Detail Box
+			this->Print_GSM_Detail(21, 80, 27, 119);
 
-			// Connection Box
-			Draw_Box(21, 80, 27, 119, "Connection", 7, false, false);
-			Text(22, 82, WHITE, F("GSM Connection Time")); Dot(22, 101, 11); Bracket(22, 112, 5);
-			Text(23, 82, WHITE, F("RSSI Level")); Dot(23, 92, 22); Bracket(23, 114, 3);
-			Text(24, 82, WHITE, F("GSM Operator")); Dot(24, 94, 17); Bracket(24, 111, 6);
-			Text(25, 82, WHITE, F("IP Address")); Dot(25, 92, 9); Bracket(25, 101, 16);
-			Text(26, 82, WHITE, F("Socket Listen Status")); Dot(26, 102, 5); Bracket(26, 107, 10);
+
+
+
+
+
+
 
 			// Power Box
 			Draw_Box(31, 2, 38, 60, "Power", 0, false, false);
