@@ -164,6 +164,57 @@ class Console {
 
 		}
 
+		/**
+		 * @brief Horizontal Line Divider Function.
+		 * @param _X1 Start Cursor X
+		 * @param _Y1 Start Cursor Y
+		 * @param _Length Length
+		 * @param _End End Symbol
+		 */
+		void Horizontal_Divider(uint8_t _X1, uint8_t _Y1, uint8_t _Length, bool _End) {
+
+			//Set Color
+			Text_Color(WHITE);
+			Text_Format(DIM);
+
+			// Print Corners
+			if (_End) {
+
+				Set_Cursor(_X1, _Y1); Serial.println(F("├"));
+				Set_Cursor(_X1, _Y1 + _Length); Serial.println(F("┤"));
+
+			}
+
+			// Print Lines
+			for (uint8_t i = _Y1 + 1; i <= _Y1 + _Length - 1; i++) {
+
+				Set_Cursor(_X1, i); Serial.println(F("─"));
+
+			}
+	
+		}
+
+		/**
+		 * @brief Vertical Line Divider Function.
+		 * @param _X1 Start Cursor X
+		 * @param _Y1 Start Cursor Y
+		 * @param _Length Length
+		 * @param _End End Symbol
+		 */
+		void Vertical_Divider(uint8_t _X1, uint8_t _Y1, uint8_t _Length) {
+
+			//Set Color
+			Text_Color(WHITE);
+			Text_Format(DIM);
+
+			// Print Corners
+			Set_Cursor(_X1, _Y1); _Console->println(F("┬"));
+			Set_Cursor(_X1 + _Length, _Y1); _Console->println(F("┴"));
+
+			// Print Lines
+			for (uint8_t i = _X1 + 1; i <= _X1 + _Length - 1; i++) {Set_Cursor(i, _Y1); _Console->println(F("│"));}
+
+		}
 
 
 
@@ -438,12 +489,12 @@ class Console {
 			Draw_Box(_X1, _Y1, _X2, _Y2, "GSM Detail", 6, false, false);
 
 			// Print Text	
-			Text(_X1 + 1, _Y1 + 2, WHITE, F("Manufacturer"));	Dot(_X1 + 1, _Y1 + 14, (_Y2 - 5) - (_Y1 + 14)); 	Bracket(_X1 + 1, _Y2 - 5, 2);
-			Text(_X1 + 2, _Y1 + 2, WHITE, F("Model"));			Dot(_X1 + 2, _Y1 + 7, (_Y2 - 5) - (_Y1 + 7)); 		Bracket(_X1 + 2, _Y2 - 5, 2);
-			Text(_X1 + 3, _Y1 + 2, WHITE, F("Firmware"));		Dot(_X1 + 3, _Y1 + 10, (_Y2 - 14) - (_Y1 + 10)); 	Bracket(_X1 + 3, _Y2 - 14, 10);
-			Text(_X1 + 4, _Y1 + 2, WHITE, F("IMEI"));			Dot(_X1 + 4, _Y1 + 6, (_Y2 - 19) - (_Y1 + 6)); 		Bracket(_X1 + 4, _Y2 - 19, 16);
-			Text(_X1 + 5, _Y1 + 2, WHITE, F("Serial ID"));		Dot(_X1 + 5, _Y1 + 11, (_Y2 - 14) - (_Y1 + 11)); 	Bracket(_X1 + 5, _Y2 - 14, 11);
-			Text(_X1 + 6, _Y1 + 2, WHITE, F("ICCID"));			Dot(_X1 + 6, _Y1 + 7, (_Y2 - 23) - (_Y1 + 7)); 		Bracket(_X1 + 6, _Y2 - 23, 20);
+			Text(_X1 + 1, _Y1 + 2, WHITE, F("Manufacturer"));	Dot(_X1 + 1, _Y1 + 14, (_Y2 - 4) - (_Y1 + 14)); 	Bracket(_X1 + 1, _Y2 - 4, 2);
+			Text(_X1 + 2, _Y1 + 2, WHITE, F("Model"));			Dot(_X1 + 2, _Y1 + 7, (_Y2 - 4) - (_Y1 + 7)); 		Bracket(_X1 + 2, _Y2 - 4, 2);
+			Text(_X1 + 3, _Y1 + 2, WHITE, F("Firmware"));		Dot(_X1 + 3, _Y1 + 10, (_Y2 - 13) - (_Y1 + 10)); 	Bracket(_X1 + 3, _Y2 - 13, 10);
+			Text(_X1 + 4, _Y1 + 2, WHITE, F("IMEI"));			Dot(_X1 + 4, _Y1 + 6, (_Y2 - 18) - (_Y1 + 6)); 		Bracket(_X1 + 4, _Y2 - 18, 16);
+			Text(_X1 + 5, _Y1 + 2, WHITE, F("Serial ID"));		Dot(_X1 + 5, _Y1 + 11, (_Y2 - 13) - (_Y1 + 11)); 	Bracket(_X1 + 5, _Y2 - 13, 11);
+			Text(_X1 + 6, _Y1 + 2, WHITE, F("ICCID"));			Dot(_X1 + 6, _Y1 + 7, (_Y2 - 22) - (_Y1 + 7)); 		Bracket(_X1 + 6, _Y2 - 22, 20);
 
 		}
 
@@ -460,11 +511,72 @@ class Console {
 			Draw_Box(_X1, _Y1, _X2, _Y2, "Connection", 7, false, false);
 
 			// Print Text	
-			Text(_X1 + 1, _Y1 + 2, WHITE, F("GSM Connection Time"));	Dot(_X1 + 1, _Y1 + 21, (_Y2 - 8) - (_Y1 + 21)); 	Bracket(_X1 + 1, _Y2 - 8, 5);
-			Text(_X1 + 2, _Y1 + 2, WHITE, F("RSSI Level"));				Dot(_X1 + 2, _Y1 + 12, (_Y2 - 6) - (_Y1 + 12)); 	Bracket(_X1 + 2, _Y2 - 6, 3);
-			Text(_X1 + 3, _Y1 + 2, WHITE, F("GSM Operator"));			Dot(_X1 + 3, _Y1 + 14, (_Y2 - 9) - (_Y1 + 14)); 	Bracket(_X1 + 3, _Y2 - 9, 6);
-			Text(_X1 + 4, _Y1 + 2, WHITE, F("IP Address"));				Dot(_X1 + 4, _Y1 + 12, (_Y2 - 19) - (_Y1 + 12)); 	Bracket(_X1 + 4, _Y2 - 19, 16);
-			Text(_X1 + 5, _Y1 + 2, WHITE, F("Socket Status"));			Dot(_X1 + 5, _Y1 + 15, (_Y2 - 13) - (_Y1 + 15)); 	Bracket(_X1 + 5, _Y2 - 13, 10);
+			Text(_X1 + 1, _Y1 + 2, WHITE, F("GSM Connection Time"));	Dot(_X1 + 1, _Y1 + 21, (_Y2 - 7) - (_Y1 + 21)); 	Bracket(_X1 + 1, _Y2 - 7, 5);
+			Text(_X1 + 2, _Y1 + 2, WHITE, F("RSSI Level"));				Dot(_X1 + 2, _Y1 + 12, (_Y2 - 5) - (_Y1 + 12)); 	Bracket(_X1 + 2, _Y2 - 5, 3);
+			Text(_X1 + 3, _Y1 + 2, WHITE, F("GSM Operator"));			Dot(_X1 + 3, _Y1 + 14, (_Y2 - 8) - (_Y1 + 14)); 	Bracket(_X1 + 3, _Y2 - 8, 6);
+			Text(_X1 + 4, _Y1 + 2, WHITE, F("IP Address"));				Dot(_X1 + 4, _Y1 + 12, (_Y2 - 18) - (_Y1 + 12)); 	Bracket(_X1 + 4, _Y2 - 18, 16);
+			Text(_X1 + 5, _Y1 + 2, WHITE, F("Socket Status"));			Dot(_X1 + 5, _Y1 + 15, (_Y2 - 13) - (_Y1 + 15)); 	Bracket(_X1 + 5, _Y2 - 12, 10);
+
+		}
+
+		/**
+		 * @brief Power Detail Function.
+		 * @param _X1 Left Upper Cursor X Position
+		 * @param _Y1 Left Upper Cursor Y Position
+		 * @param _X2 Right Lower Cursor X Position
+		 * @param _Y2 Right Lower Cursor Y Position
+		 */
+		void Print_Power_Detail(uint8_t _X1, uint8_t _Y1, uint8_t _X2, uint8_t _Y2) {
+
+			// Draw State Box
+			this->Draw_Box(_X1, _Y1, _X2, _Y2, "Power", 0, false, false);
+
+			// Draw Horizontal Lines
+			Horizontal_Divider(_X1 + 1, _Y1, 50, false);
+			Horizontal_Divider(_X1 + 5, _Y1, 50, false);
+
+			// Draw Vertical Lines
+			Vertical_Divider(_X1 + 1,_Y1 + 9,4);
+			Vertical_Divider(_X1 + 1,_Y1 + 19,4);
+			Vertical_Divider(_X1 + 1,_Y1 + 29,4);
+			Vertical_Divider(_X1 + 1,_Y1 + 39,4);
+
+			// Print Text
+			Text(_X1, _Y1 + 11, WHITE, F("Voltage"));
+			Text(_X1, _Y1 + 21, WHITE, F("Current"));
+			Text(_X1, _Y1 + 32, WHITE, F("Freq"));
+			Text(_X1, _Y1 + 42, WHITE, F("Cos Fi"));
+			Text(_X1 + 2, _Y1 + 1, WHITE, F("Phase R"));
+			Text(_X1 + 3, _Y1 + 1, WHITE, F("Phase S"));
+			Text(_X1 + 4, _Y1 + 1, WHITE, F("Phase T"));
+
+		}
+
+
+
+
+
+		/**
+		 * @brief State Detail Function.
+		 * @param _X1 Left Upper Cursor X Position
+		 * @param _Y1 Left Upper Cursor Y Position
+		 * @param _X2 Right Lower Cursor X Position
+		 * @param _Y2 Right Lower Cursor Y Position
+		 */
+		void Print_State_Detail(uint8_t _X1, uint8_t _Y1, uint8_t _X2, uint8_t _Y2) {
+
+			// Draw State Box
+			Draw_Box(_X1, _Y1, _X2, _Y2, "", 0, false, false);
+
+			// Print Text	
+			Text(_X1 + 1, _Y1 + 2, WHITE, F("R [ ] -"));
+			Text(_X1 + 1, _Y1 + 10, WHITE, F("S [ ] -"));
+			Text(_X1 + 1, _Y1 + 18, WHITE, F("T [ ] -"));
+			Text(_X1 + 1, _Y1 + 26, WHITE, F("M1 [ ] -"));
+			Text(_X1 + 1, _Y1 + 35, WHITE, F("M2 [ ] -"));
+			Text(_X1 + 1, _Y1 + 44, WHITE, F("M3 [ ] -"));
+			Text(_X1 + 1, _Y1 + 53, WHITE, F("Th [ ] -"));
+			Text(_X1 + 1, _Y1 + 62, WHITE, F("Mp [ ]"));
 
 		}
 
@@ -503,32 +615,21 @@ class Console {
 			// Draw GSM Connection Detail Box
 			this->Print_GSM_Connection_Detail(21, 80, 27, 119);
 
-
-
-
-
-
-
+			// GSM Power Box
+			this->Draw_Box(28, 2, 30, 119, "", 0, false, false);
 
 			// Power Box
-			Draw_Box(31, 2, 38, 60, "Power", 0, false, false);
-			Draw_3Row_Abstract_Table(32,6);
-			Draw_Box(31, 61, 38, 119, "Power Check", 0, false, false);
-			Draw_3Row_Limit_Table(32,64);
+			this->Print_Power_Detail(31, 2, 38, 60);
 
-			Text(40, 4, WHITE, F("R [ ] -"));
-			Text(40, 12, WHITE, F("S [ ] -"));
-			Text(40, 20, WHITE, F("T [ ] -"));
-			Text(40, 28, WHITE, F("M1 [ ] -"));
-			Text(40, 37, WHITE, F("M2 [ ] -"));
-			Text(40, 46, WHITE, F("M3 [ ] -"));
-			Text(40, 55, WHITE, F("Th [ ] -"));
-			Text(40, 64, WHITE, F("Mp [ ]"));
+			// Power Check
+			this->Draw_Box(31, 61, 38, 119, "Power Check", 0, false, false);
+			this->Draw_3Row_Limit_Table(32,64);
 
-			// JSON Data Box
-			Draw_Box(28, 2, 30, 119, "", 8, false, false);
-			Draw_Box(42, 2, 49, 119, "Data", 0, false, false);
-			Draw_Box(39, 2, 41, 119, "", 8, false, false);
+			// State Detail Box
+			this->Print_State_Detail(39, 2, 41, 119);
+
+			// Data Box
+			this->Draw_Box(42, 2, 49, 119, "JSON", 0, false, false);
 
 			// Print Instant Value
 			Text(40, 115, WHITE, F("Bar"));
@@ -549,10 +650,7 @@ class Console {
 
 
 		void Print_Box_Title(uint8_t _X1, uint8_t _Y1, uint8_t _X2, String _Title);
-		void Draw_Horizontal_Divider(uint8_t _X1, uint8_t _Y1, uint8_t _Length, bool _End);
-		void Draw_Vertical_Divider(uint8_t _X1, uint8_t _Y1, uint8_t _Length);
 		void Draw_3Row_Stat_Table(uint8_t _X1, uint8_t _Y1);
-		void Draw_3Row_Abstract_Table(uint8_t _X1, uint8_t _Y1);
 		void Draw_1Row_Stat_Table(uint8_t _X1, uint8_t _Y1, String _Variable);
 		void Draw_3Row_Limit_Table(uint8_t _X1, uint8_t _Y1);
 
