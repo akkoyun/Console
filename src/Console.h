@@ -62,7 +62,7 @@ class Console {
 
 		void Background_Color(Colors _Color);
 
-		void Draw_Box(uint8_t _X1, uint8_t _Y1, uint8_t _X2, uint8_t _Y2, char *_Text, uint8_t _Number, bool _Header, bool _Footer);
+		void Draw_Box(uint8_t _X1, uint8_t _Y1, uint8_t _X2, uint8_t _Y2, String _Text, uint8_t _Number, bool _Header, bool _Footer);
 		void Draw_Box_Header(uint8_t _X1, uint8_t _Y1, uint8_t _X2, uint8_t _Y2);
 		void Draw_Box_Footer(uint8_t _X1, uint8_t _Y1, uint8_t _X2, uint8_t _Y2);
 		void Print_Box_Title(uint8_t _X1, uint8_t _Y1, uint8_t _X2, String _Title);
@@ -76,12 +76,12 @@ class Console {
 		// Predefined Drawing Functions
 		void Dot(uint8_t _X, uint8_t _Y, uint8_t _Count);
 		void Bracket(uint8_t _X, uint8_t _Y, uint8_t _Space);
+		void FilterStat(void);
 		void B100BB(void);
 		void I2C_Scanner_Table(void);
 		void MAX78630(void);
 		void Telit_xE910(void);
 		void MAX78630_Voltmeter(void);
-
 };
 
 extern Console Terminal;
