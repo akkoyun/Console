@@ -216,139 +216,6 @@ class Console {
 
 		}
 
-
-
-
-
-
-
-
-		void _Send_CMD(uint8_t _val);
-		void _Format_Text(uint8_t _val);
-
-	public:
-
-		/**
-		 * @brief Begin Serial VT100 Console.
-		 * @param _Serial Terminal UART Channel.
-		 */
-		void Begin(Stream &_Serial) {
-	
-			//Set serial port
-			_Console = &_Serial;
-
-			// Cursor Off
-			Cursor(false);
-
-			// Clear Screen
-			Clear(SCREEN);
-
-			// Reset Delay
-			delay(5);
-
-		}
-
-		/**
-		 * @brief Change Cursor Visibility Function.
-		 * @param _State Cursor State.
-		 */
-		void Cursor(bool _State) {
-
-			// Cursor On
-			if (_State) _Console->print(F("\e[?25h"));	
-
-			// Cursor Off
-			if (_State) _Console->print(F("\e[?25l"));	
-
-		}
-
-		/**
-		 * @brief Set Cursor Position Function.
-		 * @param _X Cursor X Position.
-		 * @param _Y Cursor Y Position.
-		 */
-		void Set_Cursor(uint8_t _X, uint8_t _Y) {
-
-			// Set Cursor Position
-			_Console->print(F("\e["));
-			_Console->print(_X);
-			_Console->print(F(";"));
-			_Console->print(_Y);
-			_Console->print(F("H"));
-
-		}
-
-		/**
-		 * @brief Terminal Beep Sound Function.
-		 */
-		void Beep(void) {
-
-			// Beep Terminal.
-			_Console->print(F("\x07"));
-
-		}
-
-		/**
-		 * @brief Clear Terminal Function.
-		 * @param _Type Clear Type.
-		 */
-		void Clear(uint8_t _Type) {
-
-			// Clear Screen
-			if (_Type == LINE_AFTER_CURSOR) _Console->print(F("\e[K"));
-			if (_Type == LINE_TO_CURSOR) _Console->print(F("\e[1K"));
-			if (_Type == LINE) _Console->print(F("\e[2K"));
-			if (_Type == SCREEN) _Console->print(F("\e[2J"));
-			if (_Type == ALL) _Console->print(F("\e[1;1H\e[2J"));
-
-		}
-
-		/**
-		 * @brief Print Text to Specified Position and Color.
-		 * @param _X X Position.
-		 * @param _Y Y Position.
-		 * @param _Color Color.
-		 * @param _Value Text Value.
-		 */
-		void Text(uint8_t _X, uint8_t _Y, Colors _Color, String _Value) {
-
-			// Set Text Cursor Position
-			Set_Cursor(_X, _Y); 
-
-			// Set Text Color
-			Text_Color(_Color); 
-
-			// Print Text			
-			_Console->println(_Value);
-
-		}
-
-		/**
-		 * @brief Set Text Color Function.
-		 * @param _Color Color
-		 */
-		void Text_Color(Colors _Color) {
-
-			// Set Text Color.
-			_Console->print(F("\e["));
-			_Console->print(_Color);
-			_Console->write('m');
-
-		}
-
-		/**
-		 * @brief Set Back Ground Color Function.
-		 * @param _Color Color.
-		 */
-		void Background_Color(Colors _Color) {
-
-			// Set Back Ground Color.
-			_Console->print(F("\e["));
-			_Console->print(_Color + 10);
-			_Console->write('m');
-
-		}
-
 		/**
 		 * @brief Hardware Diagnostic Box Print Function.
 		 * @param _X1 Left Upper Cursor X Position
@@ -622,6 +489,159 @@ class Console {
 
 		}
 
+
+
+
+
+
+
+		void _Send_CMD(uint8_t _val);
+		void _Format_Text(uint8_t _val);
+
+	public:
+
+		/**
+		 * @brief Begin Serial VT100 Console.
+		 * @param _Serial Terminal UART Channel.
+		 */
+		void Begin(Stream &_Serial) {
+	
+			//Set serial port
+			_Console = &_Serial;
+
+			// Cursor Off
+			Cursor(false);
+
+			// Clear Screen
+			Clear(SCREEN);
+
+			// Reset Delay
+			delay(5);
+
+		}
+
+		/**
+		 * @brief Change Cursor Visibility Function.
+		 * @param _State Cursor State.
+		 */
+		void Cursor(bool _State) {
+
+			// Cursor On
+			if (_State) _Console->print(F("\e[?25h"));	
+
+			// Cursor Off
+			if (_State) _Console->print(F("\e[?25l"));	
+
+		}
+
+		/**
+		 * @brief Set Cursor Position Function.
+		 * @param _X Cursor X Position.
+		 * @param _Y Cursor Y Position.
+		 */
+		void Set_Cursor(uint8_t _X, uint8_t _Y) {
+
+			// Set Cursor Position
+			_Console->print(F("\e["));
+			_Console->print(_X);
+			_Console->print(F(";"));
+			_Console->print(_Y);
+			_Console->print(F("H"));
+
+		}
+
+		/**
+		 * @brief Terminal Beep Sound Function.
+		 */
+		void Beep(void) {
+
+			// Beep Terminal.
+			_Console->print(F("\x07"));
+
+		}
+
+		/**
+		 * @brief Clear Terminal Function.
+		 * @param _Type Clear Type.
+		 */
+		void Clear(uint8_t _Type) {
+
+			// Clear Screen
+			if (_Type == LINE_AFTER_CURSOR) _Console->print(F("\e[K"));
+			if (_Type == LINE_TO_CURSOR) _Console->print(F("\e[1K"));
+			if (_Type == LINE) _Console->print(F("\e[2K"));
+			if (_Type == SCREEN) _Console->print(F("\e[2J"));
+			if (_Type == ALL) _Console->print(F("\e[1;1H\e[2J"));
+
+		}
+
+		/**
+		 * @brief Print Text to Specified Position and Color.
+		 * @param _X X Position.
+		 * @param _Y Y Position.
+		 * @param _Color Color.
+		 * @param _Value Text Value.
+		 */
+		void Text(uint8_t _X, uint8_t _Y, Colors _Color, String _Value) {
+
+			// Set Text Cursor Position
+			Set_Cursor(_X, _Y); 
+
+			// Set Text Color
+			Text_Color(_Color); 
+
+			// Print Text			
+			_Console->println(_Value);
+
+		}
+
+		/**
+		 * @brief Set Text Color Function.
+		 * @param _Color Color
+		 */
+		void Text_Color(Colors _Color) {
+
+			// Set Text Color.
+			_Console->print(F("\e["));
+			_Console->print(_Color);
+			_Console->write('m');
+
+		}
+
+		/**
+		 * @brief Set Back Ground Color Function.
+		 * @param _Color Color.
+		 */
+		void Background_Color(Colors _Color) {
+
+			// Set Back Ground Color.
+			_Console->print(F("\e["));
+			_Console->print(_Color + 10);
+			_Console->write('m');
+
+		}
+
+		/**
+		 * @brief OK Decide Function.
+		 * @param _Result Result Input
+		 * @param _X Cursor X
+		 * @param _Y Cursor Y
+		 */
+		void OK_Decide(bool _Result, uint8_t _X, uint8_t _Y) {
+
+			// Print Command State
+			if (_Result) {
+
+				Text(_X, _Y, GREEN, F(" OK "));
+
+			} else {
+
+				Text(_X, _Y, RED, F("FAIL"));
+
+			}
+	
+		}
+
 		/**
 		 * @brief PowerStat Terminal Batch
 		 */
@@ -631,7 +651,7 @@ class Console {
 			Draw_Box(1, 1, 52, 120, "", 0, true, true);
 
 			// Print Main Header Text
-			Print_Box_Title(1,1,60,F("PowerStat V3"));
+			Text_Format(BRIGHT); this->Text(2, 53, WHITE, F("PowerStat V3")); Text_Format(RST);
 
 			// Header Titles
 			Text(2, 3, WHITE, F("Up Time : "));
@@ -684,13 +704,16 @@ class Console {
 		void Text_Format(TextFormat _Format);
 		void Print(String _Value);
 		void Print(const uint32_t _Value);
-		void OK_Decide(bool _Result, uint8_t _X, uint8_t _Y);
 
 
 		void Print_Box_Title(uint8_t _X1, uint8_t _Y1, uint8_t _X2, String _Title);
 		void Draw_3Row_Stat_Table(uint8_t _X1, uint8_t _Y1);
 		void Draw_1Row_Stat_Table(uint8_t _X1, uint8_t _Y1, String _Variable);
 		void Draw_3Row_Limit_Table(uint8_t _X1, uint8_t _Y1);
+
+
+
+
 
 		// Predefined Drawing Functions
 		void FilterStat(void);

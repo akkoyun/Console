@@ -10,16 +10,12 @@ void Console::Text_Format(TextFormat _Format) {
 
 }
 
-void Console::OK_Decide(bool _Result, uint8_t _X, uint8_t _Y) {
 
-	// Print Command State
-	if (_Result) {
-		Text(_X, _Y+1, GREEN, F("OK"));
-	} else {
-		Text(_X, _Y, RED, F("FAIL"));
-	}
-	
-}
+
+
+
+
+
 
 
 void Console::Print_Box_Title(uint8_t _X1, uint8_t _Y1, uint8_t _Y2, String _Title) {
