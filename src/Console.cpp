@@ -39,39 +39,6 @@ void Console::Print_Box_Title(uint8_t _X1, uint8_t _Y1, uint8_t _Y2, String _Tit
 }
 
 // Stats Table
-void Console::Draw_3Row_Limit_Table(uint8_t _X1, uint8_t _Y1) {
-
-	//32,64
-
-	Horizontal_Divider(_X1 + 1, _Y1 - 1, 54, false);
-	Horizontal_Divider(_X1 + 5, _Y1 - 1, 54, false);
-
-	Vertical_Divider(_X1 + 1,_Y1 + 8, 4);
-	Vertical_Divider(_X1 + 1,_Y1 + 15, 4);
-	Vertical_Divider(_X1 + 1,_Y1 + 22, 4);
-	Vertical_Divider(_X1 + 1,_Y1 + 30, 4);
-	Vertical_Divider(_X1 + 1,_Y1 + 38, 4);
-	Vertical_Divider(_X1 + 1,_Y1 + 46, 4);
-
-	Text(_X1, _Y1 + 11, WHITE, F("LV"));
-	Text(_X1, _Y1 + 18, WHITE, F("HV"));
-	Text(_X1, _Y1 + 25, WHITE, F("LFQ"));
-	Text(_X1, _Y1 + 33, WHITE, F("HFQ"));
-	Text(_X1, _Y1 + 41, WHITE, F("VIM"));
-	Text(_X1, _Y1 + 49, WHITE, F("IIM"));
-
-	Text(_X1 + 2, _Y1, WHITE, F("Max"));
-	Text(_X1 + 3, _Y1, WHITE, F("State"));
-	Text(_X1 + 4, _Y1, WHITE, F("Min"));
-
-	Text(_X1 + 3, _Y1 + 11, WHITE, F("[ ]"));
-	Text(_X1 + 3, _Y1 + 18, WHITE, F("[ ]"));
-	Text(_X1 + 3, _Y1 + 25, WHITE, F("[ ]"));
-	Text(_X1 + 3, _Y1 + 33, WHITE, F("[ ]"));
-	Text(_X1 + 3, _Y1 + 41, WHITE, F("[ ]"));
-	Text(_X1 + 3, _Y1 + 49, WHITE, F("[ ]"));
-
-}
 void Console::Draw_1Row_Stat_Table(uint8_t _X1, uint8_t _Y1, String _Variable) {
 
 	//32,5
