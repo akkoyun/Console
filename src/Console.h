@@ -438,12 +438,12 @@ class Console {
 			Draw_Box(_X1, _Y1, _X2, _Y2, "GSM Detail", 6, false, false);
 
 			// Print Text	
-			Text(_X1 + 1, _Y1 + 2, WHITE, F("Manufacturer"));	Dot(_X1 + 1, _Y1 + 14, (_Y2 - 4) - (_Y1 + 14)); 	Bracket(_X1 + 1, _Y2 - 4, 1);
-			Text(_X1 + 2, _Y1 + 2, WHITE, F("Model"));			Dot(_X1 + 2, _Y1 + 7, (_Y2 - 4) - (_Y1 + 7)); 		Bracket(_X1 + 2, _Y2 - 4, 1);
-			Text(_X1 + 3, _Y1 + 2, WHITE, F("Firmware"));		Dot(_X1 + 3, _Y1 + 10, (_Y2 - 12) - (_Y1 + 10)); 	Bracket(_X1 + 3, _Y2 - 12, 9);
-			Text(_X1 + 4, _Y1 + 2, WHITE, F("IMEI"));			Dot(_X1 + 4, _Y1 + 6, (_Y2 - 18) - (_Y1 + 6)); 		Bracket(_X1 + 4, _Y2 - 18, 15);
-			Text(_X1 + 5, _Y1 + 2, WHITE, F("Serial ID"));		Dot(_X1 + 5, _Y1 + 11, (_Y2 - 13) - (_Y1 + 11)); 	Bracket(_X1 + 5, _Y2 - 13, 10);
-			Text(_X1 + 6, _Y1 + 2, WHITE, F("ICCID"));			Dot(_X1 + 6, _Y1 + 7, (_Y2 - 22) - (_Y1 + 7)); 		Bracket(_X1 + 6, _Y2 - 22, 19);
+			Text(_X1 + 1, _Y1 + 2, WHITE, F("Manufacturer"));	Dot(_X1 + 1, _Y1 + 14, (_Y2 - 5) - (_Y1 + 14)); 	Bracket(_X1 + 1, _Y2 - 5, 2);
+			Text(_X1 + 2, _Y1 + 2, WHITE, F("Model"));			Dot(_X1 + 2, _Y1 + 7, (_Y2 - 5) - (_Y1 + 7)); 		Bracket(_X1 + 2, _Y2 - 5, 2);
+			Text(_X1 + 3, _Y1 + 2, WHITE, F("Firmware"));		Dot(_X1 + 3, _Y1 + 10, (_Y2 - 14) - (_Y1 + 10)); 	Bracket(_X1 + 3, _Y2 - 14, 10);
+			Text(_X1 + 4, _Y1 + 2, WHITE, F("IMEI"));			Dot(_X1 + 4, _Y1 + 6, (_Y2 - 19) - (_Y1 + 6)); 		Bracket(_X1 + 4, _Y2 - 19, 16);
+			Text(_X1 + 5, _Y1 + 2, WHITE, F("Serial ID"));		Dot(_X1 + 5, _Y1 + 11, (_Y2 - 14) - (_Y1 + 11)); 	Bracket(_X1 + 5, _Y2 - 14, 11);
+			Text(_X1 + 6, _Y1 + 2, WHITE, F("ICCID"));			Dot(_X1 + 6, _Y1 + 7, (_Y2 - 23) - (_Y1 + 7)); 		Bracket(_X1 + 6, _Y2 - 23, 20);
 
 		}
 
@@ -460,11 +460,11 @@ class Console {
 			Draw_Box(_X1, _Y1, _X2, _Y2, "Connection", 7, false, false);
 
 			// Print Text	
-			Text(_X1 + 1, _Y1 + 2, WHITE, F("GSM Connection Time"));	Dot(_X1 + 1, _Y1 + 21, (_Y2 - 7) - (_Y1 + 21)); 	Bracket(_X1 + 1, _Y2 - 7, 1);
-			Text(_X1 + 2, _Y1 + 2, WHITE, F("RSSI Level"));				Dot(_X1 + 2, _Y1 + 12, (_Y2 - 5) - (_Y1 + 12)); 	Bracket(_X1 + 2, _Y2 - 5, 1);
-			Text(_X1 + 3, _Y1 + 2, WHITE, F("GSM Operator"));			Dot(_X1 + 3, _Y1 + 14, (_Y2 - 8) - (_Y1 + 14)); 	Bracket(_X1 + 3, _Y2 - 8, 9);
-			Text(_X1 + 4, _Y1 + 2, WHITE, F("IP Address"));				Dot(_X1 + 4, _Y1 + 12, (_Y2 - 18) - (_Y1 + 12)); 	Bracket(_X1 + 4, _Y2 - 18, 15);
-			Text(_X1 + 5, _Y1 + 2, WHITE, F("Socket Status"));			Dot(_X1 + 5, _Y1 + 15, (_Y2 - 12) - (_Y1 + 15)); 	Bracket(_X1 + 5, _Y2 - 12, 10);
+			Text(_X1 + 1, _Y1 + 2, WHITE, F("GSM Connection Time"));	Dot(_X1 + 1, _Y1 + 21, (_Y2 - 8) - (_Y1 + 21)); 	Bracket(_X1 + 1, _Y2 - 8, 5);
+			Text(_X1 + 2, _Y1 + 2, WHITE, F("RSSI Level"));				Dot(_X1 + 2, _Y1 + 12, (_Y2 - 6) - (_Y1 + 12)); 	Bracket(_X1 + 2, _Y2 - 6, 3);
+			Text(_X1 + 3, _Y1 + 2, WHITE, F("GSM Operator"));			Dot(_X1 + 3, _Y1 + 14, (_Y2 - 9) - (_Y1 + 14)); 	Bracket(_X1 + 3, _Y2 - 9, 6);
+			Text(_X1 + 4, _Y1 + 2, WHITE, F("IP Address"));				Dot(_X1 + 4, _Y1 + 12, (_Y2 - 19) - (_Y1 + 12)); 	Bracket(_X1 + 4, _Y2 - 19, 16);
+			Text(_X1 + 5, _Y1 + 2, WHITE, F("Socket Status"));			Dot(_X1 + 5, _Y1 + 15, (_Y2 - 13) - (_Y1 + 15)); 	Bracket(_X1 + 5, _Y2 - 13, 10);
 
 		}
 
@@ -501,7 +501,7 @@ class Console {
 			this->Print_GSM_Detail(13, 80, 20, 119);
 
 			// Draw GSM Connection Detail Box
-			this->Print_GSM_Detail(21, 80, 27, 119);
+			this->Print_GSM_Connection_Detail(21, 80, 27, 119);
 
 
 
