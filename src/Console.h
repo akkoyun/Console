@@ -532,26 +532,67 @@ class Console {
 			this->Draw_Box(_X1, _Y1, _X2, _Y2, "Power", 0, false, false);
 
 			// Draw Horizontal Lines
-			Horizontal_Divider(_X1 + 1, _Y1, 50, false);
-			Horizontal_Divider(_X1 + 5, _Y1, 50, false);
+			Horizontal_Divider(_X1 + 2, _Y1 + 5, 54, false);
+			Horizontal_Divider(_X1 + 6, _Y1 + 5, 54, false);
 
 			// Draw Vertical Lines
-			Vertical_Divider(_X1 + 1,_Y1 + 9,4);
-			Vertical_Divider(_X1 + 1,_Y1 + 19,4);
-			Vertical_Divider(_X1 + 1,_Y1 + 29,4);
-			Vertical_Divider(_X1 + 1,_Y1 + 39,4);
+			Vertical_Divider(_X1 + 2, _Y1 + 13, 4);
+			Vertical_Divider(_X1 + 2, _Y1 + 23, 4);
+			Vertical_Divider(_X1 + 2, _Y1 + 33, 4);
+			Vertical_Divider(_X1 + 2, _Y1 + 43, 4);
 
 			// Print Text
-			Text(_X1, _Y1 + 11, WHITE, F("Voltage"));
-			Text(_X1, _Y1 + 21, WHITE, F("Current"));
-			Text(_X1, _Y1 + 32, WHITE, F("Freq"));
-			Text(_X1, _Y1 + 42, WHITE, F("Cos Fi"));
-			Text(_X1 + 2, _Y1 + 1, WHITE, F("Phase R"));
-			Text(_X1 + 3, _Y1 + 1, WHITE, F("Phase S"));
-			Text(_X1 + 4, _Y1 + 1, WHITE, F("Phase T"));
+			Text(_X1 + 1, _Y1 + 15, WHITE, F("Voltage"));
+			Text(_X1 + 1, _Y1 + 25, WHITE, F("Current"));
+			Text(_X1 + 1, _Y1 + 36, WHITE, F("Freq"));
+			Text(_X1 + 1, _Y1 + 46, WHITE, F("Cos Fi"));
+			Text(_X1 + 5, _Y1 + 5, WHITE, F("Phase R"));
+			Text(_X1 + 6, _Y1 + 5, WHITE, F("Phase S"));
+			Text(_X1 + 7, _Y1 + 5, WHITE, F("Phase T"));
 
 		}
 
+		/**
+		 * @brief Power Fault Detail Function.
+		 * @param _X1 Left Upper Cursor X Position
+		 * @param _Y1 Left Upper Cursor Y Position
+		 * @param _X2 Right Lower Cursor X Position
+		 * @param _Y2 Right Lower Cursor Y Position
+		 */
+		void Print_Power_Fault_Detail(uint8_t _X1, uint8_t _Y1, uint8_t _X2, uint8_t _Y2) {
+
+			// Draw State Box
+			this->Draw_Box(_X1, _Y1, _X2, _Y2, "Power Fault", 0, false, false);
+
+			Horizontal_Divider(_X1 + 2, _Y1 + 3, 53, false);
+			Horizontal_Divider(_X1 + 6, _Y1 + 3, 53, false);
+
+			Vertical_Divider(_X1 + 2, _Y1 + 11, 4);
+			Vertical_Divider(_X1 + 2, _Y1 + 18, 4);
+			Vertical_Divider(_X1 + 2, _Y1 + 25, 4);
+			Vertical_Divider(_X1 + 2, _Y1 + 33, 4);
+			Vertical_Divider(_X1 + 2, _Y1 + 41, 4);
+			Vertical_Divider(_X1 + 2, _Y1 + 49, 4);
+
+			Text(_X1 + 1, _Y1 + 14, WHITE, F("LV"));
+			Text(_X1 + 1, _Y1 + 21, WHITE, F("HV"));
+			Text(_X1 + 1, _Y1 + 28, WHITE, F("LFQ"));
+			Text(_X1 + 1, _Y1 + 36, WHITE, F("HFQ"));
+			Text(_X1 + 1, _Y1 + 44, WHITE, F("VIM"));
+			Text(_X1 + 1, _Y1 + 52, WHITE, F("IIM"));
+
+			Text(_X1 + 3, _Y1 + 3, WHITE, F("Max"));
+			Text(_X1 + 4, _Y1 + 3, WHITE, F("Fault"));
+			Text(_X1 + 5, _Y1 + 3, WHITE, F("Min"));
+
+			Text(_X1 + 4, _Y1 + 14, WHITE, F("[ ]"));
+			Text(_X1 + 4, _Y1 + 21, WHITE, F("[ ]"));
+			Text(_X1 + 4, _Y1 + 28, WHITE, F("[ ]"));
+			Text(_X1 + 4, _Y1 + 36, WHITE, F("[ ]"));
+			Text(_X1 + 4, _Y1 + 44, WHITE, F("[ ]"));
+			Text(_X1 + 4, _Y1 + 52, WHITE, F("[ ]"));
+			
+		}
 
 
 
@@ -622,8 +663,7 @@ class Console {
 			this->Print_Power_Detail(31, 2, 38, 60);
 
 			// Power Check
-			this->Draw_Box(31, 61, 38, 119, "Power Check", 0, false, false);
-			this->Draw_3Row_Limit_Table(32,64);
+			this->Print_Power_Fault_Detail(31, 61, 38, 119);
 
 			// State Detail Box
 			this->Print_State_Detail(39, 2, 41, 119);
