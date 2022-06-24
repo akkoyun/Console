@@ -500,19 +500,19 @@ class Console {
 		 * @brief Begin Serial VT100 Console.
 		 * @param _Serial Terminal UART Channel.
 		 */
-		void Begin(Stream &_Serial) {
-	
+		void Begin(Stream &_Serial, bool _Boot) {
+
 			//Set serial port
-			_Console = &_Serial;
+			if (!_Boot) _Console = &_Serial;
 
 			// Cursor Off
-			Cursor(false);
+			if (_Boot) Cursor(false);
 
 			// Clear Screen
-			Clear(SCREEN);
+			if (_Boot) Clear(SCREEN);
 
 			// Reset Delay
-			delay(5);
+			if (_Boot) delay(5);
 
 		}
 
