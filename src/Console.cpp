@@ -22,36 +22,6 @@ void Console::OK_Decide(bool _Result, uint8_t _X, uint8_t _Y) {
 }
 
 
-void Console::Draw_Horizontal_Divider(uint8_t _X1, uint8_t _Y1, uint8_t _Length, bool _End) {
-
-	//Set Color
-	Text_Color(WHITE);
-	Text_Format(DIM);
-
-	// Print Corners
-	if (_End == true) {
-		Set_Cursor(_X1, _Y1); Serial.println(F("├"));
-		Set_Cursor(_X1, _Y1 + _Length); Serial.println(F("┤"));
-	}
-
-	// Print Lines
-	for (uint8_t i = _Y1 + 1; i <= _Y1 + _Length - 1; i++) {Set_Cursor(_X1, i); Serial.println(F("─"));}
-
-}
-void Console::Draw_Vertical_Divider(uint8_t _X1, uint8_t _Y1, uint8_t _Length) {
-
-	//Set Color
-	Text_Color(WHITE);
-	Text_Format(DIM);
-
-	// Print Corners
-	Set_Cursor(_X1, _Y1); _Console->println(F("┬"));
-	Set_Cursor(_X1 + _Length, _Y1); _Console->println(F("┴"));
-
-	// Print Lines
-	for (uint8_t i = _X1 + 1; i <= _X1 + _Length - 1; i++) {Set_Cursor(i, _Y1); _Console->println(F("│"));}
-
-}
 void Console::Print_Box_Title(uint8_t _X1, uint8_t _Y1, uint8_t _Y2, String _Title) {
 
 	// Calculate Position
@@ -69,65 +39,19 @@ void Console::Print_Box_Title(uint8_t _X1, uint8_t _Y1, uint8_t _Y2, String _Tit
 }
 
 // Stats Table
-void Console::Draw_3Row_Stat_Table(uint8_t _X1, uint8_t _Y1) {
-
-	//32,5
-
-	Draw_Horizontal_Divider(_X1 + 1, _Y1, 50, false);
-	Draw_Horizontal_Divider(_X1 + 5, _Y1, 50, false);
-
-	Draw_Vertical_Divider(_X1 + 1,_Y1 + 9,4);
-	Draw_Vertical_Divider(_X1 + 1,_Y1 + 19,4);
-	Draw_Vertical_Divider(_X1 + 1,_Y1 + 29,4);
-	Draw_Vertical_Divider(_X1 + 1,_Y1 + 39,4);
-
-	Text(_X1, _Y1 + 11, WHITE, F("Instant"));
-	Text(_X1, _Y1 + 21, WHITE, F("Minimum"));
-	Text(_X1, _Y1 + 31, WHITE, F("Maximum"));
-	Text(_X1, _Y1 + 41, WHITE, F("Average"));
-
-	Text(_X1 + 2, _Y1 + 1, WHITE, F("Phase R"));
-	Text(_X1 + 3, _Y1 + 1, WHITE, F("Phase S"));
-	Text(_X1 + 4, _Y1 + 1, WHITE, F("Phase T"));
-
-
-}
-void Console::Draw_3Row_Abstract_Table(uint8_t _X1, uint8_t _Y1) {
-
-	//32,5
-
-	Draw_Horizontal_Divider(_X1 + 1, _Y1, 50, false);
-	Draw_Horizontal_Divider(_X1 + 5, _Y1, 50, false);
-
-	Draw_Vertical_Divider(_X1 + 1,_Y1 + 9,4);
-	Draw_Vertical_Divider(_X1 + 1,_Y1 + 19,4);
-	Draw_Vertical_Divider(_X1 + 1,_Y1 + 29,4);
-	Draw_Vertical_Divider(_X1 + 1,_Y1 + 39,4);
-
-	Text(_X1, _Y1 + 11, WHITE, F("Voltage"));
-	Text(_X1, _Y1 + 21, WHITE, F("Current"));
-	Text(_X1, _Y1 + 32, WHITE, F("Freq"));
-	Text(_X1, _Y1 + 42, WHITE, F("Cos Fi"));
-
-	Text(_X1 + 2, _Y1 + 1, WHITE, F("Phase R"));
-	Text(_X1 + 3, _Y1 + 1, WHITE, F("Phase S"));
-	Text(_X1 + 4, _Y1 + 1, WHITE, F("Phase T"));
-
-
-}
 void Console::Draw_3Row_Limit_Table(uint8_t _X1, uint8_t _Y1) {
 
 	//32,64
 
-	Draw_Horizontal_Divider(_X1 + 1, _Y1 - 1, 54, false);
-	Draw_Horizontal_Divider(_X1 + 5, _Y1 - 1, 54, false);
+	Horizontal_Divider(_X1 + 1, _Y1 - 1, 54, false);
+	Horizontal_Divider(_X1 + 5, _Y1 - 1, 54, false);
 
-	Draw_Vertical_Divider(_X1 + 1,_Y1 + 8, 4);
-	Draw_Vertical_Divider(_X1 + 1,_Y1 + 15, 4);
-	Draw_Vertical_Divider(_X1 + 1,_Y1 + 22, 4);
-	Draw_Vertical_Divider(_X1 + 1,_Y1 + 30, 4);
-	Draw_Vertical_Divider(_X1 + 1,_Y1 + 38, 4);
-	Draw_Vertical_Divider(_X1 + 1,_Y1 + 46, 4);
+	Vertical_Divider(_X1 + 1,_Y1 + 8, 4);
+	Vertical_Divider(_X1 + 1,_Y1 + 15, 4);
+	Vertical_Divider(_X1 + 1,_Y1 + 22, 4);
+	Vertical_Divider(_X1 + 1,_Y1 + 30, 4);
+	Vertical_Divider(_X1 + 1,_Y1 + 38, 4);
+	Vertical_Divider(_X1 + 1,_Y1 + 46, 4);
 
 	Text(_X1, _Y1 + 11, WHITE, F("LV"));
 	Text(_X1, _Y1 + 18, WHITE, F("HV"));
@@ -152,13 +76,13 @@ void Console::Draw_1Row_Stat_Table(uint8_t _X1, uint8_t _Y1, String _Variable) {
 
 	//32,5
 
-	Draw_Horizontal_Divider(_X1 + 1, _Y1, 50, false);
-	Draw_Horizontal_Divider(_X1 + 3, _Y1, 50, false);
+	Horizontal_Divider(_X1 + 1, _Y1, 50, false);
+	Horizontal_Divider(_X1 + 3, _Y1, 50, false);
 
-	Draw_Vertical_Divider(_X1 + 1,_Y1 + 9,2);
-	Draw_Vertical_Divider(_X1 + 1,_Y1 + 19,2);
-	Draw_Vertical_Divider(_X1 + 1,_Y1 + 29,2);
-	Draw_Vertical_Divider(_X1 + 1,_Y1 + 39,2);
+	Vertical_Divider(_X1 + 1,_Y1 + 9,2);
+	Vertical_Divider(_X1 + 1,_Y1 + 19,2);
+	Vertical_Divider(_X1 + 1,_Y1 + 29,2);
+	Vertical_Divider(_X1 + 1,_Y1 + 39,2);
 
 	Text(_X1, _Y1 + 11, WHITE, F("Instant"));
 	Text(_X1, _Y1 + 21, WHITE, F("Minimum"));
@@ -271,30 +195,30 @@ void Console::FilterStat(void) {
 	Text(25, 82, WHITE, F("IP Address")); Dot(25, 92, 9); Bracket(25, 101, 16);
 	Text(26, 82, WHITE, F("Socket Listen Status")); Dot(26, 102, 5); Bracket(26, 107, 10);
 
-	// Selenoid Box
+	// Solenoid Box
     Draw_Box(31, 2, 36, 98, "", 0, false, false);
     Draw_Box(31, 99, 36, 119, "", 0, false, false);
-	Draw_Horizontal_Divider(33,2,96,true);
-	Draw_Horizontal_Divider(33,99,20,true);
-	Draw_Vertical_Divider(33,8,3);
-	Draw_Vertical_Divider(33,14,3);
-	Draw_Vertical_Divider(33,20,3);
-	Draw_Vertical_Divider(33,26,3);
-	Draw_Vertical_Divider(33,32,3);
-	Draw_Vertical_Divider(33,38,3);
-	Draw_Vertical_Divider(33,44,3);
-	Draw_Vertical_Divider(33,50,3);
-	Draw_Vertical_Divider(33,56,3);
-	Draw_Vertical_Divider(33,62,3);
-	Draw_Vertical_Divider(33,68,3);
-	Draw_Vertical_Divider(33,74,3);
-	Draw_Vertical_Divider(33,80,3);
-	Draw_Vertical_Divider(33,86,3);
-	Draw_Vertical_Divider(33,92,3);
+	Horizontal_Divider(33,2,96,true);
+	Horizontal_Divider(33,99,20,true);
+	Vertical_Divider(33,8,3);
+	Vertical_Divider(33,14,3);
+	Vertical_Divider(33,20,3);
+	Vertical_Divider(33,26,3);
+	Vertical_Divider(33,32,3);
+	Vertical_Divider(33,38,3);
+	Vertical_Divider(33,44,3);
+	Vertical_Divider(33,50,3);
+	Vertical_Divider(33,56,3);
+	Vertical_Divider(33,62,3);
+	Vertical_Divider(33,68,3);
+	Vertical_Divider(33,74,3);
+	Vertical_Divider(33,80,3);
+	Vertical_Divider(33,86,3);
+	Vertical_Divider(33,92,3);
 
-	Draw_Vertical_Divider(31,26,2);
-	Draw_Vertical_Divider(31,50,2);
-	Draw_Vertical_Divider(31,74,2);
+	Vertical_Divider(31,26,2);
+	Vertical_Divider(31,50,2);
+	Vertical_Divider(31,74,2);
 
 	Text(32, 6, WHITE, F("Expander A [    ]"));
 	Text(32, 30, WHITE, F("Expander B [    ]"));
@@ -331,21 +255,21 @@ void Console::FilterStat(void) {
     Draw_Box(37, 99, 46, 119, "Setting", 0, false, false);
 	Text(39, 101, WHITE, F("Filter Count.[  ]"));
 	Text(40, 101, WHITE, F("State.......[   ]"));
-	Text(41, 101, WHITE, F("Stabiliser....[ ]"));
-	Text(42, 101, WHITE, F("HydroSyclone..[ ]"));
+	Text(41, 101, WHITE, F("Stabilizer....[ ]"));
+	Text(42, 101, WHITE, F("HydroCyclone..[ ]"));
 	Text(43, 101, WHITE, F("Irrigation....[ ]"));
 	//Text(44, 101, WHITE, F("IDLE..........[ ]"));
 
-	Draw_Vertical_Divider(47,99,2);
+	Vertical_Divider(47,99,2);
 
 }
 void Console::I2C_Scanner_Table(void) {
 
 	// Draw Console Table
-	for (uint8_t i = 1; i <= 23; i = i + 2) {Draw_Horizontal_Divider(i, 1, 120, false);}
-	Draw_Vertical_Divider(1, 1, 22);
-	for (uint8_t i = 9; i <= 120; i = i + 7) {Draw_Vertical_Divider(3, i, 18);}
-	Draw_Vertical_Divider(1, 121, 22);
+	for (uint8_t i = 1; i <= 23; i = i + 2) {Horizontal_Divider(i, 1, 120, false);}
+	Vertical_Divider(1, 1, 22);
+	for (uint8_t i = 9; i <= 120; i = i + 7) {Vertical_Divider(3, i, 18);}
+	Vertical_Divider(1, 121, 22);
 
 	// Draw Corners
 	Set_Cursor(1,1); Serial.print(F("┌"));
@@ -357,7 +281,7 @@ void Console::I2C_Scanner_Table(void) {
 	for (uint8_t i = 3; i <= 21; i = i + 2) {Set_Cursor(i,1); Serial.print(F("├"));}
 	for (uint8_t i = 3; i <= 21; i = i + 2) {Set_Cursor(i,121); Serial.print(F("┤"));}
 	
-	// Draw CrosSection
+	// Draw Cross Section
 	for (uint8_t i = 5; i <= 19; i = i + 2) {for (uint8_t j = 9; j <= 120; j = j + 7) {Set_Cursor(i,j); Serial.print(F("┼"));}}
 	
 	// Write Text
