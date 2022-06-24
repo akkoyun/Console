@@ -639,6 +639,125 @@ class Console {
 		}
 
 		/**
+		 * @brief I2C Scanner Terminal Batch
+		 */
+		void I2C_Scanner_Table(void) {
+
+			// Draw Console Table Grid
+			for (uint8_t i = 1; i <= 23; i = i + 2) Horizontal_Divider(i, 1, 120, false);
+			Vertical_Divider(1, 1, 22);
+			for (uint8_t i = 9; i <= 120; i = i + 7) Vertical_Divider(3, i, 18);
+			Vertical_Divider(1, 121, 22);
+
+			// Draw Corners
+			this->Text(1, 1, WHITE, F("┌"));
+			this->Text(1, 121, WHITE, F("┐"));
+			this->Text(23, 1, WHITE, F("└"));
+			this->Text(23, 121, WHITE, F("┘"));
+
+			// Draw T
+			for (uint8_t i = 3; i <= 21; i = i + 2) {Set_Cursor(i,1); Serial.print(F("├"));}
+			for (uint8_t i = 3; i <= 21; i = i + 2) {Set_Cursor(i,121); Serial.print(F("┤"));}
+			
+			// Draw Cross Section
+			for (uint8_t i = 5; i <= 19; i = i + 2) {for (uint8_t j = 9; j <= 120; j = j + 7) {Set_Cursor(i,j); Serial.print(F("┼"));}}
+			
+			// Write Text
+			this->Text(1, 60, WHITE, F("I2C Device Explorer"));
+			this->Text(22, 3, WHITE, F("Total connected device :"));
+			this->Text(22, 86, WHITE, F("Current Mux Channel [0-8] :"));
+			this->Text(24, 100, WHITE, F("github.com/akkoyun"));
+
+			// Print Colum Headers
+			uint8_t _C = 0;
+			for (uint8_t i = 6; i <= 21; i = i + 2) {
+				this->Text(i, 3, WHITE, F("0x"));
+				this->Text(i, 5, WHITE, String(_C));
+				this->Text(i, 6, WHITE, F("_"));
+				_C++;
+			}
+
+			// Print Row Headers
+			uint8_t _R = 0;
+			for (uint8_t i = 11; i <= 121; i = i + 7) {
+				this->Text(4, i, WHITE, F("0x_"));
+				this->Text(4, i + 3, WHITE, String(_R, HEX));
+				_R++;
+			}
+
+		}
+
+		/**
+		 * @brief MAX78630 Terminal Batch
+		 */
+		void MAX78630(void) {
+
+			// Draw Main Box
+			this->Draw_Box(1, 1, 40, 80, "", 0, true, true);
+
+			// Print Header 
+			this->Text(1, 40, WHITE, F("MAX78630 Energy Meter"));
+
+
+
+
+			// Draw Voltage
+			Draw_Box(4, 2, 27, 32, "Voltage", 1, false, false);
+			Text(6, 4, WHITE, F("VScale")); Dot(6, 10, 11); Bracket(6, 21, 9); Text(6, 29, WHITE, F(""));
+			Text(7, 4, WHITE, F("VA_GAIN")); Dot(7, 11, 10); Bracket(7, 21, 9); Text(7, 29, WHITE, F(""));
+			Text(8, 4, WHITE, F("VB_GAIN")); Dot(8, 11, 10); Bracket(8, 21, 9); Text(8, 29, WHITE, F(""));
+			Text(9, 4, WHITE, F("VC_GAIN")); Dot(9, 11, 10); Bracket(9, 21, 9); Text(9, 29, WHITE, F(""));
+			Text(10, 4, WHITE, F("VA_OFFS")); Dot(10, 11, 10); Bracket(10, 21, 9); Text(10, 29, WHITE, F(""));
+			Text(11, 4, WHITE, F("VB_OFFS")); Dot(11, 11, 10); Bracket(11, 21, 9); Text(11, 29, WHITE, F(""));
+			Text(12, 4, WHITE, F("VC_OFFS")); Dot(12, 11, 10); Bracket(12, 21, 9); Text(12, 29, WHITE, F(""));
+			Text(13, 4, WHITE, F("HPF_COEF_V")); Dot(13, 14, 7); Bracket(13, 21, 9); Text(13, 29, WHITE, F(""));
+			Text(14, 4, WHITE, F("VA_RMS")); Dot(14, 10, 11); Bracket(14, 21, 9); Text(14, 29, WHITE, F("V"));
+			Text(15, 4, WHITE, F("VB_RMS")); Dot(15, 10, 11); Bracket(15, 21, 9); Text(15, 29, WHITE, F("V"));
+			Text(16, 4, WHITE, F("VC_RMS")); Dot(16, 10, 11); Bracket(16, 21, 9); Text(16, 29, WHITE, F("V"));
+			Text(17, 4, WHITE, F("VT_RMS")); Dot(17, 10, 11); Bracket(17, 21, 9); Text(17, 29, WHITE, F("V"));
+			Text(18, 4, WHITE, F("VA")); Dot(18, 6, 15); Bracket(18, 21, 9); Text(18, 29, WHITE, F("V"));
+			Text(19, 4, WHITE, F("VB")); Dot(19, 6, 15); Bracket(19, 21, 9); Text(19, 29, WHITE, F("V"));
+			Text(20, 4, WHITE, F("VC")); Dot(20, 6, 15); Bracket(20, 21, 9); Text(20, 29, WHITE, F("V"));
+			Text(21, 4, WHITE, F("VA_FUND")); Dot(21, 11, 10); Bracket(21, 21, 9); Text(21, 29, WHITE, F("V"));
+			Text(22, 4, WHITE, F("VB_FUND")); Dot(22, 11, 10); Bracket(22, 21, 9); Text(22, 29, WHITE, F("V"));
+			Text(23, 4, WHITE, F("VC_FUND")); Dot(23, 11, 10); Bracket(23, 21, 9); Text(23, 29, WHITE, F("V"));
+			Text(24, 4, WHITE, F("VA_HARM")); Dot(24, 11, 10); Bracket(24, 21, 9); Text(24, 29, WHITE, F("V"));
+			Text(25, 4, WHITE, F("VB_HARM")); Dot(25, 11, 10); Bracket(25, 21, 9); Text(25, 29, WHITE, F("V"));
+			Text(26, 4, WHITE, F("VC_HARM")); Dot(26, 11, 10); Bracket(26, 21, 9); Text(26, 29, WHITE, F("V"));
+
+			// Draw Voltage
+			Draw_Box(4, 33, 27, 63, "Current", 1, false, false);
+			Text(6, 35, WHITE, F("IScale")); Dot(6, 41, 11); Bracket(6, 52, 9); Text(6, 60, WHITE, F(""));
+			Text(7, 35, WHITE, F("IA_GAIN")); Dot(7, 42, 10); Bracket(7, 52, 9); Text(7, 60, WHITE, F(""));
+			Text(8, 35, WHITE, F("IB_GAIN")); Dot(8, 42, 10); Bracket(8, 52, 9); Text(8, 60, WHITE, F(""));
+			Text(9, 35, WHITE, F("IC_GAIN")); Dot(9, 42, 10); Bracket(9, 52, 9); Text(9, 60, WHITE, F(""));
+			Text(10, 35, WHITE, F("IA_OFFS")); Dot(10, 42, 10); Bracket(10, 52, 9); Text(10, 60, WHITE, F(""));
+			Text(11, 35, WHITE, F("IB_OFFS")); Dot(11, 42, 10); Bracket(11, 52, 9); Text(11, 60, WHITE, F(""));
+			Text(12, 35, WHITE, F("IC_OFFS")); Dot(12, 42, 10); Bracket(12, 52, 9); Text(12, 60, WHITE, F(""));
+			Text(13, 35, WHITE, F("HPF_COEF_I")); Dot(13, 45, 7); Bracket(13, 52, 9); Text(13, 29, WHITE, F(""));
+			Text(14, 35, WHITE, F("IA_RMS")); Dot(14, 41, 11); Bracket(14, 52, 9); Text(14, 60, WHITE, F("A"));
+			Text(15, 35, WHITE, F("IB_RMS")); Dot(15, 41, 11); Bracket(15, 52, 9); Text(15, 60, WHITE, F("A"));
+			Text(16, 35, WHITE, F("IC_RMS")); Dot(16, 41, 11); Bracket(16, 52, 9); Text(16, 60, WHITE, F("A"));
+			Text(17, 35, WHITE, F("IT_RMS")); Dot(17, 41, 11); Bracket(17, 52, 9); Text(17, 60, WHITE, F("A"));
+			Text(18, 35, WHITE, F("IA")); Dot(18, 37, 15); Bracket(18, 52, 9); Text(18, 60, WHITE, F("A"));
+			Text(19, 35, WHITE, F("IB")); Dot(19, 37, 15); Bracket(19, 52, 9); Text(19, 60, WHITE, F("A"));
+			Text(20, 35, WHITE, F("IC")); Dot(20, 37, 15); Bracket(20, 52, 9); Text(20, 60, WHITE, F("A"));
+			Text(21, 35, WHITE, F("IA_FUND")); Dot(21, 42, 10); Bracket(21, 52, 9); Text(21, 60, WHITE, F("A"));
+			Text(22, 35, WHITE, F("IB_FUND")); Dot(22, 42, 10); Bracket(22, 52, 9); Text(22, 60, WHITE, F("A"));
+			Text(23, 35, WHITE, F("IC_FUND")); Dot(23, 42, 10); Bracket(23, 52, 9); Text(23, 60, WHITE, F("A"));
+			Text(24, 35, WHITE, F("IA_HARM")); Dot(24, 42, 10); Bracket(24, 52, 9); Text(24, 60, WHITE, F("A"));
+			Text(25, 35, WHITE, F("IB_HARM")); Dot(25, 42, 10); Bracket(25, 52, 9); Text(25, 60, WHITE, F("A"));
+			Text(26, 35, WHITE, F("IC_HARM")); Dot(26, 42, 10); Bracket(26, 52, 9); Text(26, 60, WHITE, F("A"));
+
+			// Draw Frequency
+			Draw_Box(28, 2, 33, 32, "Frequency", 1, false, false);
+			Text(30, 4, WHITE, F("Frequency")); Dot(30, 13, 8); Bracket(30, 21, 9); Text(30, 28, WHITE, F("Hz"));
+			Text(31, 4, WHITE, F("F_MIN")); Dot(31, 9, 12); Bracket(31, 21, 9); Text(31, 28, WHITE, F("Hz"));
+			Text(32, 4, WHITE, F("F_MAX")); Dot(32, 9, 12); Bracket(32, 21, 9); Text(32, 28, WHITE, F("Hz"));
+
+		}
+
+		/**
 		 * @brief PowerStat Terminal Batch
 		 */
 		void PowerStat(void) {
@@ -850,110 +969,7 @@ class Console {
 			Vertical_Divider(47,99,2);
 			
 		}
-		void I2C_Scanner_Table(void) {
 
-			// Draw Console Table
-			for (uint8_t i = 1; i <= 23; i = i + 2) {Horizontal_Divider(i, 1, 120, false);}
-			Vertical_Divider(1, 1, 22);
-			for (uint8_t i = 9; i <= 120; i = i + 7) {Vertical_Divider(3, i, 18);}
-			Vertical_Divider(1, 121, 22);
-
-			// Draw Corners
-			Set_Cursor(1,1); Serial.print(F("┌"));
-			Set_Cursor(1,121); Serial.print(F("┐"));
-			Set_Cursor(23,1); Serial.print(F("└"));
-			Set_Cursor(23,121); Serial.print(F("┘"));
-
-			// Draw T
-			for (uint8_t i = 3; i <= 21; i = i + 2) {Set_Cursor(i,1); Serial.print(F("├"));}
-			for (uint8_t i = 3; i <= 21; i = i + 2) {Set_Cursor(i,121); Serial.print(F("┤"));}
-			
-			// Draw Cross Section
-			for (uint8_t i = 5; i <= 19; i = i + 2) {for (uint8_t j = 9; j <= 120; j = j + 7) {Set_Cursor(i,j); Serial.print(F("┼"));}}
-			
-			// Write Text
-			//Print_Box_Title(1,1,60,F("I2C DEVICE EXPLORER"));
-			Text(22,3,WHITE,F("Total connected device :"));
-			Text(22,86,WHITE,F("Current Mux Channel [0-8] :"));
-			Text(24,100,WHITE,F("github.com/akkoyun"));
-
-			// Print headers
-			uint8_t _C = 0;
-			for (uint8_t i = 6; i <= 21; i = i + 2) {
-				Set_Cursor(i,3); Serial.print(F("0x"));
-				Set_Cursor(i,5); Serial.print(_C);
-				Set_Cursor(i,6); Serial.print(F("_"));
-				_C++;
-			}
-			uint8_t _R = 0;
-			for (uint8_t i = 11; i <= 121; i = i + 7) {
-				Set_Cursor(4,i); Serial.print(F("0x_"));
-				Set_Cursor(4,i+3); Serial.print(_R, HEX);
-				_R++;
-			}
-
-		}
-		void MAX78630(void) {
-
-			// Draw Main Screen
-			Draw_Box(1, 1, 40, 80, "", 0, true, true);
-			//Print_Box_Title(1,1,40,F("MAX78630 Energy Meter"));
-
-			// Draw Voltage
-			Draw_Box(4, 2, 27, 32, "Voltage", 1, false, false);
-			Text(6, 4, WHITE, F("VScale")); Dot(6, 10, 11); Bracket(6, 21, 9); Text(6, 29, WHITE, F(""));
-			Text(7, 4, WHITE, F("VA_GAIN")); Dot(7, 11, 10); Bracket(7, 21, 9); Text(7, 29, WHITE, F(""));
-			Text(8, 4, WHITE, F("VB_GAIN")); Dot(8, 11, 10); Bracket(8, 21, 9); Text(8, 29, WHITE, F(""));
-			Text(9, 4, WHITE, F("VC_GAIN")); Dot(9, 11, 10); Bracket(9, 21, 9); Text(9, 29, WHITE, F(""));
-			Text(10, 4, WHITE, F("VA_OFFS")); Dot(10, 11, 10); Bracket(10, 21, 9); Text(10, 29, WHITE, F(""));
-			Text(11, 4, WHITE, F("VB_OFFS")); Dot(11, 11, 10); Bracket(11, 21, 9); Text(11, 29, WHITE, F(""));
-			Text(12, 4, WHITE, F("VC_OFFS")); Dot(12, 11, 10); Bracket(12, 21, 9); Text(12, 29, WHITE, F(""));
-			Text(13, 4, WHITE, F("HPF_COEF_V")); Dot(13, 14, 7); Bracket(13, 21, 9); Text(13, 29, WHITE, F(""));
-			Text(14, 4, WHITE, F("VA_RMS")); Dot(14, 10, 11); Bracket(14, 21, 9); Text(14, 29, WHITE, F("V"));
-			Text(15, 4, WHITE, F("VB_RMS")); Dot(15, 10, 11); Bracket(15, 21, 9); Text(15, 29, WHITE, F("V"));
-			Text(16, 4, WHITE, F("VC_RMS")); Dot(16, 10, 11); Bracket(16, 21, 9); Text(16, 29, WHITE, F("V"));
-			Text(17, 4, WHITE, F("VT_RMS")); Dot(17, 10, 11); Bracket(17, 21, 9); Text(17, 29, WHITE, F("V"));
-			Text(18, 4, WHITE, F("VA")); Dot(18, 6, 15); Bracket(18, 21, 9); Text(18, 29, WHITE, F("V"));
-			Text(19, 4, WHITE, F("VB")); Dot(19, 6, 15); Bracket(19, 21, 9); Text(19, 29, WHITE, F("V"));
-			Text(20, 4, WHITE, F("VC")); Dot(20, 6, 15); Bracket(20, 21, 9); Text(20, 29, WHITE, F("V"));
-			Text(21, 4, WHITE, F("VA_FUND")); Dot(21, 11, 10); Bracket(21, 21, 9); Text(21, 29, WHITE, F("V"));
-			Text(22, 4, WHITE, F("VB_FUND")); Dot(22, 11, 10); Bracket(22, 21, 9); Text(22, 29, WHITE, F("V"));
-			Text(23, 4, WHITE, F("VC_FUND")); Dot(23, 11, 10); Bracket(23, 21, 9); Text(23, 29, WHITE, F("V"));
-			Text(24, 4, WHITE, F("VA_HARM")); Dot(24, 11, 10); Bracket(24, 21, 9); Text(24, 29, WHITE, F("V"));
-			Text(25, 4, WHITE, F("VB_HARM")); Dot(25, 11, 10); Bracket(25, 21, 9); Text(25, 29, WHITE, F("V"));
-			Text(26, 4, WHITE, F("VC_HARM")); Dot(26, 11, 10); Bracket(26, 21, 9); Text(26, 29, WHITE, F("V"));
-
-			// Draw Voltage
-			Draw_Box(4, 33, 27, 63, "Current", 1, false, false);
-			Text(6, 35, WHITE, F("IScale")); Dot(6, 41, 11); Bracket(6, 52, 9); Text(6, 60, WHITE, F(""));
-			Text(7, 35, WHITE, F("IA_GAIN")); Dot(7, 42, 10); Bracket(7, 52, 9); Text(7, 60, WHITE, F(""));
-			Text(8, 35, WHITE, F("IB_GAIN")); Dot(8, 42, 10); Bracket(8, 52, 9); Text(8, 60, WHITE, F(""));
-			Text(9, 35, WHITE, F("IC_GAIN")); Dot(9, 42, 10); Bracket(9, 52, 9); Text(9, 60, WHITE, F(""));
-			Text(10, 35, WHITE, F("IA_OFFS")); Dot(10, 42, 10); Bracket(10, 52, 9); Text(10, 60, WHITE, F(""));
-			Text(11, 35, WHITE, F("IB_OFFS")); Dot(11, 42, 10); Bracket(11, 52, 9); Text(11, 60, WHITE, F(""));
-			Text(12, 35, WHITE, F("IC_OFFS")); Dot(12, 42, 10); Bracket(12, 52, 9); Text(12, 60, WHITE, F(""));
-			Text(13, 35, WHITE, F("HPF_COEF_I")); Dot(13, 45, 7); Bracket(13, 52, 9); Text(13, 29, WHITE, F(""));
-			Text(14, 35, WHITE, F("IA_RMS")); Dot(14, 41, 11); Bracket(14, 52, 9); Text(14, 60, WHITE, F("A"));
-			Text(15, 35, WHITE, F("IB_RMS")); Dot(15, 41, 11); Bracket(15, 52, 9); Text(15, 60, WHITE, F("A"));
-			Text(16, 35, WHITE, F("IC_RMS")); Dot(16, 41, 11); Bracket(16, 52, 9); Text(16, 60, WHITE, F("A"));
-			Text(17, 35, WHITE, F("IT_RMS")); Dot(17, 41, 11); Bracket(17, 52, 9); Text(17, 60, WHITE, F("A"));
-			Text(18, 35, WHITE, F("IA")); Dot(18, 37, 15); Bracket(18, 52, 9); Text(18, 60, WHITE, F("A"));
-			Text(19, 35, WHITE, F("IB")); Dot(19, 37, 15); Bracket(19, 52, 9); Text(19, 60, WHITE, F("A"));
-			Text(20, 35, WHITE, F("IC")); Dot(20, 37, 15); Bracket(20, 52, 9); Text(20, 60, WHITE, F("A"));
-			Text(21, 35, WHITE, F("IA_FUND")); Dot(21, 42, 10); Bracket(21, 52, 9); Text(21, 60, WHITE, F("A"));
-			Text(22, 35, WHITE, F("IB_FUND")); Dot(22, 42, 10); Bracket(22, 52, 9); Text(22, 60, WHITE, F("A"));
-			Text(23, 35, WHITE, F("IC_FUND")); Dot(23, 42, 10); Bracket(23, 52, 9); Text(23, 60, WHITE, F("A"));
-			Text(24, 35, WHITE, F("IA_HARM")); Dot(24, 42, 10); Bracket(24, 52, 9); Text(24, 60, WHITE, F("A"));
-			Text(25, 35, WHITE, F("IB_HARM")); Dot(25, 42, 10); Bracket(25, 52, 9); Text(25, 60, WHITE, F("A"));
-			Text(26, 35, WHITE, F("IC_HARM")); Dot(26, 42, 10); Bracket(26, 52, 9); Text(26, 60, WHITE, F("A"));
-
-			// Draw Frequency
-			Draw_Box(28, 2, 33, 32, "Frequency", 1, false, false);
-			Text(30, 4, WHITE, F("Frequency")); Dot(30, 13, 8); Bracket(30, 21, 9); Text(30, 28, WHITE, F("Hz"));
-			Text(31, 4, WHITE, F("F_MIN")); Dot(31, 9, 12); Bracket(31, 21, 9); Text(31, 28, WHITE, F("Hz"));
-			Text(32, 4, WHITE, F("F_MAX")); Dot(32, 9, 12); Bracket(32, 21, 9); Text(32, 28, WHITE, F("Hz"));
-
-		}
 		void Telit_xE910(void) {
 
 			// Draw Main Screen
