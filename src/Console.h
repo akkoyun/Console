@@ -491,7 +491,7 @@ class Console {
 			// Print Text	
 			Text(_X1 + 1, _Y1 + 2, WHITE, F("Manufacturer"));	Dot(_X1 + 1, _Y1 + 14, (_Y2 - 4) - (_Y1 + 14)); 	Bracket(_X1 + 1, _Y2 - 4, 2);
 			Text(_X1 + 2, _Y1 + 2, WHITE, F("Model"));			Dot(_X1 + 2, _Y1 + 7, (_Y2 - 4) - (_Y1 + 7)); 		Bracket(_X1 + 2, _Y2 - 4, 2);
-			Text(_X1 + 3, _Y1 + 2, WHITE, F("Firmware"));		Dot(_X1 + 3, _Y1 + 10, (_Y2 - 13) - (_Y1 + 10)); 	Bracket(_X1 + 3, _Y2 - 13, 10);
+			Text(_X1 + 3, _Y1 + 2, WHITE, F("Firmware"));		Dot(_X1 + 3, _Y1 + 11, (_Y2 - 12) - (_Y1 + 11)); 	Bracket(_X1 + 3, _Y2 - 12, 10);
 			Text(_X1 + 4, _Y1 + 2, WHITE, F("IMEI"));			Dot(_X1 + 4, _Y1 + 6, (_Y2 - 18) - (_Y1 + 6)); 		Bracket(_X1 + 4, _Y2 - 18, 16);
 			Text(_X1 + 5, _Y1 + 2, WHITE, F("Serial ID"));		Dot(_X1 + 5, _Y1 + 11, (_Y2 - 13) - (_Y1 + 11)); 	Bracket(_X1 + 5, _Y2 - 13, 11);
 			Text(_X1 + 6, _Y1 + 2, WHITE, F("ICCID"));			Dot(_X1 + 6, _Y1 + 7, (_Y2 - 22) - (_Y1 + 7)); 		Bracket(_X1 + 6, _Y2 - 22, 20);
@@ -532,8 +532,8 @@ class Console {
 			this->Draw_Box(_X1, _Y1, _X2, _Y2, "Power", 0, false, false);
 
 			// Draw Horizontal Lines
-			Horizontal_Divider(_X1 + 2, _Y1 + 5, 54, false);
-			Horizontal_Divider(_X1 + 6, _Y1 + 5, 54, false);
+			Horizontal_Divider(_X1 + 2, _Y1 + 4, 49, false);
+			Horizontal_Divider(_X1 + 6, _Y1 + 4, 49, false);
 
 			// Draw Vertical Lines
 			Vertical_Divider(_X1 + 2, _Y1 + 13, 4);
@@ -546,9 +546,9 @@ class Console {
 			Text(_X1 + 1, _Y1 + 25, WHITE, F("Current"));
 			Text(_X1 + 1, _Y1 + 36, WHITE, F("Freq"));
 			Text(_X1 + 1, _Y1 + 46, WHITE, F("Cos Fi"));
-			Text(_X1 + 5, _Y1 + 5, WHITE, F("Phase R"));
-			Text(_X1 + 6, _Y1 + 5, WHITE, F("Phase S"));
-			Text(_X1 + 7, _Y1 + 5, WHITE, F("Phase T"));
+			Text(_X1 + 3, _Y1 + 5, WHITE, F("Phase R"));
+			Text(_X1 + 4, _Y1 + 5, WHITE, F("Phase S"));
+			Text(_X1 + 5, _Y1 + 5, WHITE, F("Phase T"));
 
 		}
 
@@ -564,8 +564,8 @@ class Console {
 			// Draw State Box
 			this->Draw_Box(_X1, _Y1, _X2, _Y2, "Power Fault", 0, false, false);
 
-			Horizontal_Divider(_X1 + 2, _Y1 + 3, 53, false);
-			Horizontal_Divider(_X1 + 6, _Y1 + 3, 53, false);
+			Horizontal_Divider(_X1 + 2, _Y1 + 2, 54, false);
+			Horizontal_Divider(_X1 + 6, _Y1 + 2, 54, false);
 
 			Vertical_Divider(_X1 + 2, _Y1 + 11, 4);
 			Vertical_Divider(_X1 + 2, _Y1 + 18, 4);
@@ -594,9 +594,6 @@ class Console {
 			
 		}
 
-
-
-
 		/**
 		 * @brief State Detail Function.
 		 * @param _X1 Left Upper Cursor X Position
@@ -608,6 +605,7 @@ class Console {
 
 			// Draw State Box
 			Draw_Box(_X1, _Y1, _X2, _Y2, "", 0, false, false);
+			Vertical_Divider(_X1, _Y1 + 105, 2);
 
 			// Print Text	
 			Text(_X1 + 1, _Y1 + 2, WHITE, F("R [ ] -"));
@@ -618,6 +616,9 @@ class Console {
 			Text(_X1 + 1, _Y1 + 44, WHITE, F("M3 [ ] -"));
 			Text(_X1 + 1, _Y1 + 53, WHITE, F("Th [ ] -"));
 			Text(_X1 + 1, _Y1 + 62, WHITE, F("Mp [ ]"));
+
+			// Print Instant Value
+			Text(_X1 + 1, _Y1 + 113, WHITE, F("Bar"));
 
 		}
 
@@ -670,9 +671,6 @@ class Console {
 
 			// Data Box
 			this->Draw_Box(42, 2, 49, 119, "JSON", 0, false, false);
-
-			// Print Instant Value
-			Text(40, 115, WHITE, F("Bar"));
 			
 		}
 
