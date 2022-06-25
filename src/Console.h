@@ -492,7 +492,10 @@ class Console {
 		/**
 		 * @brief Construct a new Console object
 		 */
-		Console(void) {
+		Console(Stream &_Serial) {
+
+			//Set serial port
+			_Console = &_Serial;
 
 		}
 
@@ -500,19 +503,16 @@ class Console {
 		 * @brief Begin Serial VT100 Console.
 		 * @param _Serial Terminal UART Channel.
 		 */
-		void Begin(Stream &_Serial, bool _Boot) {
-
-			//Set serial port
-			if (!_Boot) _Console = &_Serial;
+		void Begin(void) {
 
 			// Cursor Off
-			if (_Boot) Cursor(false);
+			this->Cursor(false);
 
 			// Clear Screen
-			if (_Boot) Clear(SCREEN);
+			this->Clear(SCREEN);
 
 			// Reset Delay
-			if (_Boot) delay(5);
+			delay(5);
 
 		}
 
