@@ -3,47 +3,63 @@
 
 // Define Arduino Library
 #ifndef __Arduino__
-#include <Arduino.h>
+	#include <Arduino.h>
 #endif
 
-typedef enum {
-	BLACK	            = 30,
-	RED		            = 31,
-	GREEN	            = 32,
-	YELLOW	            = 33,
-	BLUE	            = 34,
-	MAGENTA	            = 35,
-	CYAN	            = 36,
-	WHITE	            = 37,
-	GRAY	            = 90
-} Colors;
-
-typedef enum {
-	RST			        = 0,
-	BRIGHT		        = 1,
-	DIM			        = 2,
-	UNDERSCORE	        = 4,
-	BLINK		        = 5,
-	REVERSE		        = 7,
-	HIDDEN		        = 8	
-} TextFormat;
+// Include Definitions
+#include "Console_Definitions.h"
 
 class Console {
 
 	private:
 
-		enum Clear_Type {
-			LINE_AFTER_CURSOR 	= 0,
-			LINE_TO_CURSOR 		= 1,
-			LINE 		    	= 2,
-			SCREEN 			    = 3,
-			ALL 			    = 4
-		};
+		/**
+		 * @brief Stream Variable.
+		 */
+		Stream * Console_Serial;
 
-		Stream *_Console;
+		/**
+		 * @brief Clear Terminal Function.
+		 * @version 01.00.00
+		 * @param _Type Clear Type.
+		 */
+		void Clear(uint8_t _Type) {
+
+			// Clear Line After Cursor
+			if (_Type == LINE_AFTER_CURSOR) Console_Serial->print(F("\e[K"));
+
+			// Clear Line to Cursor
+			if (_Type == LINE_TO_CURSOR) Console_Serial->print(F("\e[1K"));
+			
+			// Clear Line
+			if (_Type == LINE) Console_Serial->print(F("\e[2K"));
+			
+			// Clear Screen
+			if (_Type == SCREEN) Console_Serial->print(F("\e[2J"));
+			
+			// Clear All
+			if (_Type == ALL) Console_Serial->print(F("\e[1;1H\e[2J"));
+
+		}
+
+		/**
+		 * @brief Change Cursor Visibility Function.
+		 * @version 01.00.00
+		 * @param _State Cursor State.
+		 */
+		void Cursor(bool _State) {
+
+			// Cursor On
+			if (_State) Console_Serial->print(F("\e[?25h"));	
+
+			// Cursor Off
+			if (!_State) Console_Serial->print(F("\e[?25l"));	
+
+		}
 
 		/**
 		 * @brief Draw Box Function.
+		 * @version 01.00.00
 		 * @param _X1 Upper Left Corner X.
 		 * @param _Y1 Upper Left Corner Y.
 		 * @param _X2 Lower Right Corner X.
@@ -59,37 +75,37 @@ class Console {
 			Text_Color(WHITE);
 
 			// Set Text Format
-			_Console->print(F("\e["));
-			_Console->print(DIM);
-			_Console->write('m');
+			Console_Serial->print(F("\e["));
+			Console_Serial->print(DIM);
+			Console_Serial->write('m');
 
 			// Print Corners
-			Set_Cursor(_X1, _Y1); _Console->println(F("┌"));
-			Set_Cursor(_X2, _Y1); _Console->println(F("└"));
-			Set_Cursor(_X1, _Y2); _Console->println(F("┐"));
-			Set_Cursor(_X2, _Y2); _Console->println(F("┘"));
+			Set_Cursor(_X1, _Y1); Console_Serial->println(F("┌"));
+			Set_Cursor(_X2, _Y1); Console_Serial->println(F("└"));
+			Set_Cursor(_X1, _Y2); Console_Serial->println(F("┐"));
+			Set_Cursor(_X2, _Y2); Console_Serial->println(F("┘"));
 
 			// Print Lines
 			for (uint8_t i = _X1 + 1; i <= _X2 - 1; i++) {
 				
-				Set_Cursor(i, _Y1); _Console->println(F("│"));
-				Set_Cursor(i, _Y2); _Console->println(F("│"));
+				Set_Cursor(i, _Y1); Console_Serial->println(F("│"));
+				Set_Cursor(i, _Y2); Console_Serial->println(F("│"));
 
 			}
 			for (uint8_t i = _Y1 + 1; i <= _Y2 - 1; i++) {
 				
-				Set_Cursor(_X1, i); _Console->println(F("─"));
-				Set_Cursor(_X2, i); _Console->println(F("─"));
+				Set_Cursor(_X1, i); Console_Serial->println(F("─"));
+				Set_Cursor(_X2, i); Console_Serial->println(F("─"));
 				
 			}
 
 			// Print Header
-			Text_Color(YELLOW); Set_Cursor(_X1, _Y1 + 2); _Console->println(_Text);
+			Text_Color(YELLOW); Set_Cursor(_X1, _Y1 + 2); Console_Serial->println(_Text);
 
 			// Print Header Number
 			if (_Number != 0) {
-				Text_Color(WHITE); Set_Cursor(_X1, _Y2 - 4); _Console->println(F("[ ]"));
-				Text_Color(YELLOW); Set_Cursor(_X1, _Y2 - 3); _Console->println(_Number);
+				Text_Color(WHITE); Set_Cursor(_X1, _Y2 - 4); Console_Serial->println(F("[ ]"));
+				Text_Color(YELLOW); Set_Cursor(_X1, _Y2 - 3); Console_Serial->println(_Number);
 			}
 
 			// Draw Header
@@ -99,13 +115,13 @@ class Console {
 				Text_Color(WHITE);
 
 				// Print Corners
-				Set_Cursor(_X1 + 2, _Y1); _Console->println(F("├"));
-				Set_Cursor(_X1 + 2, _Y2); _Console->println(F("┤"));
+				Set_Cursor(_X1 + 2, _Y1); Console_Serial->println(F("├"));
+				Set_Cursor(_X1 + 2, _Y2); Console_Serial->println(F("┤"));
 
 				// Print Lines
 				for (uint8_t i = _Y1 + 1; i <= _Y2 - 1; i++) {
 					
-					Set_Cursor(_X1 + 2, i); _Console->println(F("─"));
+					Set_Cursor(_X1 + 2, i); Console_Serial->println(F("─"));
 					
 				}
 
@@ -118,13 +134,13 @@ class Console {
 			Text_Color(WHITE);
 
 				// Print Corners
-				Set_Cursor(_X2 - 2, _Y1); _Console->println(F("├"));
-				Set_Cursor(_X2 - 2, _Y2); _Console->println(F("┤"));
+				Set_Cursor(_X2 - 2, _Y1); Console_Serial->println(F("├"));
+				Set_Cursor(_X2 - 2, _Y2); Console_Serial->println(F("┤"));
 
 				// Print Lines
 				for (uint8_t i = _Y1 + 1; i <= _Y2 - 1; i++) {
 					
-					Set_Cursor(_X2 - 2, i); _Console->println(F("─"));
+					Set_Cursor(_X2 - 2, i); Console_Serial->println(F("─"));
 					
 				}
 
@@ -134,6 +150,7 @@ class Console {
 
 		/**
 		 * @brief Dot Print Function.
+		 * @version 01.00.00
 		 * @param _X Cursor X Position
 		 * @param _Y Cursor Y Position
 		 * @param _Count Dot Length
@@ -150,6 +167,7 @@ class Console {
 
 		/**
 		 * @brief Bracket Place Holder Function.
+		 * @version 01.00.00
 		 * @param _X Cursor X Position.
 		 * @param _Y Cursor Y Position.
 		 * @param _Space Bracket Size.
@@ -166,6 +184,7 @@ class Console {
 
 		/**
 		 * @brief Horizontal Line Divider Function.
+		 * @version 01.00.00
 		 * @param _X1 Start Cursor X
 		 * @param _Y1 Start Cursor Y
 		 * @param _Length Length
@@ -195,6 +214,7 @@ class Console {
 
 		/**
 		 * @brief Vertical Line Divider Function.
+		 * @version 01.00.00
 		 * @param _X1 Start Cursor X
 		 * @param _Y1 Start Cursor Y
 		 * @param _Length Length
@@ -206,16 +226,17 @@ class Console {
 			Text_Color(WHITE);
 
 			// Print Corners
-			Set_Cursor(_X1, _Y1); _Console->println(F("┬"));
-			Set_Cursor(_X1 + _Length, _Y1); _Console->println(F("┴"));
+			Set_Cursor(_X1, _Y1); Console_Serial->println(F("┬"));
+			Set_Cursor(_X1 + _Length, _Y1); Console_Serial->println(F("┴"));
 
 			// Print Lines
-			for (uint8_t i = _X1 + 1; i <= _X1 + _Length - 1; i++) {Set_Cursor(i, _Y1); _Console->println(F("│"));}
+			for (uint8_t i = _X1 + 1; i <= _X1 + _Length - 1; i++) {Set_Cursor(i, _Y1); Console_Serial->println(F("│"));}
 
 		}
 
 		/**
 		 * @brief Hardware Diagnostic Box Print Function.
+		 * @version 01.00.00
 		 * @param _X1 Left Upper Cursor X Position
 		 * @param _Y1 Left Upper Cursor Y Position
 		 * @param _X2 Right Lower Cursor X Position
@@ -239,6 +260,7 @@ class Console {
 
 		/**
 		 * @brief Detail Box Print Function.
+		 * @version 01.00.00
 		 * @param _X1 Left Upper Cursor X Position
 		 * @param _Y1 Left Upper Cursor Y Position
 		 * @param _X2 Right Lower Cursor X Position
@@ -262,6 +284,7 @@ class Console {
 
 		/**
 		 * @brief Battery Print Function.
+		 * @version 01.00.00
 		 * @param _X1 Left Upper Cursor X Position
 		 * @param _Y1 Left Upper Cursor Y Position
 		 * @param _X2 Right Lower Cursor X Position
@@ -285,6 +308,7 @@ class Console {
 
 		/**
 		 * @brief Battery GSM Initialize Function.
+		 * @version 01.00.00
 		 * @param _X1 Left Upper Cursor X Position
 		 * @param _Y1 Left Upper Cursor Y Position
 		 * @param _X2 Right Lower Cursor X Position
@@ -314,6 +338,7 @@ class Console {
 
 		/**
 		 * @brief Battery GSM Connection Function.
+		 * @version 01.00.00
 		 * @param _X1 Left Upper Cursor X Position
 		 * @param _Y1 Left Upper Cursor Y Position
 		 * @param _X2 Right Lower Cursor X Position
@@ -343,6 +368,7 @@ class Console {
 
 		/**
 		 * @brief Battery GSM Detail Function.
+		 * @version 01.00.00
 		 * @param _X1 Left Upper Cursor X Position
 		 * @param _Y1 Left Upper Cursor Y Position
 		 * @param _X2 Right Lower Cursor X Position
@@ -365,6 +391,7 @@ class Console {
 
 		/**
 		 * @brief GSM Connection Detail Function.
+		 * @version 01.00.00
 		 * @param _X1 Left Upper Cursor X Position
 		 * @param _Y1 Left Upper Cursor Y Position
 		 * @param _X2 Right Lower Cursor X Position
@@ -386,6 +413,7 @@ class Console {
 
 		/**
 		 * @brief Power Detail Function.
+		 * @version 01.00.00
 		 * @param _X1 Left Upper Cursor X Position
 		 * @param _Y1 Left Upper Cursor Y Position
 		 * @param _X2 Right Lower Cursor X Position
@@ -419,6 +447,7 @@ class Console {
 
 		/**
 		 * @brief Power Fault Detail Function.
+		 * @version 01.00.00
 		 * @param _X1 Left Upper Cursor X Position
 		 * @param _Y1 Left Upper Cursor Y Position
 		 * @param _X2 Right Lower Cursor X Position
@@ -461,6 +490,7 @@ class Console {
 
 		/**
 		 * @brief State Detail Function.
+		 * @version 01.00.00
 		 * @param _X1 Left Upper Cursor X Position
 		 * @param _Y1 Left Upper Cursor Y Position
 		 * @param _X2 Right Lower Cursor X Position
@@ -491,16 +521,18 @@ class Console {
 
 		/**
 		 * @brief Construct a new Console object
+		 * @version 01.00.00
 		 */
 		Console(Stream &_Serial) {
 
 			//Set serial port
-			_Console = &_Serial;
+			this->Console_Serial = &_Serial;
 
 		}
 
 		/**
 		 * @brief Begin Serial VT100 Console.
+		 * @version 01.00.00
 		 * @param _Serial Terminal UART Channel.
 		 */
 		void Begin(void) {
@@ -517,68 +549,42 @@ class Console {
 		}
 
 		/**
-		 * @brief Change Cursor Visibility Function.
-		 * @param _State Cursor State.
-		 */
-		void Cursor(bool _State) {
-
-			// Cursor On
-			if (_State) _Console->print(F("\e[?25h"));	
-
-			// Cursor Off
-			if (_State) _Console->print(F("\e[?25l"));	
-
-		}
-
-		/**
 		 * @brief Set Cursor Position Function.
+		 * @version 01.00.00
 		 * @param _X Cursor X Position.
 		 * @param _Y Cursor Y Position.
 		 */
 		void Set_Cursor(uint8_t _X, uint8_t _Y) {
 
 			// Set Cursor Position
-			_Console->print(F("\e["));
-			_Console->print(_X);
-			_Console->print(F(";"));
-			_Console->print(_Y);
-			_Console->print(F("H"));
+			Console_Serial->print(F("\e["));
+			Console_Serial->print(_X);
+			Console_Serial->print(F(";"));
+			Console_Serial->print(_Y);
+			Console_Serial->print(F("H"));
 
 		}
 
 		/**
 		 * @brief Terminal Beep Sound Function.
+		 * @version 01.00.00
 		 */
 		void Beep(void) {
 
 			// Beep Terminal.
-			_Console->print(F("\x07"));
-
-		}
-
-		/**
-		 * @brief Clear Terminal Function.
-		 * @param _Type Clear Type.
-		 */
-		void Clear(uint8_t _Type) {
-
-			// Clear Screen
-			if (_Type == LINE_AFTER_CURSOR) _Console->print(F("\e[K"));
-			if (_Type == LINE_TO_CURSOR) _Console->print(F("\e[1K"));
-			if (_Type == LINE) _Console->print(F("\e[2K"));
-			if (_Type == SCREEN) _Console->print(F("\e[2J"));
-			if (_Type == ALL) _Console->print(F("\e[1;1H\e[2J"));
+			Console_Serial->print(F("\x07"));
 
 		}
 
 		/**
 		 * @brief Print Text to Specified Position and Color.
+		 * @version 01.00.00
 		 * @param _X X Position.
 		 * @param _Y Y Position.
 		 * @param _Color Color.
 		 * @param _Value Text Value.
 		 */
-		void Text(uint8_t _X, uint8_t _Y, Colors _Color, String _Value) {
+		void Text(uint8_t _X, uint8_t _Y, uint8_t _Color, String _Value) {
 
 			// Set Text Cursor Position
 			Set_Cursor(_X, _Y); 
@@ -587,38 +593,41 @@ class Console {
 			Text_Color(_Color); 
 
 			// Print Text			
-			_Console->println(_Value);
+			Console_Serial->println(String(_Value));
 
 		}
 
 		/**
 		 * @brief Set Text Color Function.
+		 * @version 01.00.00
 		 * @param _Color Color
 		 */
-		void Text_Color(Colors _Color) {
+		void Text_Color(uint8_t _Color) {
 
 			// Set Text Color.
-			_Console->print(F("\e["));
-			_Console->print(_Color);
-			_Console->write('m');
+			Console_Serial->print(F("\e["));
+			Console_Serial->print(_Color);
+			Console_Serial->write('m');
 
 		}
 
 		/**
 		 * @brief Set Back Ground Color Function.
+		 * @version 01.00.00
 		 * @param _Color Color.
 		 */
-		void Background_Color(Colors _Color) {
+		void Background_Color(uint8_t _Color) {
 
 			// Set Back Ground Color.
-			_Console->print(F("\e["));
-			_Console->print(_Color + 10);
-			_Console->write('m');
+			Console_Serial->print(F("\e["));
+			Console_Serial->print(_Color + 10);
+			Console_Serial->write('m');
 
 		}
 
 		/**
 		 * @brief OK Decide Function.
+		 * @version 01.00.00
 		 * @param _Result Result Input
 		 * @param _X Cursor X
 		 * @param _Y Cursor Y
@@ -640,6 +649,7 @@ class Console {
 
 		/**
 		 * @brief I2C Scanner Terminal Batch
+		 * @version 01.00.00
 		 */
 		void I2C_Scanner_Table(void) {
 
@@ -689,6 +699,7 @@ class Console {
 
 		/**
 		 * @brief MAX78630 Terminal Batch
+		 * @version 01.00.00
 		 */
 		void MAX78630(void) {
 
@@ -759,61 +770,64 @@ class Console {
 
 		/**
 		 * @brief PowerStat Terminal Batch
+		 * @version 01.00.00
 		 */
-		void PowerStat(void) {
+		void PowerStat(uint8_t _X = 1, uint8_t _Y = 1) {
+
+			// _X = 1
+			// _Y = 1
 
 			// Draw Main Box
-			Draw_Box(1, 1, 52, 120, "", 0, true, true);
+			Draw_Box(_X, _Y, _X + 51, _Y + 119, "", 0, true, true);
 
 			// Print Main Header Text
-			this->Text(2, 53, WHITE, F("PowerStat V3"));
+			this->Text(_X + 1, _Y + 52, WHITE, F("PowerStat V3"));
 
 			// Header Titles
-			Text(2, 3, WHITE, F("Up Time : "));
+			Text(_X + 1, _Y + 2, WHITE, F("Up Time : "));
 
 			// Draw Hardware Diagnostic
-			this->Print_Diagnostic(4, 2, 12, 39);
+			this->Print_Diagnostic(_X + 3, _Y + 1, _X + 11, _Y + 38);
 
 			// Draw Detail Box
-			this->Print_Detail(4, 40, 12, 79);
+			this->Print_Detail(_X + 3, _Y + 39, _X + 11, _Y + 78);
 
 			// Draw Battery Box
-			this->Print_Battery(4, 80, 12, 119);
+			this->Print_Battery(_X + 3, _Y + 79, _X + 11, _Y + 118);
 
 			// Draw GSM Setup Box
-			this->Print_GSM_Setup(13, 2, 27, 39);
+			this->Print_GSM_Setup(_X + 12, _Y + 1, _X + 26, _Y + 38);
 
 			// Draw GSM Connection Box
-			this->Print_GSM_Connection(13, 40, 27, 79);
+			this->Print_GSM_Connection(_X + 12, _Y + 39, _X + 26, _Y + 78);
 
 			// Draw GSM Detail Box
-			this->Print_GSM_Detail(13, 80, 20, 119);
+			this->Print_GSM_Detail(_X + 12, _Y + 79, _X + 19, _Y + 118);
 
 			// Draw GSM Connection Detail Box
-			this->Print_GSM_Connection_Detail(21, 80, 27, 119);
+			this->Print_GSM_Connection_Detail(_X + 20, _Y + 79, _X + 26, _Y + 118);
 
 			// GSM Power Box
-			this->Draw_Box(28, 2, 30, 119, "", 0, false, false);
+			this->Draw_Box(_X + 27, _Y + 1, _X + 29, _Y + 118, "", 0, false, false);
 
 			// Power Box
-			this->Print_Power_Detail(31, 2, 38, 60);
+			this->Print_Power_Detail(_X + 30, _Y + 1, _X + 37, _Y + 59);
 
 			// Power Check
-			this->Print_Power_Fault_Detail(31, 61, 38, 119);
+			this->Print_Power_Fault_Detail(_X + 30, _Y + 60, _X + 37, _Y + 118);
 
 			// State Detail Box
-			this->Print_State_Detail(39, 2, 41, 119);
+			this->Print_State_Detail(_X + 38, _Y + 1, _X + 40, _Y + 118);
 
 			// Data Box
-			this->Draw_Box(42, 2, 49, 119, "JSON", 0, false, false);
+			this->Draw_Box(_X + 41, _Y + 1, _X + 48, _Y + 118, "JSON", 0, false, false);
 			
 		}
 
-
-
-
-
-
+		/**
+		 * @brief FilterStat Terminal Batch
+		 * @version 01.00.00
+		 */
 
 		void FilterStat(void) {
 
@@ -970,6 +984,10 @@ class Console {
 			
 		}
 
+		/**
+		 * @brief Telit xE910 Terminal Batch
+		 * @version 01.00.00
+		 */
 		void Telit_xE910(void) {
 
 			// Draw Main Screen
@@ -1039,6 +1057,11 @@ class Console {
 			Text(23, 55, WHITE, F("[4] Send HTTP Pack"));
 			
 		}
+
+		/**
+		 * @brief MAX78630 Voltmeter Terminal Batch
+		 * @version 01.00.00
+		 */
 		void MAX78630_Voltmeter(void) {
 
 			// Draw Main Screen
