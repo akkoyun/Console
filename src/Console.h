@@ -828,6 +828,7 @@ class Console {
 		 * @brief FilterStat Terminal Batch
 		 * @version 01.00.00
 		 */
+
 		void FilterStat(void) {
 
 			// Draw Main Screen
