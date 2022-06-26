@@ -828,7 +828,6 @@ class Console {
 		 * @brief FilterStat Terminal Batch
 		 * @version 01.00.00
 		 */
-
 		void FilterStat(void) {
 
 			// Draw Main Screen
@@ -990,72 +989,30 @@ class Console {
 		 */
 		void Telit_xE910(void) {
 
-			// Draw Main Screen
+			// Draw Main Box
 			Draw_Box(1, 1, 24, 120, "", 0, true, true);
-			//Print_Box_Title(1,1,60,F("GSM Test Procedure"));
+
+			// Print Main Header Text
+			this->Text(2, 53, WHITE, F("GSM Test Procedure"));
+
+			// Header Titles
+			Text(2, 3, WHITE, F("Up Time : "));
 
 			// Draw GSM Setup Box
-			Draw_Box(4, 2, 18, 39, "GSM Setup", 1, false, false);
-			Text(5, 4, WHITE, F("ATE=0")); Dot(5, 9, 23); Bracket(5, 32, 5); Text(5, 33, YELLOW, F(" ** "));
-			Text(6, 4, WHITE, F("AT+CMEE=1")); Dot(6, 13, 19); Bracket(6, 32, 5); Text(6, 33, YELLOW, F(" ** "));
-			Text(7, 4, WHITE, F("AT+FCLASS=0")); Dot(7, 15, 17); Bracket(7, 32, 5); Text(7, 33, YELLOW, F(" ** "));
-			Text(8, 4, WHITE, F("AT&K0")); Dot(8, 9, 23); Bracket(8, 32, 5); Text(8, 33, YELLOW, F(" ** "));
-			Text(9, 4, WHITE, F("AT+CPIN?")); Dot(9, 12, 20); Bracket(9, 32, 5); Text(9, 33, YELLOW, F(" ** "));
-			Text(10, 4, WHITE, F("AT+CGSN")); Dot(10, 11, 21); Bracket(10, 32, 5); Text(10, 33, YELLOW, F(" ** "));
-			Text(11, 4, WHITE, F("AT+GSN")); Dot(11, 10, 22); Bracket(11, 32, 5); Text(11, 33, YELLOW, F(" ** "));
-			Text(12, 4, WHITE, F("AT+CCID")); Dot(12, 11, 21); Bracket(12, 32, 5); Text(12, 33, YELLOW, F(" ** "));
-			Text(13, 4, WHITE, F("AT+GMI")); Dot(13, 10, 22); Bracket(13, 32, 5); Text(13, 33, YELLOW, F(" ** "));
-			Text(14, 4, WHITE, F("AT+GMM")); Dot(14, 10, 22); Bracket(14, 32, 5); Text(14, 33, YELLOW, F(" ** "));
-			Text(15, 4, WHITE, F("AT+GMR")); Dot(15, 10, 22); Bracket(15, 32, 5); Text(15, 33, YELLOW, F(" ** "));
-			Text(16, 4, WHITE, F("AT+SLED=2")); Dot(16, 13, 19); Bracket(16, 32, 5); Text(16, 33, YELLOW, F(" ** "));
-			Text(17, 4, WHITE, F("AT#E2SLRI=50")); Dot(17, 16, 16); Bracket(17, 32, 5); Text(17, 33, YELLOW, F(" ** "));
+			this->Print_GSM_Setup(4, 2, 18, 39);
 
-			// GSM Connection Box
-			Draw_Box(4, 40, 18, 79, "GSM Connection", 2, false, false);
-			Text(5, 42, WHITE, F("AT#REGMODE=1")); Dot(5, 54, 18); Bracket(5, 72, 5); Text(5, 73, YELLOW, F(" ** "));
-			Text(6, 42, WHITE, F("AT#TXMONMODE=1")); Dot(6, 56, 16); Bracket(6, 72, 5); Text(6, 73, YELLOW, F(" ** "));
-			Text(7, 42, WHITE, F("AT+CREG=0")); Dot(7, 51, 21); Bracket(7, 72, 5); Text(7, 73, YELLOW, F(" ** "));
-			Text(8, 42, WHITE, F("AT+CGREG=0")); Dot(8, 52, 20); Bracket(8, 72, 5); Text(8, 73, YELLOW, F(" ** "));
-			Text(9, 42, WHITE, F("AT#SCFG=1,1,1500,90,600,50")); Dot(9, 68, 4); Bracket(9, 72, 5); Text(9, 73, YELLOW, F(" ** "));
-			Text(10, 42, WHITE, F("AT#SCFG=2,1,1500,90,300,50")); Dot(10, 68, 4); Bracket(10, 72, 5); Text(10, 73, YELLOW, F(" ** "));
-			Text(11, 42, WHITE, F("AT#SCFGEXT=2,1,0,1,0,0")); Dot(11, 64, 8); Bracket(11, 72, 5); Text(11, 73, YELLOW, F(" ** "));
-			Text(12, 42, WHITE, F("AT+CGDCONT=1,\"IP\",\"mgbs\"")); Dot(12, 66, 6); Bracket(12, 72, 5); Text(12, 73, YELLOW, F(" ** "));
-			Text(13, 42, WHITE, F("AT#SERVIFO")); Dot(13, 52, 20); Bracket(13, 72, 5); Text(13, 73, YELLOW, F(" ** "));
-			Text(14, 42, WHITE, F("AT+SGACT=1,1")); Dot(14, 54, 18); Bracket(14, 72, 5); Text(14, 73, YELLOW, F(" ** "));
-			Text(15, 42, WHITE, F("AT#HTTPCFG=1,\"*****\",80,0")); Dot(15, 67, 5); Bracket(15, 72, 5); Text(15, 73, YELLOW, F(" ** "));
-			Text(16, 42, WHITE, F("AT#ICMP=1")); Dot(16, 51, 21); Bracket(16, 72, 5); Text(16, 73, YELLOW, F(" ** "));
-			Text(17, 42, WHITE, F("AT#FRWL..")); Dot(17, 51, 21); Bracket(17, 72, 5); Text(17, 73, YELLOW, F(" ** "));
+			// Draw GSM Connection Box
+			this->Print_GSM_Connection(4, 40, 18, 79);
 
-		//	Text(14, 42, WHITE, F("AT+CGACT=1,1")); Dot(14, 54, 18); Bracket(14, 72, 5); Text(14, 73, YELLOW, F(" ** "));
-		//	Text(15, 42, WHITE, F("AT+CGPADDR=1")); Dot(15, 54, 18); Bracket(15, 72, 5); Text(15, 73, YELLOW, F(" ** "));
-		//	Text(16, 42, WHITE, F("AT#HTTPCFG=1,\"*****\",80,0")); Dot(16, 67, 5); Bracket(16, 72, 5); Text(16, 73, YELLOW, F(" ** "));
-		//	Text(17, 42, WHITE, F("AT#ICMP=1")); Dot(17, 51, 21); Bracket(17, 72, 5); Text(17, 73, YELLOW, F(" ** "));
+			// Draw GSM Detail Box
+			this->Print_GSM_Detail(4, 80, 11, 119);
 
-			// GSM Detail Box
-			Draw_Box(4, 80, 11, 119, "GSM Detail", 3, false, false);
-			Text(5, 82, WHITE, F("Manufacturer")); Dot(5, 94, 21); Bracket(5, 115, 2);
-			Text(6, 82, WHITE, F("Model")); Dot(6, 87, 28); Bracket(6, 115, 2);
-			Text(7, 82, WHITE, F("Firmware")); Dot(7, 90, 7); Bracket(7, 106, 11);
-			Text(8, 82, WHITE, F("IMEI")); Dot(8, 86, 15); Bracket(8, 101, 16);
-			Text(9, 82, WHITE, F("Serial ID")); Dot(9, 91, 15); Bracket(9, 106, 11);
-			Text(10, 82, WHITE, F("SIM ICCID")); Dot(10, 91, 6); Bracket(10, 97, 20);
-
-			// Connection Box
-			Draw_Box(12, 80, 18, 119, "Connection", 4, false, false);
-			Text(13, 82, WHITE, F("GSM Connection Time")); Dot(13, 101, 11); Bracket(13, 112, 5);
-			Text(14, 82, WHITE, F("RSSI Level")); Dot(14, 92, 22); Bracket(14, 114, 3);
-			Text(15, 82, WHITE, F("GSM Operator")); Dot(15, 94, 17); Bracket(15, 111, 6);
-			Text(16, 82, WHITE, F("IP Address")); Dot(16, 92, 9); Bracket(16, 101, 16);
-			Text(17, 82, WHITE, F("Socket Listen Status")); Dot(17, 102, 5); Bracket(17, 107, 10);
+			// Draw GSM Connection Detail Box
+			this->Print_GSM_Connection_Detail(12, 80, 18, 119);
 
 			// JSON Data Box
 			Draw_Box(19, 2, 21, 119, "", 8, false, false);
 
-			Text(23, 3, WHITE, F("[1] Initialize Modem"));
-			Text(23, 25, WHITE, F("[2] Connect"));
-			Text(23, 38, WHITE, F("[3] Time Update"));
-			Text(23, 55, WHITE, F("[4] Send HTTP Pack"));
-			
 		}
 
 		/**
