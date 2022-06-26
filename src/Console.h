@@ -72,7 +72,7 @@ class Console {
 		void Draw_Box(uint8_t _X1, uint8_t _Y1, uint8_t _X2, uint8_t _Y2, String _Text, uint8_t _Number, bool _Header, bool _Footer) {
 
 			// Set Text Color
-			Text_Color(WHITE);
+			this->Text_Color(WHITE);
 
 			// Set Text Format
 			Console_Serial->print(F("\e["));
@@ -80,48 +80,48 @@ class Console {
 			Console_Serial->write('m');
 
 			// Print Corners
-			Set_Cursor(_X1, _Y1); Console_Serial->println(F("┌"));
-			Set_Cursor(_X2, _Y1); Console_Serial->println(F("└"));
-			Set_Cursor(_X1, _Y2); Console_Serial->println(F("┐"));
-			Set_Cursor(_X2, _Y2); Console_Serial->println(F("┘"));
+			this->Set_Cursor(_X1, _Y1); Console_Serial->println(F("┌"));
+			this->Set_Cursor(_X2, _Y1); Console_Serial->println(F("└"));
+			this->Set_Cursor(_X1, _Y2); Console_Serial->println(F("┐"));
+			this->Set_Cursor(_X2, _Y2); Console_Serial->println(F("┘"));
 
 			// Print Lines
 			for (uint8_t i = _X1 + 1; i <= _X2 - 1; i++) {
 				
-				Set_Cursor(i, _Y1); Console_Serial->println(F("│"));
-				Set_Cursor(i, _Y2); Console_Serial->println(F("│"));
+				this->Set_Cursor(i, _Y1); Console_Serial->println(F("│"));
+				this->Set_Cursor(i, _Y2); Console_Serial->println(F("│"));
 
 			}
 			for (uint8_t i = _Y1 + 1; i <= _Y2 - 1; i++) {
 				
-				Set_Cursor(_X1, i); Console_Serial->println(F("─"));
-				Set_Cursor(_X2, i); Console_Serial->println(F("─"));
+				this->Set_Cursor(_X1, i); Console_Serial->println(F("─"));
+				this->Set_Cursor(_X2, i); Console_Serial->println(F("─"));
 				
 			}
 
 			// Print Header
-			Text_Color(YELLOW); Set_Cursor(_X1, _Y1 + 2); Console_Serial->println(_Text);
+			this->Text_Color(YELLOW); this->Set_Cursor(_X1, _Y1 + 2); Console_Serial->println(_Text);
 
 			// Print Header Number
 			if (_Number != 0) {
-				Text_Color(WHITE); Set_Cursor(_X1, _Y2 - 4); Console_Serial->println(F("[ ]"));
-				Text_Color(YELLOW); Set_Cursor(_X1, _Y2 - 3); Console_Serial->println(_Number);
+				this->Text_Color(WHITE); this->Set_Cursor(_X1, _Y2 - 4); Console_Serial->println(F("[ ]"));
+				this->Text_Color(YELLOW); this->Set_Cursor(_X1, _Y2 - 3); Console_Serial->println(_Number);
 			}
 
 			// Draw Header
 			if (_Header) {
 
 				// Set Text Color
-				Text_Color(WHITE);
+				this->Text_Color(WHITE);
 
 				// Print Corners
-				Set_Cursor(_X1 + 2, _Y1); Console_Serial->println(F("├"));
-				Set_Cursor(_X1 + 2, _Y2); Console_Serial->println(F("┤"));
+				this->Set_Cursor(_X1 + 2, _Y1); Console_Serial->println(F("├"));
+				this->Set_Cursor(_X1 + 2, _Y2); Console_Serial->println(F("┤"));
 
 				// Print Lines
 				for (uint8_t i = _Y1 + 1; i <= _Y2 - 1; i++) {
 					
-					Set_Cursor(_X1 + 2, i); Console_Serial->println(F("─"));
+					this->Set_Cursor(_X1 + 2, i); Console_Serial->println(F("─"));
 					
 				}
 
@@ -130,17 +130,17 @@ class Console {
 			// Draw Footer			
 			if (_Footer) {
 
-			// Set Text Color
-			Text_Color(WHITE);
+				// Set Text Color
+				this->Text_Color(WHITE);
 
 				// Print Corners
-				Set_Cursor(_X2 - 2, _Y1); Console_Serial->println(F("├"));
-				Set_Cursor(_X2 - 2, _Y2); Console_Serial->println(F("┤"));
+				this->Set_Cursor(_X2 - 2, _Y1); Console_Serial->println(F("├"));
+				this->Set_Cursor(_X2 - 2, _Y2); Console_Serial->println(F("┤"));
 
 				// Print Lines
 				for (uint8_t i = _Y1 + 1; i <= _Y2 - 1; i++) {
 					
-					Set_Cursor(_X2 - 2, i); Console_Serial->println(F("─"));
+					this->Set_Cursor(_X2 - 2, i); Console_Serial->println(F("─"));
 					
 				}
 
@@ -159,7 +159,7 @@ class Console {
 
 			for (uint8_t i = 0; i < _Count; i++) {
 
-				Text(_X, _Y + i, WHITE, F("."));
+				this->Text(_X, _Y + i, GRAY, F("."));
 
 			}
 
@@ -175,10 +175,10 @@ class Console {
 		void Bracket(uint8_t _X, uint8_t _Y, uint8_t _Space) {
 
 			// Print Bracket Start
-			Text(_X, _Y, WHITE, F("["));
+			this->Text(_X, _Y, WHITE, F("["));
 
 			// Print Bracket Left
-			Text(_X, _Y + _Space, WHITE, F("]"));
+			this->Text(_X, _Y + _Space, WHITE, F("]"));
 
 		}
 
@@ -382,7 +382,7 @@ class Console {
 			// Print Text	
 			Text(_X1 + 1, _Y1 + 2, WHITE, F("Manufacturer"));	Dot(_X1 + 1, _Y1 + 14, (_Y2 - 4) - (_Y1 + 14)); 	Bracket(_X1 + 1, _Y2 - 4, 2);
 			Text(_X1 + 2, _Y1 + 2, WHITE, F("Model"));			Dot(_X1 + 2, _Y1 + 7, (_Y2 - 4) - (_Y1 + 7)); 		Bracket(_X1 + 2, _Y2 - 4, 2);
-			Text(_X1 + 3, _Y1 + 2, WHITE, F("Firmware"));		Dot(_X1 + 3, _Y1 + 11, (_Y2 - 12) - (_Y1 + 11)); 	Bracket(_X1 + 3, _Y2 - 12, 10);
+			Text(_X1 + 3, _Y1 + 2, WHITE, F("Firmware"));		Dot(_X1 + 3, _Y1 + 10, (_Y2 - 12) - (_Y1 + 10)); 	Bracket(_X1 + 3, _Y2 - 12, 10);
 			Text(_X1 + 4, _Y1 + 2, WHITE, F("IMEI"));			Dot(_X1 + 4, _Y1 + 6, (_Y2 - 18) - (_Y1 + 6)); 		Bracket(_X1 + 4, _Y2 - 18, 16);
 			Text(_X1 + 5, _Y1 + 2, WHITE, F("Serial ID"));		Dot(_X1 + 5, _Y1 + 11, (_Y2 - 13) - (_Y1 + 11)); 	Bracket(_X1 + 5, _Y2 - 13, 11);
 			Text(_X1 + 6, _Y1 + 2, WHITE, F("ICCID"));			Dot(_X1 + 6, _Y1 + 7, (_Y2 - 22) - (_Y1 + 7)); 		Bracket(_X1 + 6, _Y2 - 22, 20);
