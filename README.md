@@ -1,8 +1,8 @@
-# VT100 Console Library <sup>V1.0</sup>
+# VT100 Console Library <sup>V1.4</sup>
 
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/akkoyun/Console) ![arduino-library-badge](https://www.ardu-badge.com/badge/Console.svg?) ![Visits Badge](https://badges.pufler.dev/visits/akkoyun/Console) ![GitHub stars](https://img.shields.io/github/stars/akkoyun/Console?style=flat&logo=github) ![Updated Badge](https://badges.pufler.dev/updated/akkoyun/Console) ![PlatformIO Registry](https://badges.registry.platformio.org/packages/akkoyun/library/Console.svg)
 
-	Build - 01.00.07
+	Build - 01.04.00
 
 ---
 
