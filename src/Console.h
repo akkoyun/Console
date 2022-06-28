@@ -500,7 +500,7 @@ class Console {
 
 			// Draw State Box
 			Draw_Box(_X1, _Y1, _X2, _Y2, "", 0, false, false);
-			Vertical_Divider(_X1, _Y1 + 105, 2);
+			Vertical_Divider(_X1, _Y1 + 100, 2);
 
 			// Print Text	
 			Text(_X1 + 1, _Y1 + 2, WHITE, F("R [ ] -"));
@@ -513,7 +513,7 @@ class Console {
 			Text(_X1 + 1, _Y1 + 62, WHITE, F("Mp [ ]"));
 
 			// Print Instant Value
-			Text(_X1 + 1, _Y1 + 113, WHITE, F("Bar"));
+			Text(_X1 + 1, _Y1 + 103, WHITE, F("Command"));
 
 		}
 
