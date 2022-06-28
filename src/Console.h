@@ -650,7 +650,7 @@ class Console {
 			this->Text(2, 53, WHITE, F("PowerStat V3"));
 
 			// Header Titles
-			Text(2, 3, WHITE, F("Up Time : "));
+			this->Text(2, 3, WHITE, F("Up Time : "));
 
 			// Draw Hardware Diagnostic
 			this->Print_Diagnostic(4, 2, 12, 39);
@@ -687,7 +687,28 @@ class Console {
 
 			// Data Box
 			this->Draw_Box(42, 2, 49, 119, "JSON", 0, false, false);
-			
+
+			// Footer Dividers
+			this->Text(50, 30, WHITE, F("┬"));
+			this->Text(50, 62, WHITE, F("┬"));
+			this->Text(50, 92, WHITE, F("┬"));
+			this->Text(51, 30, WHITE, F("│"));
+			this->Text(51, 62, WHITE, F("│"));
+			this->Text(51, 92, WHITE, F("│"));
+			this->Text(52, 30, WHITE, F("┴"));
+			this->Text(52, 62, WHITE, F("┴"));
+			this->Text(52, 92, WHITE, F("┴"));
+
+			// Footer Texts
+			this->Text(51, 3, WHITE, F("Interval :"));
+			this->Text(51, 17, WHITE, F("min"));
+			this->Text(51, 21, WHITE, F("/"));
+			this->Text(51, 26, WHITE, F("min"));
+			this->Text(51, 32, WHITE, F("Regression Limit : %"));
+			this->Text(51, 64, WHITE, F("Pressure Slope : %"));
+			this->Text(51, 94, WHITE, F("Pressure :"));
+			this->Text(51, 113, WHITE, F("Bar"));
+
 		}
 
 
