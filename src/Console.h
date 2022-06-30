@@ -843,6 +843,12 @@ class Console {
 			this->Text(51, 94, WHITE, F("Pressure :"));
 			this->Text(51, 113, WHITE, F("Bar"));
 
+			// Fault Control Box
+			this->Draw_Box(53, 1, 55, 120, "", 0, false, false);
+
+			// Fault Texts
+			this->Text(54, 3, WHITE, F("PL [ ] - Th [ ] - MP [ ] - RA [ ] - VC [ ] - FQC [ ] - PFC [ ] - VIMBC [ ] - IIMBC [ ] - PIC [ ] - PDC [ ]"));
+
 		}
 
 		/**
