@@ -784,7 +784,7 @@ class Console {
 			this->Text(_X + 1, _Y + 52, WHITE, F("PowerStat V3"));
 
 			// Header Titles
-			this->Text(2, 3, WHITE, F("Up Time : "));
+			this->Text(2, 3, WHITE, F("Counter : "));
 
 			// Draw Hardware Diagnostic
 			this->Print_Diagnostic(_X + 3, _Y + 1, _X + 11, _Y + 38);
