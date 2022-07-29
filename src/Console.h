@@ -350,19 +350,19 @@ class Console {
 			Draw_Box(_X1, _Y1, _X2, _Y2, "GSM Connection", 5, false, false);
 
 			// Print Text	
-			Text(_X1 + 1, _Y1 + 2, WHITE, F("AT#REGMODE=1"));					Dot(_X1 + 1, _Y1 + 14, (_Y2 - 7) - (_Y1 + 14)); 	Bracket(_X1 + 1, _Y2 - 7, 5);
+			Text(_X1 + 1, _Y1 + 2, WHITE, F("AT#REGMODE=0"));					Dot(_X1 + 1, _Y1 + 14, (_Y2 - 7) - (_Y1 + 14)); 	Bracket(_X1 + 1, _Y2 - 7, 5);
 			Text(_X1 + 2, _Y1 + 2, WHITE, F("AT#TXMONMODE=1"));					Dot(_X1 + 2, _Y1 + 15, (_Y2 - 7) - (_Y1 + 15)); 	Bracket(_X1 + 2, _Y2 - 7, 5);
-			Text(_X1 + 3, _Y1 + 2, WHITE, F("AT+CREG=0"));						Dot(_X1 + 3, _Y1 + 11, (_Y2 - 7) - (_Y1 + 11)); 	Bracket(_X1 + 3, _Y2 - 7, 5);
-			Text(_X1 + 4, _Y1 + 2, WHITE, F("AT+CGREG=0"));						Dot(_X1 + 4, _Y1 + 12, (_Y2 - 7) - (_Y1 + 12)); 	Bracket(_X1 + 4, _Y2 - 7, 5);
-			Text(_X1 + 5, _Y1 + 2, WHITE, F("AT#SCFG=1,1,1500,90,600,50"));		Dot(_X1 + 5, _Y1 + 28, (_Y2 - 7) - (_Y1 + 28)); 	Bracket(_X1 + 5, _Y2 - 7, 5);
-			Text(_X1 + 6, _Y1 + 2, WHITE, F("AT#SCFG=2,1,1500,90,300,50"));		Dot(_X1 + 6, _Y1 + 28, (_Y2 - 7) - (_Y1 + 28)); 	Bracket(_X1 + 6, _Y2 - 7, 5);
-			Text(_X1 + 7, _Y1 + 2, WHITE, F("AT#SCFGEXT=2,1,0,1,0,0"));			Dot(_X1 + 7, _Y1 + 24, (_Y2 - 7) - (_Y1 + 24)); 	Bracket(_X1 + 7, _Y2 - 7, 5);
-			Text(_X1 + 8, _Y1 + 2, WHITE, F("AT+CGDCONT=1,\"IP\",\"mgbs\""));	Dot(_X1 + 8, _Y1 + 26, (_Y2 - 7) - (_Y1 + 26)); 	Bracket(_X1 + 8, _Y2 - 7, 5);
-			Text(_X1 + 9, _Y1 + 2, WHITE, F("AT#SERVIFO"));						Dot(_X1 + 9, _Y1 + 12, (_Y2 - 7) - (_Y1 + 12)); 	Bracket(_X1 + 9, _Y2 - 7, 5);
-			Text(_X1 + 10, _Y1 + 2, WHITE, F("AT+CGACT=1,1"));					Dot(_X1 + 10, _Y1 + 14, (_Y2 - 7) - (_Y1 + 14));	Bracket(_X1 + 10, _Y2 - 7, 5);
-			Text(_X1 + 11, _Y1 + 2, WHITE, F("AT+CGPADDR=1"));					Dot(_X1 + 11, _Y1 + 14, (_Y2 - 7) - (_Y1 + 14));	Bracket(_X1 + 11, _Y2 - 7, 5);
-			Text(_X1 + 12, _Y1 + 2, WHITE, F("AT#HTTPCFG=1,\"*****\",80,0"));	Dot(_X1 + 12, _Y1 + 27, (_Y2 - 7) - (_Y1 + 27)); 	Bracket(_X1 + 12, _Y2 - 7, 5);
-			Text(_X1 + 13, _Y1 + 2, WHITE, F("AT#ICMP=1"));						Dot(_X1 + 13, _Y1 + 11, (_Y2 - 7) - (_Y1 + 11)); 	Bracket(_X1 + 13, _Y2 - 7, 5);
+			Text(_X1 + 3, _Y1 + 2, WHITE, F("AT+COPS=0,2,28601"));				Dot(_X1 + 3, _Y1 + 18, (_Y2 - 7) - (_Y1 + 18)); 	Bracket(_X1 + 3, _Y2 - 7, 5);
+			Text(_X1 + 4, _Y1 + 2, WHITE, F("AT#AUTOBND=1"));					Dot(_X1 + 4, _Y1 + 14, (_Y2 - 7) - (_Y1 + 14)); 	Bracket(_X1 + 4, _Y2 - 7, 5);
+			Text(_X1 + 5, _Y1 + 2, WHITE, F("AT+CREG=0"));						Dot(_X1 + 5, _Y1 + 11, (_Y2 - 7) - (_Y1 + 11)); 	Bracket(_X1 + 5, _Y2 - 7, 5);
+			Text(_X1 + 6, _Y1 + 2, WHITE, F("AT+CGREG=0"));						Dot(_X1 + 6, _Y1 + 12, (_Y2 - 7) - (_Y1 + 12)); 	Bracket(_X1 + 6, _Y2 - 7, 5);
+			Text(_X1 + 7, _Y1 + 2, WHITE, F("AT+CGDCONT=1,\"IP\",\"mgbs\""));	Dot(_X1 + 7, _Y1 + 26, (_Y2 - 7) - (_Y1 + 26)); 	Bracket(_X1 + 7, _Y2 - 7, 5);
+			Text(_X1 + 8, _Y1 + 2, WHITE, F("AT#SGACT=1,1"));					Dot(_X1 + 8, _Y1 + 14, (_Y2 - 7) - (_Y1 + 14));		Bracket(_X1 + 8, _Y2 - 7, 5);
+			Text(_X1 + 9, _Y1 + 2, WHITE, F("AT+CSQ")); 						Dot(_X1 + 9, _Y1 + 8, (_Y2 - 7) - (_Y1 + 8)); 		Bracket(_X1 + 9, _Y2 - 7, 5);
+			Text(_X1 + 10, _Y1 + 2, WHITE, F("AT#FRWL=1...")); 					Dot(_X1 + 10, _Y1 + 14, (_Y2 - 7) - (_Y1 + 14));	Bracket(_X1 + 10, _Y2 - 7, 5);
+			Text(_X1 + 11, _Y1 + 2, WHITE, F("AT#ICMP=1"));						Dot(_X1 + 11, _Y1 + 11, (_Y2 - 7) - (_Y1 + 11)); 	Bracket(_X1 + 11, _Y2 - 7, 5);
+			Text(_X1 + 12, _Y1 + 2, WHITE, F("AT#MONI"));						Dot(_X1 + 12, _Y1 + 8, (_Y2 - 7) - (_Y1 + 8)); 		Bracket(_X1 + 12, _Y2 - 7, 5);
+			Text(_X1 + 13, _Y1 + 2, WHITE, F("AT+CCLK?"));						Dot(_X1 + 13, _Y1 + 9, (_Y2 - 7) - (_Y1 + 9)); 		Bracket(_X1 + 13, _Y2 - 7, 5);
 
 		}
 
