@@ -1071,6 +1071,20 @@ class Console {
 			
 		}
 
+		/**
+		 * @brief HDC2010 TH Meter
+		 * @version 01.00.00
+		 */
+		void HDC2010_TH_Meter(void) {
+
+			// Draw Main Screen
+			Draw_Box(1, 1, 8, 38, "HDC2010 T/H Sensor", 1, true, true);
+			Text(3, 3, WHITE, F("Temperature..........[         C ]"));
+			Text(4, 3, WHITE, F("Humidity.............[         % ]"));
+			Text(7, 3, WHITE, F("Function Time............[    ms ]"));
+			
+		}
+
 };
 
 #endif /* defined(__Console__) */
