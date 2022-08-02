@@ -1085,6 +1085,20 @@ class Console {
 			
 		}
 
+		/**
+		 * @brief Analog Pressure Meter
+		 * @version 01.00.00
+		 */
+		void Analog_Pressure_Meter(void) {
+
+			// Draw Main Screen
+			Draw_Box(1, 1, 8, 38, "Analog P Sensor", 1, false, true);
+			Text(3, 3, WHITE, F("Pressure...........[         Bar ]"));
+			Text(4, 3, WHITE, F("Deviation..............[         ]"));
+			Text(7, 3, WHITE, F("Function Time............[    ms ]"));
+			
+		}
+
 };
 
 #endif /* defined(__Console__) */
