@@ -653,47 +653,51 @@ class Console {
 		 */
 		void I2C_Scanner_Table(void) {
 
-			// Draw Console Table Grid
-			for (uint8_t i = 1; i <= 23; i = i + 2) Horizontal_Divider(i, 1, 120, false);
-			Vertical_Divider(1, 1, 22);
-			for (uint8_t i = 9; i <= 120; i = i + 7) Vertical_Divider(3, i, 18);
-			Vertical_Divider(1, 121, 22);
+			#ifdef I2C_SCANNER_TEMPLATE
 
-			// Draw Corners
-			this->Text(1, 1, WHITE, F("┌"));
-			this->Text(1, 121, WHITE, F("┐"));
-			this->Text(23, 1, WHITE, F("└"));
-			this->Text(23, 121, WHITE, F("┘"));
+				// Draw Console Table Grid
+				for (uint8_t i = 1; i <= 23; i = i + 2) Horizontal_Divider(i, 1, 120, false);
+				Vertical_Divider(1, 1, 22);
+				for (uint8_t i = 9; i <= 120; i = i + 7) Vertical_Divider(3, i, 18);
+				Vertical_Divider(1, 121, 22);
 
-			// Draw T
-			for (uint8_t i = 3; i <= 21; i = i + 2) {Set_Cursor(i,1); Serial.print(F("├"));}
-			for (uint8_t i = 3; i <= 21; i = i + 2) {Set_Cursor(i,121); Serial.print(F("┤"));}
-			
-			// Draw Cross Section
-			for (uint8_t i = 5; i <= 19; i = i + 2) {for (uint8_t j = 9; j <= 120; j = j + 7) {Set_Cursor(i,j); Serial.print(F("┼"));}}
-			
-			// Write Text
-			this->Text(1, 60, WHITE, F("I2C Device Explorer"));
-			this->Text(22, 3, WHITE, F("Total connected device :"));
-			this->Text(22, 86, WHITE, F("Current Mux Channel [0-8] :"));
-			this->Text(24, 100, WHITE, F("github.com/akkoyun"));
+				// Draw Corners
+				this->Text(1, 1, WHITE, F("┌"));
+				this->Text(1, 121, WHITE, F("┐"));
+				this->Text(23, 1, WHITE, F("└"));
+				this->Text(23, 121, WHITE, F("┘"));
 
-			// Print Colum Headers
-			uint8_t _C = 0;
-			for (uint8_t i = 6; i <= 21; i = i + 2) {
-				this->Text(i, 3, WHITE, F("0x"));
-				this->Text(i, 5, WHITE, String(_C));
-				this->Text(i, 6, WHITE, F("_"));
-				_C++;
-			}
+				// Draw T
+				for (uint8_t i = 3; i <= 21; i = i + 2) {Set_Cursor(i,1); Serial.print(F("├"));}
+				for (uint8_t i = 3; i <= 21; i = i + 2) {Set_Cursor(i,121); Serial.print(F("┤"));}
+				
+				// Draw Cross Section
+				for (uint8_t i = 5; i <= 19; i = i + 2) {for (uint8_t j = 9; j <= 120; j = j + 7) {Set_Cursor(i,j); Serial.print(F("┼"));}}
+				
+				// Write Text
+				this->Text(1, 60, WHITE, F("I2C Device Explorer"));
+				this->Text(22, 3, WHITE, F("Total connected device :"));
+				this->Text(22, 86, WHITE, F("Current Mux Channel [0-8] :"));
+				this->Text(24, 100, WHITE, F("github.com/akkoyun"));
 
-			// Print Row Headers
-			uint8_t _R = 0;
-			for (uint8_t i = 11; i <= 121; i = i + 7) {
-				this->Text(4, i, WHITE, F("0x_"));
-				this->Text(4, i + 3, WHITE, String(_R, HEX));
-				_R++;
-			}
+				// Print Colum Headers
+				uint8_t _C = 0;
+				for (uint8_t i = 6; i <= 21; i = i + 2) {
+					this->Text(i, 3, WHITE, F("0x"));
+					this->Text(i, 5, WHITE, String(_C));
+					this->Text(i, 6, WHITE, F("_"));
+					_C++;
+				}
+
+				// Print Row Headers
+				uint8_t _R = 0;
+				for (uint8_t i = 11; i <= 121; i = i + 7) {
+					this->Text(4, i, WHITE, F("0x_"));
+					this->Text(4, i + 3, WHITE, String(_R, HEX));
+					_R++;
+				}
+
+			#endif
 
 		}
 
@@ -703,68 +707,72 @@ class Console {
 		 */
 		void MAX78630(void) {
 
-			// Draw Main Box
-			this->Draw_Box(1, 1, 40, 80, "", 0, true, true);
+			#ifdef MAX78630_TEMPLATE
 
-			// Print Header 
-			this->Text(1, 40, WHITE, F("MAX78630 Energy Meter"));
+				// Draw Main Box
+				this->Draw_Box(1, 1, 40, 80, "", 0, true, true);
+
+				// Print Header 
+				this->Text(1, 40, WHITE, F("MAX78630 Energy Meter"));
 
 
 
 
-			// Draw Voltage
-			Draw_Box(4, 2, 27, 32, "Voltage", 1, false, false);
-			Text(6, 4, WHITE, F("VScale")); Dot(6, 10, 11); Bracket(6, 21, 9); Text(6, 29, WHITE, F(""));
-			Text(7, 4, WHITE, F("VA_GAIN")); Dot(7, 11, 10); Bracket(7, 21, 9); Text(7, 29, WHITE, F(""));
-			Text(8, 4, WHITE, F("VB_GAIN")); Dot(8, 11, 10); Bracket(8, 21, 9); Text(8, 29, WHITE, F(""));
-			Text(9, 4, WHITE, F("VC_GAIN")); Dot(9, 11, 10); Bracket(9, 21, 9); Text(9, 29, WHITE, F(""));
-			Text(10, 4, WHITE, F("VA_OFFS")); Dot(10, 11, 10); Bracket(10, 21, 9); Text(10, 29, WHITE, F(""));
-			Text(11, 4, WHITE, F("VB_OFFS")); Dot(11, 11, 10); Bracket(11, 21, 9); Text(11, 29, WHITE, F(""));
-			Text(12, 4, WHITE, F("VC_OFFS")); Dot(12, 11, 10); Bracket(12, 21, 9); Text(12, 29, WHITE, F(""));
-			Text(13, 4, WHITE, F("HPF_COEF_V")); Dot(13, 14, 7); Bracket(13, 21, 9); Text(13, 29, WHITE, F(""));
-			Text(14, 4, WHITE, F("VA_RMS")); Dot(14, 10, 11); Bracket(14, 21, 9); Text(14, 29, WHITE, F("V"));
-			Text(15, 4, WHITE, F("VB_RMS")); Dot(15, 10, 11); Bracket(15, 21, 9); Text(15, 29, WHITE, F("V"));
-			Text(16, 4, WHITE, F("VC_RMS")); Dot(16, 10, 11); Bracket(16, 21, 9); Text(16, 29, WHITE, F("V"));
-			Text(17, 4, WHITE, F("VT_RMS")); Dot(17, 10, 11); Bracket(17, 21, 9); Text(17, 29, WHITE, F("V"));
-			Text(18, 4, WHITE, F("VA")); Dot(18, 6, 15); Bracket(18, 21, 9); Text(18, 29, WHITE, F("V"));
-			Text(19, 4, WHITE, F("VB")); Dot(19, 6, 15); Bracket(19, 21, 9); Text(19, 29, WHITE, F("V"));
-			Text(20, 4, WHITE, F("VC")); Dot(20, 6, 15); Bracket(20, 21, 9); Text(20, 29, WHITE, F("V"));
-			Text(21, 4, WHITE, F("VA_FUND")); Dot(21, 11, 10); Bracket(21, 21, 9); Text(21, 29, WHITE, F("V"));
-			Text(22, 4, WHITE, F("VB_FUND")); Dot(22, 11, 10); Bracket(22, 21, 9); Text(22, 29, WHITE, F("V"));
-			Text(23, 4, WHITE, F("VC_FUND")); Dot(23, 11, 10); Bracket(23, 21, 9); Text(23, 29, WHITE, F("V"));
-			Text(24, 4, WHITE, F("VA_HARM")); Dot(24, 11, 10); Bracket(24, 21, 9); Text(24, 29, WHITE, F("V"));
-			Text(25, 4, WHITE, F("VB_HARM")); Dot(25, 11, 10); Bracket(25, 21, 9); Text(25, 29, WHITE, F("V"));
-			Text(26, 4, WHITE, F("VC_HARM")); Dot(26, 11, 10); Bracket(26, 21, 9); Text(26, 29, WHITE, F("V"));
+				// Draw Voltage
+				Draw_Box(4, 2, 27, 32, "Voltage", 1, false, false);
+				Text(6, 4, WHITE, F("VScale")); Dot(6, 10, 11); Bracket(6, 21, 9); Text(6, 29, WHITE, F(""));
+				Text(7, 4, WHITE, F("VA_GAIN")); Dot(7, 11, 10); Bracket(7, 21, 9); Text(7, 29, WHITE, F(""));
+				Text(8, 4, WHITE, F("VB_GAIN")); Dot(8, 11, 10); Bracket(8, 21, 9); Text(8, 29, WHITE, F(""));
+				Text(9, 4, WHITE, F("VC_GAIN")); Dot(9, 11, 10); Bracket(9, 21, 9); Text(9, 29, WHITE, F(""));
+				Text(10, 4, WHITE, F("VA_OFFS")); Dot(10, 11, 10); Bracket(10, 21, 9); Text(10, 29, WHITE, F(""));
+				Text(11, 4, WHITE, F("VB_OFFS")); Dot(11, 11, 10); Bracket(11, 21, 9); Text(11, 29, WHITE, F(""));
+				Text(12, 4, WHITE, F("VC_OFFS")); Dot(12, 11, 10); Bracket(12, 21, 9); Text(12, 29, WHITE, F(""));
+				Text(13, 4, WHITE, F("HPF_COEF_V")); Dot(13, 14, 7); Bracket(13, 21, 9); Text(13, 29, WHITE, F(""));
+				Text(14, 4, WHITE, F("VA_RMS")); Dot(14, 10, 11); Bracket(14, 21, 9); Text(14, 29, WHITE, F("V"));
+				Text(15, 4, WHITE, F("VB_RMS")); Dot(15, 10, 11); Bracket(15, 21, 9); Text(15, 29, WHITE, F("V"));
+				Text(16, 4, WHITE, F("VC_RMS")); Dot(16, 10, 11); Bracket(16, 21, 9); Text(16, 29, WHITE, F("V"));
+				Text(17, 4, WHITE, F("VT_RMS")); Dot(17, 10, 11); Bracket(17, 21, 9); Text(17, 29, WHITE, F("V"));
+				Text(18, 4, WHITE, F("VA")); Dot(18, 6, 15); Bracket(18, 21, 9); Text(18, 29, WHITE, F("V"));
+				Text(19, 4, WHITE, F("VB")); Dot(19, 6, 15); Bracket(19, 21, 9); Text(19, 29, WHITE, F("V"));
+				Text(20, 4, WHITE, F("VC")); Dot(20, 6, 15); Bracket(20, 21, 9); Text(20, 29, WHITE, F("V"));
+				Text(21, 4, WHITE, F("VA_FUND")); Dot(21, 11, 10); Bracket(21, 21, 9); Text(21, 29, WHITE, F("V"));
+				Text(22, 4, WHITE, F("VB_FUND")); Dot(22, 11, 10); Bracket(22, 21, 9); Text(22, 29, WHITE, F("V"));
+				Text(23, 4, WHITE, F("VC_FUND")); Dot(23, 11, 10); Bracket(23, 21, 9); Text(23, 29, WHITE, F("V"));
+				Text(24, 4, WHITE, F("VA_HARM")); Dot(24, 11, 10); Bracket(24, 21, 9); Text(24, 29, WHITE, F("V"));
+				Text(25, 4, WHITE, F("VB_HARM")); Dot(25, 11, 10); Bracket(25, 21, 9); Text(25, 29, WHITE, F("V"));
+				Text(26, 4, WHITE, F("VC_HARM")); Dot(26, 11, 10); Bracket(26, 21, 9); Text(26, 29, WHITE, F("V"));
 
-			// Draw Voltage
-			Draw_Box(4, 33, 27, 63, "Current", 1, false, false);
-			Text(6, 35, WHITE, F("IScale")); Dot(6, 41, 11); Bracket(6, 52, 9); Text(6, 60, WHITE, F(""));
-			Text(7, 35, WHITE, F("IA_GAIN")); Dot(7, 42, 10); Bracket(7, 52, 9); Text(7, 60, WHITE, F(""));
-			Text(8, 35, WHITE, F("IB_GAIN")); Dot(8, 42, 10); Bracket(8, 52, 9); Text(8, 60, WHITE, F(""));
-			Text(9, 35, WHITE, F("IC_GAIN")); Dot(9, 42, 10); Bracket(9, 52, 9); Text(9, 60, WHITE, F(""));
-			Text(10, 35, WHITE, F("IA_OFFS")); Dot(10, 42, 10); Bracket(10, 52, 9); Text(10, 60, WHITE, F(""));
-			Text(11, 35, WHITE, F("IB_OFFS")); Dot(11, 42, 10); Bracket(11, 52, 9); Text(11, 60, WHITE, F(""));
-			Text(12, 35, WHITE, F("IC_OFFS")); Dot(12, 42, 10); Bracket(12, 52, 9); Text(12, 60, WHITE, F(""));
-			Text(13, 35, WHITE, F("HPF_COEF_I")); Dot(13, 45, 7); Bracket(13, 52, 9); Text(13, 29, WHITE, F(""));
-			Text(14, 35, WHITE, F("IA_RMS")); Dot(14, 41, 11); Bracket(14, 52, 9); Text(14, 60, WHITE, F("A"));
-			Text(15, 35, WHITE, F("IB_RMS")); Dot(15, 41, 11); Bracket(15, 52, 9); Text(15, 60, WHITE, F("A"));
-			Text(16, 35, WHITE, F("IC_RMS")); Dot(16, 41, 11); Bracket(16, 52, 9); Text(16, 60, WHITE, F("A"));
-			Text(17, 35, WHITE, F("IT_RMS")); Dot(17, 41, 11); Bracket(17, 52, 9); Text(17, 60, WHITE, F("A"));
-			Text(18, 35, WHITE, F("IA")); Dot(18, 37, 15); Bracket(18, 52, 9); Text(18, 60, WHITE, F("A"));
-			Text(19, 35, WHITE, F("IB")); Dot(19, 37, 15); Bracket(19, 52, 9); Text(19, 60, WHITE, F("A"));
-			Text(20, 35, WHITE, F("IC")); Dot(20, 37, 15); Bracket(20, 52, 9); Text(20, 60, WHITE, F("A"));
-			Text(21, 35, WHITE, F("IA_FUND")); Dot(21, 42, 10); Bracket(21, 52, 9); Text(21, 60, WHITE, F("A"));
-			Text(22, 35, WHITE, F("IB_FUND")); Dot(22, 42, 10); Bracket(22, 52, 9); Text(22, 60, WHITE, F("A"));
-			Text(23, 35, WHITE, F("IC_FUND")); Dot(23, 42, 10); Bracket(23, 52, 9); Text(23, 60, WHITE, F("A"));
-			Text(24, 35, WHITE, F("IA_HARM")); Dot(24, 42, 10); Bracket(24, 52, 9); Text(24, 60, WHITE, F("A"));
-			Text(25, 35, WHITE, F("IB_HARM")); Dot(25, 42, 10); Bracket(25, 52, 9); Text(25, 60, WHITE, F("A"));
-			Text(26, 35, WHITE, F("IC_HARM")); Dot(26, 42, 10); Bracket(26, 52, 9); Text(26, 60, WHITE, F("A"));
+				// Draw Voltage
+				Draw_Box(4, 33, 27, 63, "Current", 1, false, false);
+				Text(6, 35, WHITE, F("IScale")); Dot(6, 41, 11); Bracket(6, 52, 9); Text(6, 60, WHITE, F(""));
+				Text(7, 35, WHITE, F("IA_GAIN")); Dot(7, 42, 10); Bracket(7, 52, 9); Text(7, 60, WHITE, F(""));
+				Text(8, 35, WHITE, F("IB_GAIN")); Dot(8, 42, 10); Bracket(8, 52, 9); Text(8, 60, WHITE, F(""));
+				Text(9, 35, WHITE, F("IC_GAIN")); Dot(9, 42, 10); Bracket(9, 52, 9); Text(9, 60, WHITE, F(""));
+				Text(10, 35, WHITE, F("IA_OFFS")); Dot(10, 42, 10); Bracket(10, 52, 9); Text(10, 60, WHITE, F(""));
+				Text(11, 35, WHITE, F("IB_OFFS")); Dot(11, 42, 10); Bracket(11, 52, 9); Text(11, 60, WHITE, F(""));
+				Text(12, 35, WHITE, F("IC_OFFS")); Dot(12, 42, 10); Bracket(12, 52, 9); Text(12, 60, WHITE, F(""));
+				Text(13, 35, WHITE, F("HPF_COEF_I")); Dot(13, 45, 7); Bracket(13, 52, 9); Text(13, 29, WHITE, F(""));
+				Text(14, 35, WHITE, F("IA_RMS")); Dot(14, 41, 11); Bracket(14, 52, 9); Text(14, 60, WHITE, F("A"));
+				Text(15, 35, WHITE, F("IB_RMS")); Dot(15, 41, 11); Bracket(15, 52, 9); Text(15, 60, WHITE, F("A"));
+				Text(16, 35, WHITE, F("IC_RMS")); Dot(16, 41, 11); Bracket(16, 52, 9); Text(16, 60, WHITE, F("A"));
+				Text(17, 35, WHITE, F("IT_RMS")); Dot(17, 41, 11); Bracket(17, 52, 9); Text(17, 60, WHITE, F("A"));
+				Text(18, 35, WHITE, F("IA")); Dot(18, 37, 15); Bracket(18, 52, 9); Text(18, 60, WHITE, F("A"));
+				Text(19, 35, WHITE, F("IB")); Dot(19, 37, 15); Bracket(19, 52, 9); Text(19, 60, WHITE, F("A"));
+				Text(20, 35, WHITE, F("IC")); Dot(20, 37, 15); Bracket(20, 52, 9); Text(20, 60, WHITE, F("A"));
+				Text(21, 35, WHITE, F("IA_FUND")); Dot(21, 42, 10); Bracket(21, 52, 9); Text(21, 60, WHITE, F("A"));
+				Text(22, 35, WHITE, F("IB_FUND")); Dot(22, 42, 10); Bracket(22, 52, 9); Text(22, 60, WHITE, F("A"));
+				Text(23, 35, WHITE, F("IC_FUND")); Dot(23, 42, 10); Bracket(23, 52, 9); Text(23, 60, WHITE, F("A"));
+				Text(24, 35, WHITE, F("IA_HARM")); Dot(24, 42, 10); Bracket(24, 52, 9); Text(24, 60, WHITE, F("A"));
+				Text(25, 35, WHITE, F("IB_HARM")); Dot(25, 42, 10); Bracket(25, 52, 9); Text(25, 60, WHITE, F("A"));
+				Text(26, 35, WHITE, F("IC_HARM")); Dot(26, 42, 10); Bracket(26, 52, 9); Text(26, 60, WHITE, F("A"));
 
-			// Draw Frequency
-			Draw_Box(28, 2, 33, 32, "Frequency", 1, false, false);
-			Text(30, 4, WHITE, F("Frequency")); Dot(30, 13, 8); Bracket(30, 21, 9); Text(30, 28, WHITE, F("Hz"));
-			Text(31, 4, WHITE, F("F_MIN")); Dot(31, 9, 12); Bracket(31, 21, 9); Text(31, 28, WHITE, F("Hz"));
-			Text(32, 4, WHITE, F("F_MAX")); Dot(32, 9, 12); Bracket(32, 21, 9); Text(32, 28, WHITE, F("Hz"));
+				// Draw Frequency
+				Draw_Box(28, 2, 33, 32, "Frequency", 1, false, false);
+				Text(30, 4, WHITE, F("Frequency")); Dot(30, 13, 8); Bracket(30, 21, 9); Text(30, 28, WHITE, F("Hz"));
+				Text(31, 4, WHITE, F("F_MIN")); Dot(31, 9, 12); Bracket(31, 21, 9); Text(31, 28, WHITE, F("Hz"));
+				Text(32, 4, WHITE, F("F_MAX")); Dot(32, 9, 12); Bracket(32, 21, 9); Text(32, 28, WHITE, F("Hz"));
+
+			#endif
 
 		}
 
@@ -774,80 +782,84 @@ class Console {
 		 */
 		void PowerStat(uint8_t _X = 1, uint8_t _Y = 1) {
 
-			// _X = 1
-			// _Y = 1
+			#ifdef POWERSTAT_TEMPLATE
 
-			// Draw Main Box
-			Draw_Box(_X, _Y, _X + 51, _Y + 119, "", 0, true, true);
+				// _X = 1
+				// _Y = 1
 
-			// Print Main Header Text
-			this->Text(_X + 1, _Y + 52, WHITE, F("PowerStat V3"));
+				// Draw Main Box
+				Draw_Box(_X, _Y, _X + 51, _Y + 119, "", 0, true, true);
 
-			// Header Titles
-			this->Text(2, 3, WHITE, F("Counter : "));
+				// Print Main Header Text
+				this->Text(_X + 1, _Y + 52, WHITE, F("PowerStat V3"));
 
-			// Draw Hardware Diagnostic
-			this->Print_Diagnostic(_X + 3, _Y + 1, _X + 11, _Y + 38);
+				// Header Titles
+				this->Text(2, 3, WHITE, F("Counter : "));
 
-			// Draw Detail Box
-			this->Print_Detail(_X + 3, _Y + 39, _X + 11, _Y + 78);
+				// Draw Hardware Diagnostic
+				this->Print_Diagnostic(_X + 3, _Y + 1, _X + 11, _Y + 38);
 
-			// Draw Battery Box
-			this->Print_Battery(_X + 3, _Y + 79, _X + 11, _Y + 118);
+				// Draw Detail Box
+				this->Print_Detail(_X + 3, _Y + 39, _X + 11, _Y + 78);
 
-			// Draw GSM Setup Box
-			this->Print_GSM_Setup(_X + 12, _Y + 1, _X + 26, _Y + 38);
+				// Draw Battery Box
+				this->Print_Battery(_X + 3, _Y + 79, _X + 11, _Y + 118);
 
-			// Draw GSM Connection Box
-			this->Print_GSM_Connection(_X + 12, _Y + 39, _X + 26, _Y + 78);
+				// Draw GSM Setup Box
+				this->Print_GSM_Setup(_X + 12, _Y + 1, _X + 26, _Y + 38);
 
-			// Draw GSM Detail Box
-			this->Print_GSM_Detail(_X + 12, _Y + 79, _X + 19, _Y + 118);
+				// Draw GSM Connection Box
+				this->Print_GSM_Connection(_X + 12, _Y + 39, _X + 26, _Y + 78);
 
-			// Draw GSM Connection Detail Box
-			this->Print_GSM_Connection_Detail(_X + 20, _Y + 79, _X + 26, _Y + 118);
+				// Draw GSM Detail Box
+				this->Print_GSM_Detail(_X + 12, _Y + 79, _X + 19, _Y + 118);
 
-			// GSM Power Box
-			this->Draw_Box(_X + 27, _Y + 1, _X + 29, _Y + 118, "", 0, false, false);
+				// Draw GSM Connection Detail Box
+				this->Print_GSM_Connection_Detail(_X + 20, _Y + 79, _X + 26, _Y + 118);
 
-			// Power Box
-			this->Print_Power_Detail(_X + 30, _Y + 1, _X + 37, _Y + 59);
+				// GSM Power Box
+				this->Draw_Box(_X + 27, _Y + 1, _X + 29, _Y + 118, "", 0, false, false);
 
-			// Power Check
-			this->Print_Power_Fault_Detail(_X + 30, _Y + 60, _X + 37, _Y + 118);
+				// Power Box
+				this->Print_Power_Detail(_X + 30, _Y + 1, _X + 37, _Y + 59);
 
-			// State Detail Box
-			this->Print_State_Detail(_X + 38, _Y + 1, _X + 40, _Y + 118);
+				// Power Check
+				this->Print_Power_Fault_Detail(_X + 30, _Y + 60, _X + 37, _Y + 118);
 
-			// Data Box
-			this->Draw_Box(42, 2, 49, 119, "JSON", 0, false, false);
+				// State Detail Box
+				this->Print_State_Detail(_X + 38, _Y + 1, _X + 40, _Y + 118);
 
-			// Footer Dividers
-			this->Text(50, 30, WHITE, F("┬"));
-			this->Text(50, 62, WHITE, F("┬"));
-			this->Text(50, 92, WHITE, F("┬"));
-			this->Text(51, 30, WHITE, F("│"));
-			this->Text(51, 62, WHITE, F("│"));
-			this->Text(51, 92, WHITE, F("│"));
-			this->Text(52, 30, WHITE, F("┴"));
-			this->Text(52, 62, WHITE, F("┴"));
-			this->Text(52, 92, WHITE, F("┴"));
+				// Data Box
+				this->Draw_Box(42, 2, 49, 119, "JSON", 0, false, false);
 
-			// Footer Texts
-			this->Text(51, 3, WHITE, F("Interval :"));
-			this->Text(51, 17, WHITE, F("min"));
-			this->Text(51, 21, WHITE, F("/"));
-			this->Text(51, 26, WHITE, F("min"));
-			this->Text(51, 32, WHITE, F("Regression Limit : %"));
-			this->Text(51, 64, WHITE, F("Pressure Slope : %"));
-			this->Text(51, 94, WHITE, F("Pressure :"));
-			this->Text(51, 113, WHITE, F("Bar"));
+				// Footer Dividers
+				this->Text(50, 30, WHITE, F("┬"));
+				this->Text(50, 62, WHITE, F("┬"));
+				this->Text(50, 92, WHITE, F("┬"));
+				this->Text(51, 30, WHITE, F("│"));
+				this->Text(51, 62, WHITE, F("│"));
+				this->Text(51, 92, WHITE, F("│"));
+				this->Text(52, 30, WHITE, F("┴"));
+				this->Text(52, 62, WHITE, F("┴"));
+				this->Text(52, 92, WHITE, F("┴"));
 
-			// Fault Control Box
-			this->Draw_Box(53, 1, 55, 120, "", 0, false, false);
+				// Footer Texts
+				this->Text(51, 3, WHITE, F("Interval :"));
+				this->Text(51, 17, WHITE, F("min"));
+				this->Text(51, 21, WHITE, F("/"));
+				this->Text(51, 26, WHITE, F("min"));
+				this->Text(51, 32, WHITE, F("Regression Limit : %"));
+				this->Text(51, 64, WHITE, F("Pressure Slope : %"));
+				this->Text(51, 94, WHITE, F("Pressure :"));
+				this->Text(51, 113, WHITE, F("Bar"));
 
-			// Fault Texts
-			this->Text(54, 3, WHITE, F("PL [ ] - Th [ ] - MP [ ] - RA [ ] - VC [ ] - FQC [ ] - PFC [ ] - VIMBC [ ] - IIMBC [ ] - PIC [ ] - PDC [ ]"));
+				// Fault Control Box
+				this->Draw_Box(53, 1, 55, 120, "", 0, false, false);
+
+				// Fault Texts
+				this->Text(54, 3, WHITE, F("PL [ ] - Th [ ] - MP [ ] - RA [ ] - VC [ ] - FQC [ ] - PFC [ ] - VIMBC [ ] - IIMBC [ ] - PIC [ ] - PDC [ ]"));
+
+			#endif
 
 		}
 
@@ -857,157 +869,161 @@ class Console {
 		 */
 		void FilterStat(void) {
 
-			// Draw Main Screen
-			Draw_Box(1, 1, 49, 120, "", 0, true, 1);
-			//Print_Box_Title(1,1,59,F("FilterStat V3"));
+			#ifdef FILTERSTAT_TEMPLATE
 
-			// Header Titles
-			Text(2, 3, WHITE, F("Up Time : "));
+				// Draw Main Screen
+				Draw_Box(1, 1, 49, 120, "", 0, true, 1);
+				//Print_Box_Title(1,1,59,F("FilterStat V3"));
 
-			// Draw Hardware Diagnostic
-			Draw_Box(4, 2, 12, 39, "Hardware Diagnostic", 1, false, false);
-			Text(5, 4, WHITE, F("I2C Multiplexer (0x70)")); Dot(5, 26, 6); Bracket(5, 32, 5);
-			Text(6, 4, WHITE, F("I2C RTC (0x52)")); Dot(6, 18, 14); Bracket(6, 32, 5);
-			Text(7, 4, WHITE, F("I2C Serial ID (0x50)")); Dot(7, 24, 8); Bracket(7, 32, 5);
-			Text(8, 4, WHITE, F("I2C Temperature (0x40)")); Dot(8, 26, 6); Bracket(8, 32, 5);
-			Text(9, 4, WHITE, F("I2C Battery Gauge (0x36)")); Dot(9, 28, 4); Bracket(9, 32, 5);
-			Text(10, 4, WHITE, F("I2C Battery Charger (0x6B)")); Dot(10, 30, 2); Bracket(10, 32, 5);
-			Text(11, 4, WHITE, F("SD Card Connection")); Dot(11, 22, 10); Bracket(11, 32, 5);
+				// Header Titles
+				Text(2, 3, WHITE, F("Up Time : "));
 
-			// Draw Detail Box
-			Draw_Box(4, 40, 12, 79, "Detail", 2, false, false);
-			Text(5, 42, WHITE, F("Serial ID")); Dot(5, 51, 9); Bracket(5, 60, 17);
-			Text(6, 42, WHITE, F("Firmware Version")); Dot(6, 58, 10); Bracket(6, 68, 9);
-			Text(7, 42, WHITE, F("Hardware Version")); Dot(7, 58, 10); Bracket(7, 68, 9);
-			Text(8, 42, WHITE, F("Module Temperature")); Dot(8, 60, 9); Bracket(8, 69, 8); Text(8, 76, WHITE, F("C"));
-			Text(9, 42, WHITE, F("Module Humidity")); Dot(9, 57, 12); Bracket(9, 69, 8); Text(9, 76, WHITE, F("%"));
+				// Draw Hardware Diagnostic
+				Draw_Box(4, 2, 12, 39, "Hardware Diagnostic", 1, false, false);
+				Text(5, 4, WHITE, F("I2C Multiplexer (0x70)")); Dot(5, 26, 6); Bracket(5, 32, 5);
+				Text(6, 4, WHITE, F("I2C RTC (0x52)")); Dot(6, 18, 14); Bracket(6, 32, 5);
+				Text(7, 4, WHITE, F("I2C Serial ID (0x50)")); Dot(7, 24, 8); Bracket(7, 32, 5);
+				Text(8, 4, WHITE, F("I2C Temperature (0x40)")); Dot(8, 26, 6); Bracket(8, 32, 5);
+				Text(9, 4, WHITE, F("I2C Battery Gauge (0x36)")); Dot(9, 28, 4); Bracket(9, 32, 5);
+				Text(10, 4, WHITE, F("I2C Battery Charger (0x6B)")); Dot(10, 30, 2); Bracket(10, 32, 5);
+				Text(11, 4, WHITE, F("SD Card Connection")); Dot(11, 22, 10); Bracket(11, 32, 5);
 
-			// Draw Battery Box
-			Draw_Box(4, 80, 12, 119, "Battery", 3, false, false);
-			Text(5, 82, WHITE, F("Instant Voltage")); Dot(5, 97, 13); Bracket(5, 110, 7);  Text(5, 116, WHITE, F("V"));
-			Text(6, 82, WHITE, F("Temperature")); Dot(6, 93, 16); Bracket(6, 109, 8); Text(6, 116, WHITE, F("C"));
-			Text(7, 82, WHITE, F("Average Current")); Dot(7, 97, 10); Bracket(7, 107, 10); Text(7, 115, WHITE, F("mA"));
-			Text(8, 82, WHITE, F("State of Charge")); Dot(8, 97, 14); Bracket(8, 111, 6); Text(8, 116, WHITE, F("%"));
-			Text(9, 82, WHITE, F("Full Battery Capacity")); Dot(9, 103, 6); Bracket(9, 109, 8); Text(9, 115, WHITE, F("mA"));
-			Text(10, 82, WHITE, F("Instant Battery Capacity")); Dot(10, 106, 3); Bracket(10, 109, 8); Text(10, 115, WHITE, F("mA"));
-			Text(11, 82, WHITE, F("Cycle Count")); Dot(11, 93, 19); Bracket(11, 112, 5);
+				// Draw Detail Box
+				Draw_Box(4, 40, 12, 79, "Detail", 2, false, false);
+				Text(5, 42, WHITE, F("Serial ID")); Dot(5, 51, 9); Bracket(5, 60, 17);
+				Text(6, 42, WHITE, F("Firmware Version")); Dot(6, 58, 10); Bracket(6, 68, 9);
+				Text(7, 42, WHITE, F("Hardware Version")); Dot(7, 58, 10); Bracket(7, 68, 9);
+				Text(8, 42, WHITE, F("Module Temperature")); Dot(8, 60, 9); Bracket(8, 69, 8); Text(8, 76, WHITE, F("C"));
+				Text(9, 42, WHITE, F("Module Humidity")); Dot(9, 57, 12); Bracket(9, 69, 8); Text(9, 76, WHITE, F("%"));
 
-			// Draw GSM Setup Box
-			Draw_Box(13, 2, 27, 39, "GSM Setup", 4, false, false);
-			Text(14, 4, WHITE, F("ATE=0")); Dot(14, 9, 23); Bracket(14, 32, 5); Text(14, 33, YELLOW, F(" ** "));
-			Text(15, 4, WHITE, F("AT+CMEE=1")); Dot(15, 13, 19); Bracket(15, 32, 5); Text(15, 33, YELLOW, F(" ** "));
-			Text(16, 4, WHITE, F("AT+FCLASS=0")); Dot(16, 15, 17); Bracket(16, 32, 5); Text(16, 33, YELLOW, F(" ** "));
-			Text(17, 4, WHITE, F("AT&K0")); Dot(17, 9, 23); Bracket(17, 32, 5); Text(17, 33, YELLOW, F(" ** "));
-			Text(18, 4, WHITE, F("AT+CPIN?")); Dot(18, 12, 20); Bracket(18, 32, 5); Text(18, 33, YELLOW, F(" ** "));
-			Text(19, 4, WHITE, F("AT+CGSN")); Dot(19, 11, 21); Bracket(19, 32, 5); Text(19, 33, YELLOW, F(" ** "));
-			Text(20, 4, WHITE, F("AT+GSN")); Dot(20, 10, 22); Bracket(20, 32, 5); Text(20, 33, YELLOW, F(" ** "));
-			Text(21, 4, WHITE, F("AT+CCID")); Dot(21, 11, 21); Bracket(21, 32, 5); Text(21, 33, YELLOW, F(" ** "));
-			Text(22, 4, WHITE, F("AT+GMI")); Dot(22, 10, 22); Bracket(22, 32, 5); Text(22, 33, YELLOW, F(" ** "));
-			Text(23, 4, WHITE, F("AT+GMM")); Dot(23, 10, 22); Bracket(23, 32, 5); Text(23, 33, YELLOW, F(" ** "));
-			Text(24, 4, WHITE, F("AT+GMR")); Dot(24, 10, 22); Bracket(24, 32, 5); Text(24, 33, YELLOW, F(" ** "));
-			Text(25, 4, WHITE, F("AT+SLED=2")); Dot(25, 13, 19); Bracket(25, 32, 5); Text(25, 33, YELLOW, F(" ** "));
-			Text(26, 4, WHITE, F("AT#E2SLRI=50")); Dot(26, 16, 16); Bracket(26, 32, 5); Text(26, 33, YELLOW, F(" ** "));
+				// Draw Battery Box
+				Draw_Box(4, 80, 12, 119, "Battery", 3, false, false);
+				Text(5, 82, WHITE, F("Instant Voltage")); Dot(5, 97, 13); Bracket(5, 110, 7);  Text(5, 116, WHITE, F("V"));
+				Text(6, 82, WHITE, F("Temperature")); Dot(6, 93, 16); Bracket(6, 109, 8); Text(6, 116, WHITE, F("C"));
+				Text(7, 82, WHITE, F("Average Current")); Dot(7, 97, 10); Bracket(7, 107, 10); Text(7, 115, WHITE, F("mA"));
+				Text(8, 82, WHITE, F("State of Charge")); Dot(8, 97, 14); Bracket(8, 111, 6); Text(8, 116, WHITE, F("%"));
+				Text(9, 82, WHITE, F("Full Battery Capacity")); Dot(9, 103, 6); Bracket(9, 109, 8); Text(9, 115, WHITE, F("mA"));
+				Text(10, 82, WHITE, F("Instant Battery Capacity")); Dot(10, 106, 3); Bracket(10, 109, 8); Text(10, 115, WHITE, F("mA"));
+				Text(11, 82, WHITE, F("Cycle Count")); Dot(11, 93, 19); Bracket(11, 112, 5);
 
-			// GSM Connection Box
-			Draw_Box(13, 40, 27, 79, "GSM Connection", 5, false, false);
-			Text(14, 42, WHITE, F("AT#REGMODE=1")); Dot(14, 54, 18); Bracket(14, 72, 5); Text(14, 73, YELLOW, F(" ** "));
-			Text(15, 42, WHITE, F("AT#TXMONMODE=1")); Dot(15, 56, 16); Bracket(15, 72, 5); Text(15, 73, YELLOW, F(" ** "));
-			Text(16, 42, WHITE, F("AT+CREG=0")); Dot(16, 51, 21); Bracket(16, 72, 5); Text(16, 73, YELLOW, F(" ** "));
-			Text(17, 42, WHITE, F("AT+CGREG=0")); Dot(17, 52, 20); Bracket(17, 72, 5); Text(17, 73, YELLOW, F(" ** "));
-			Text(18, 42, WHITE, F("AT#SCFG=1,1,1500,90,600,50")); Dot(18, 68, 4); Bracket(18, 72, 5); Text(18, 73, YELLOW, F(" ** "));
-			Text(19, 42, WHITE, F("AT#SCFG=2,1,1500,90,300,50")); Dot(19, 68, 4); Bracket(19, 72, 5); Text(19, 73, YELLOW, F(" ** "));
-			Text(20, 42, WHITE, F("AT#SCFGEXT=2,1,0,1,0,0")); Dot(20, 64, 8); Bracket(20, 72, 5); Text(20, 73, YELLOW, F(" ** "));
-			Text(21, 42, WHITE, F("AT+CGDCONT=1,\"IP\",\"mgbs\"")); Dot(21, 66, 6); Bracket(21, 72, 5); Text(21, 73, YELLOW, F(" ** "));
-			Text(22, 42, WHITE, F("AT#SERVIFO")); Dot(22, 52, 20); Bracket(22, 72, 5); Text(22, 73, YELLOW, F(" ** "));
-			Text(23, 42, WHITE, F("AT+CGACT=1,1")); Dot(23, 54, 18); Bracket(23, 72, 5); Text(23, 73, YELLOW, F(" ** "));
-			Text(24, 42, WHITE, F("AT+CGPADDR=1")); Dot(24, 54, 18); Bracket(24, 72, 5); Text(24, 73, YELLOW, F(" ** "));
-			Text(25, 42, WHITE, F("AT#HTTPCFG=1,\"*****\",80,0")); Dot(25, 67, 5); Bracket(25, 72, 5); Text(25, 73, YELLOW, F(" ** "));
-			Text(26, 42, WHITE, F("AT#ICMP=1")); Dot(26, 51, 21); Bracket(26, 72, 5); Text(26, 73, YELLOW, F(" ** "));
+				// Draw GSM Setup Box
+				Draw_Box(13, 2, 27, 39, "GSM Setup", 4, false, false);
+				Text(14, 4, WHITE, F("ATE=0")); Dot(14, 9, 23); Bracket(14, 32, 5); Text(14, 33, YELLOW, F(" ** "));
+				Text(15, 4, WHITE, F("AT+CMEE=1")); Dot(15, 13, 19); Bracket(15, 32, 5); Text(15, 33, YELLOW, F(" ** "));
+				Text(16, 4, WHITE, F("AT+FCLASS=0")); Dot(16, 15, 17); Bracket(16, 32, 5); Text(16, 33, YELLOW, F(" ** "));
+				Text(17, 4, WHITE, F("AT&K0")); Dot(17, 9, 23); Bracket(17, 32, 5); Text(17, 33, YELLOW, F(" ** "));
+				Text(18, 4, WHITE, F("AT+CPIN?")); Dot(18, 12, 20); Bracket(18, 32, 5); Text(18, 33, YELLOW, F(" ** "));
+				Text(19, 4, WHITE, F("AT+CGSN")); Dot(19, 11, 21); Bracket(19, 32, 5); Text(19, 33, YELLOW, F(" ** "));
+				Text(20, 4, WHITE, F("AT+GSN")); Dot(20, 10, 22); Bracket(20, 32, 5); Text(20, 33, YELLOW, F(" ** "));
+				Text(21, 4, WHITE, F("AT+CCID")); Dot(21, 11, 21); Bracket(21, 32, 5); Text(21, 33, YELLOW, F(" ** "));
+				Text(22, 4, WHITE, F("AT+GMI")); Dot(22, 10, 22); Bracket(22, 32, 5); Text(22, 33, YELLOW, F(" ** "));
+				Text(23, 4, WHITE, F("AT+GMM")); Dot(23, 10, 22); Bracket(23, 32, 5); Text(23, 33, YELLOW, F(" ** "));
+				Text(24, 4, WHITE, F("AT+GMR")); Dot(24, 10, 22); Bracket(24, 32, 5); Text(24, 33, YELLOW, F(" ** "));
+				Text(25, 4, WHITE, F("AT+SLED=2")); Dot(25, 13, 19); Bracket(25, 32, 5); Text(25, 33, YELLOW, F(" ** "));
+				Text(26, 4, WHITE, F("AT#E2SLRI=50")); Dot(26, 16, 16); Bracket(26, 32, 5); Text(26, 33, YELLOW, F(" ** "));
 
-			// GSM Detail Box
-			Draw_Box(13, 80, 20, 119, "GSM Detail", 6, false, false);
-			Text(14, 82, WHITE, F("Manufacturer")); Dot(14, 94, 21); Bracket(14, 115, 2);
-			Text(15, 82, WHITE, F("Model")); Dot(15, 87, 28); Bracket(15, 115, 2);
-			Text(16, 82, WHITE, F("Firmware")); Dot(16, 90, 16); Bracket(16, 106, 11);
-			Text(17, 82, WHITE, F("IMEI")); Dot(17, 86, 15); Bracket(17, 101, 16);
-			Text(18, 82, WHITE, F("Serial ID")); Dot(18, 91, 15); Bracket(18, 106, 11);
-			Text(19, 82, WHITE, F("SIM ICCID")); Dot(19, 91, 6); Bracket(19, 97, 20);
+				// GSM Connection Box
+				Draw_Box(13, 40, 27, 79, "GSM Connection", 5, false, false);
+				Text(14, 42, WHITE, F("AT#REGMODE=1")); Dot(14, 54, 18); Bracket(14, 72, 5); Text(14, 73, YELLOW, F(" ** "));
+				Text(15, 42, WHITE, F("AT#TXMONMODE=1")); Dot(15, 56, 16); Bracket(15, 72, 5); Text(15, 73, YELLOW, F(" ** "));
+				Text(16, 42, WHITE, F("AT+CREG=0")); Dot(16, 51, 21); Bracket(16, 72, 5); Text(16, 73, YELLOW, F(" ** "));
+				Text(17, 42, WHITE, F("AT+CGREG=0")); Dot(17, 52, 20); Bracket(17, 72, 5); Text(17, 73, YELLOW, F(" ** "));
+				Text(18, 42, WHITE, F("AT#SCFG=1,1,1500,90,600,50")); Dot(18, 68, 4); Bracket(18, 72, 5); Text(18, 73, YELLOW, F(" ** "));
+				Text(19, 42, WHITE, F("AT#SCFG=2,1,1500,90,300,50")); Dot(19, 68, 4); Bracket(19, 72, 5); Text(19, 73, YELLOW, F(" ** "));
+				Text(20, 42, WHITE, F("AT#SCFGEXT=2,1,0,1,0,0")); Dot(20, 64, 8); Bracket(20, 72, 5); Text(20, 73, YELLOW, F(" ** "));
+				Text(21, 42, WHITE, F("AT+CGDCONT=1,\"IP\",\"mgbs\"")); Dot(21, 66, 6); Bracket(21, 72, 5); Text(21, 73, YELLOW, F(" ** "));
+				Text(22, 42, WHITE, F("AT#SERVIFO")); Dot(22, 52, 20); Bracket(22, 72, 5); Text(22, 73, YELLOW, F(" ** "));
+				Text(23, 42, WHITE, F("AT+CGACT=1,1")); Dot(23, 54, 18); Bracket(23, 72, 5); Text(23, 73, YELLOW, F(" ** "));
+				Text(24, 42, WHITE, F("AT+CGPADDR=1")); Dot(24, 54, 18); Bracket(24, 72, 5); Text(24, 73, YELLOW, F(" ** "));
+				Text(25, 42, WHITE, F("AT#HTTPCFG=1,\"*****\",80,0")); Dot(25, 67, 5); Bracket(25, 72, 5); Text(25, 73, YELLOW, F(" ** "));
+				Text(26, 42, WHITE, F("AT#ICMP=1")); Dot(26, 51, 21); Bracket(26, 72, 5); Text(26, 73, YELLOW, F(" ** "));
 
-			// Connection Box
-			Draw_Box(21, 80, 27, 119, "Connection", 7, false, false);
-			Text(22, 82, WHITE, F("GSM Connection Time")); Dot(22, 101, 11); Bracket(22, 112, 5);
-			Text(23, 82, WHITE, F("RSSI Level")); Dot(23, 92, 22); Bracket(23, 114, 3);
-			Text(24, 82, WHITE, F("GSM Operator")); Dot(24, 94, 17); Bracket(24, 111, 6);
-			Text(25, 82, WHITE, F("IP Address")); Dot(25, 92, 9); Bracket(25, 101, 16);
-			Text(26, 82, WHITE, F("Socket Listen Status")); Dot(26, 102, 5); Bracket(26, 107, 10);
+				// GSM Detail Box
+				Draw_Box(13, 80, 20, 119, "GSM Detail", 6, false, false);
+				Text(14, 82, WHITE, F("Manufacturer")); Dot(14, 94, 21); Bracket(14, 115, 2);
+				Text(15, 82, WHITE, F("Model")); Dot(15, 87, 28); Bracket(15, 115, 2);
+				Text(16, 82, WHITE, F("Firmware")); Dot(16, 90, 16); Bracket(16, 106, 11);
+				Text(17, 82, WHITE, F("IMEI")); Dot(17, 86, 15); Bracket(17, 101, 16);
+				Text(18, 82, WHITE, F("Serial ID")); Dot(18, 91, 15); Bracket(18, 106, 11);
+				Text(19, 82, WHITE, F("SIM ICCID")); Dot(19, 91, 6); Bracket(19, 97, 20);
 
-			// Solenoid Box
-			Draw_Box(31, 2, 36, 98, "", 0, false, false);
-			Draw_Box(31, 99, 36, 119, "", 0, false, false);
-			Horizontal_Divider(33,2,96,true);
-			Horizontal_Divider(33,99,20,true);
-			Vertical_Divider(33,8,3);
-			Vertical_Divider(33,14,3);
-			Vertical_Divider(33,20,3);
-			Vertical_Divider(33,26,3);
-			Vertical_Divider(33,32,3);
-			Vertical_Divider(33,38,3);
-			Vertical_Divider(33,44,3);
-			Vertical_Divider(33,50,3);
-			Vertical_Divider(33,56,3);
-			Vertical_Divider(33,62,3);
-			Vertical_Divider(33,68,3);
-			Vertical_Divider(33,74,3);
-			Vertical_Divider(33,80,3);
-			Vertical_Divider(33,86,3);
-			Vertical_Divider(33,92,3);
+				// Connection Box
+				Draw_Box(21, 80, 27, 119, "Connection", 7, false, false);
+				Text(22, 82, WHITE, F("GSM Connection Time")); Dot(22, 101, 11); Bracket(22, 112, 5);
+				Text(23, 82, WHITE, F("RSSI Level")); Dot(23, 92, 22); Bracket(23, 114, 3);
+				Text(24, 82, WHITE, F("GSM Operator")); Dot(24, 94, 17); Bracket(24, 111, 6);
+				Text(25, 82, WHITE, F("IP Address")); Dot(25, 92, 9); Bracket(25, 101, 16);
+				Text(26, 82, WHITE, F("Socket Listen Status")); Dot(26, 102, 5); Bracket(26, 107, 10);
 
-			Vertical_Divider(31,26,2);
-			Vertical_Divider(31,50,2);
-			Vertical_Divider(31,74,2);
+				// Solenoid Box
+				Draw_Box(31, 2, 36, 98, "", 0, false, false);
+				Draw_Box(31, 99, 36, 119, "", 0, false, false);
+				Horizontal_Divider(33,2,96,true);
+				Horizontal_Divider(33,99,20,true);
+				Vertical_Divider(33,8,3);
+				Vertical_Divider(33,14,3);
+				Vertical_Divider(33,20,3);
+				Vertical_Divider(33,26,3);
+				Vertical_Divider(33,32,3);
+				Vertical_Divider(33,38,3);
+				Vertical_Divider(33,44,3);
+				Vertical_Divider(33,50,3);
+				Vertical_Divider(33,56,3);
+				Vertical_Divider(33,62,3);
+				Vertical_Divider(33,68,3);
+				Vertical_Divider(33,74,3);
+				Vertical_Divider(33,80,3);
+				Vertical_Divider(33,86,3);
+				Vertical_Divider(33,92,3);
 
-			Text(32, 6, WHITE, F("Expander A [    ]"));
-			Text(32, 30, WHITE, F("Expander B [    ]"));
-			Text(32, 54, WHITE, F("Expander C [    ]"));
-			Text(32, 77, WHITE, F("Expander D [    ]"));
-			Text(34, 4, WHITE, F("S01"));
-			Text(34, 10, WHITE, F("S02"));
-			Text(34, 16, WHITE, F("S03"));
-			Text(34, 22, WHITE, F("S04"));
-			Text(34, 28, WHITE, F("S05"));
-			Text(34, 34, WHITE, F("S06"));
-			Text(34, 40, WHITE, F("S07"));
-			Text(34, 46, WHITE, F("S08"));
-			Text(34, 52, WHITE, F("S09"));
-			Text(34, 58, WHITE, F("S10"));
-			Text(34, 64, WHITE, F("S11"));
-			Text(34, 70, WHITE, F("S12"));
-			Text(34, 76, WHITE, F("S13"));
-			Text(34, 82, WHITE, F("S14"));
-			Text(34, 88, WHITE, F("S15"));
-			Text(34, 94, WHITE, F("S16"));
-			Text(32, 101, WHITE, F("P-Delta       Bar"));
-			Text(34, 101, WHITE, F("P-In          Bar"));
-			Text(35, 101, WHITE, F("P-Out         Bar"));
+				Vertical_Divider(31,26,2);
+				Vertical_Divider(31,50,2);
+				Vertical_Divider(31,74,2);
 
-			// JSON Data Box
-			Draw_Box(28, 2, 30, 119, "", 8, false, false);
+				Text(32, 6, WHITE, F("Expander A [    ]"));
+				Text(32, 30, WHITE, F("Expander B [    ]"));
+				Text(32, 54, WHITE, F("Expander C [    ]"));
+				Text(32, 77, WHITE, F("Expander D [    ]"));
+				Text(34, 4, WHITE, F("S01"));
+				Text(34, 10, WHITE, F("S02"));
+				Text(34, 16, WHITE, F("S03"));
+				Text(34, 22, WHITE, F("S04"));
+				Text(34, 28, WHITE, F("S05"));
+				Text(34, 34, WHITE, F("S06"));
+				Text(34, 40, WHITE, F("S07"));
+				Text(34, 46, WHITE, F("S08"));
+				Text(34, 52, WHITE, F("S09"));
+				Text(34, 58, WHITE, F("S10"));
+				Text(34, 64, WHITE, F("S11"));
+				Text(34, 70, WHITE, F("S12"));
+				Text(34, 76, WHITE, F("S13"));
+				Text(34, 82, WHITE, F("S14"));
+				Text(34, 88, WHITE, F("S15"));
+				Text(34, 94, WHITE, F("S16"));
+				Text(32, 101, WHITE, F("P-Delta       Bar"));
+				Text(34, 101, WHITE, F("P-In          Bar"));
+				Text(35, 101, WHITE, F("P-Out         Bar"));
 
-			// Setting Detail
-			Draw_Box(37, 2, 46, 98, "Data", 0, false, false);
+				// JSON Data Box
+				Draw_Box(28, 2, 30, 119, "", 8, false, false);
+
+				// Setting Detail
+				Draw_Box(37, 2, 46, 98, "Data", 0, false, false);
 
 
-			// Setting Section
-			Draw_Box(37, 99, 46, 119, "Setting", 0, false, false);
-			Text(39, 101, WHITE, F("Filter Count.[  ]"));
-			Text(40, 101, WHITE, F("State.......[   ]"));
-			Text(41, 101, WHITE, F("Stabilizer....[ ]"));
-			Text(42, 101, WHITE, F("HydroCyclone..[ ]"));
-			Text(43, 101, WHITE, F("Irrigation....[ ]"));
-			//Text(44, 101, WHITE, F("IDLE..........[ ]"));
+				// Setting Section
+				Draw_Box(37, 99, 46, 119, "Setting", 0, false, false);
+				Text(39, 101, WHITE, F("Filter Count.[  ]"));
+				Text(40, 101, WHITE, F("State.......[   ]"));
+				Text(41, 101, WHITE, F("Stabilizer....[ ]"));
+				Text(42, 101, WHITE, F("HydroCyclone..[ ]"));
+				Text(43, 101, WHITE, F("Irrigation....[ ]"));
+				//Text(44, 101, WHITE, F("IDLE..........[ ]"));
 
-			Vertical_Divider(47,99,2);
+				Vertical_Divider(47,99,2);
 			
+			#endif
+
 		}
 
 		/**
@@ -1016,29 +1032,33 @@ class Console {
 		 */
 		void Telit_xE910(void) {
 
-			// Draw Main Box
-			Draw_Box(1, 1, 24, 120, "", 0, true, true);
+			#ifdef TELIT_TEMPLATE
 
-			// Print Main Header Text
-			this->Text(2, 53, WHITE, F("GSM Test Procedure"));
+				// Draw Main Box
+				Draw_Box(1, 1, 24, 120, "", 0, true, true);
 
-			// Header Titles
-			Text(2, 3, WHITE, F("Up Time : "));
+				// Print Main Header Text
+				this->Text(2, 53, WHITE, F("GSM Test Procedure"));
 
-			// Draw GSM Setup Box
-			this->Print_GSM_Setup(4, 2, 18, 39);
+				// Header Titles
+				Text(2, 3, WHITE, F("Up Time : "));
 
-			// Draw GSM Connection Box
-			this->Print_GSM_Connection(4, 40, 18, 79);
+				// Draw GSM Setup Box
+				this->Print_GSM_Setup(4, 2, 18, 39);
 
-			// Draw GSM Detail Box
-			this->Print_GSM_Detail(4, 80, 11, 119);
+				// Draw GSM Connection Box
+				this->Print_GSM_Connection(4, 40, 18, 79);
 
-			// Draw GSM Connection Detail Box
-			this->Print_GSM_Connection_Detail(12, 80, 18, 119);
+				// Draw GSM Detail Box
+				this->Print_GSM_Detail(4, 80, 11, 119);
 
-			// JSON Data Box
-			Draw_Box(19, 2, 21, 119, "", 8, false, false);
+				// Draw GSM Connection Detail Box
+				this->Print_GSM_Connection_Detail(12, 80, 18, 119);
+
+				// JSON Data Box
+				Draw_Box(19, 2, 21, 119, "", 8, false, false);
+
+			#endif
 
 		}
 
@@ -1048,27 +1068,31 @@ class Console {
 		 */
 		void MAX78630_Voltmeter(void) {
 
-			// Draw Main Screen
-			Draw_Box(1, 1, 14, 84, "", 0, true, true);
-			//Print_Box_Title(1,1,42,F("MAX78630 Volt Meter"));
+			#ifdef MAX78630_VOLTMETER_TEMPLATE
 
-			// Draw Voltage
-			Draw_Box(5, 3, 10, 28, "Phase R", 1, false, false);
-			Draw_Box(5, 30, 10, 55, "Phase S", 2, false, false);
-			Draw_Box(5, 57, 10, 82, "Phase T", 3, false, false);
+				// Draw Main Screen
+				Draw_Box(1, 1, 14, 84, "", 0, true, true);
+				//Print_Box_Title(1,1,42,F("MAX78630 Volt Meter"));
 
-			Text(7, 5, WHITE, F("VA_RMS......[       V]"));
-			Text(8, 5, WHITE, F("VA_MIN......[       V]"));
-			Text(9, 5, WHITE, F("VA_MAX......[       V]"));
+				// Draw Voltage
+				Draw_Box(5, 3, 10, 28, "Phase R", 1, false, false);
+				Draw_Box(5, 30, 10, 55, "Phase S", 2, false, false);
+				Draw_Box(5, 57, 10, 82, "Phase T", 3, false, false);
 
-			Text(7, 32, WHITE, F("VB_RMS......[       V]"));
-			Text(8, 32, WHITE, F("VB_MIN......[       V]"));
-			Text(9, 32, WHITE, F("VB_MAX......[       V]"));
+				Text(7, 5, WHITE, F("VA_RMS......[       V]"));
+				Text(8, 5, WHITE, F("VA_MIN......[       V]"));
+				Text(9, 5, WHITE, F("VA_MAX......[       V]"));
 
-			Text(7, 59, WHITE, F("VC_RMS......[       V]"));
-			Text(8, 59, WHITE, F("VC_MIN......[       V]"));
-			Text(9, 59, WHITE, F("VC_MAX......[       V]"));
-			
+				Text(7, 32, WHITE, F("VB_RMS......[       V]"));
+				Text(8, 32, WHITE, F("VB_MIN......[       V]"));
+				Text(9, 32, WHITE, F("VB_MAX......[       V]"));
+
+				Text(7, 59, WHITE, F("VC_RMS......[       V]"));
+				Text(8, 59, WHITE, F("VC_MIN......[       V]"));
+				Text(9, 59, WHITE, F("VC_MAX......[       V]"));
+
+			#endif
+
 		}
 
 		/**
@@ -1077,12 +1101,16 @@ class Console {
 		 */
 		void HDC2010_TH_Meter(void) {
 
-			// Draw Main Screen
-			Draw_Box(1, 1, 8, 38, "HDC2010 T/H Sensor", 1, false, true);
-			Text(3, 3, WHITE, F("Temperature..........[         C ]"));
-			Text(4, 3, WHITE, F("Humidity.............[         % ]"));
-			Text(7, 3, WHITE, F("Function Time............[    ms ]"));
+			#ifdef HDC2010_TH_TEMPLATE
+
+				// Draw Main Screen
+				Draw_Box(1, 1, 8, 38, "HDC2010 T/H Sensor", 1, false, true);
+				Text(3, 3, WHITE, F("Temperature..........[         C ]"));
+				Text(4, 3, WHITE, F("Humidity.............[         % ]"));
+				Text(7, 3, WHITE, F("Function Time............[    ms ]"));
 			
+			#endif
+
 		}
 
 		/**
@@ -1091,11 +1119,198 @@ class Console {
 		 */
 		void Analog_Pressure_Meter(void) {
 
-			// Draw Main Screen
-			Draw_Box(1, 1, 8, 38, "Analog P Sensor", 1, false, true);
-			Text(3, 3, WHITE, F("Pressure...........[         Bar ]"));
-			Text(4, 3, WHITE, F("Deviation..............[         ]"));
-			Text(7, 3, WHITE, F("Function Time............[    ms ]"));
+			#ifdef ANALOG_PRESSURE_TEMPLATE
+
+				// Draw Main Screen
+				Draw_Box(1, 1, 8, 38, "Analog P Sensor", 1, false, true);
+				Text(3, 3, WHITE, F("Pressure...........[         Bar ]"));
+				Text(4, 3, WHITE, F("Deviation..............[         ]"));
+				Text(7, 3, WHITE, F("Function Time............[    ms ]"));
+
+			#endif
+
+		}
+
+		/**
+		 * @brief Full_Energy_Analayzer
+		 * @version 01.00.00
+		 */
+		void Full_Energy_Analayzer(void) {
+
+			#ifdef FULL_ENERGY_TEMPLATE
+
+				// Draw Main Screen
+				this->Draw_Box(1, 1, 41, 160, "", 0, true, false);
+				this->Text(2, 68, WHITE, F("MAX78630 Energy Analyzer"));
+
+				// Draw Voltage
+				this->Draw_Box(5, 2, 13, 77, "Voltage", 1, false, false);
+				this->Text(7, 4, WHITE, F("────────┬──────────┬──────────┬──────────┬──────────┬─────────┬─────────"));
+				this->Text(8, 12, WHITE, F("│          │          │          │          │         │"));
+				this->Text(9, 12, WHITE, F("│          │          │          │          │         │"));
+				this->Text(10, 12, WHITE, F("│          │          │          │          │         │"));
+				this->Text(11, 12, WHITE, F("│          │          │          │          │         │"));
+				this->Text(12, 4, WHITE, F("────────┴──────────┴──────────┴──────────┴──────────┴─────────┴─────────"));
+				this->Text(8, 4, WHITE, F("Phase R"));
+				this->Text(9, 4, WHITE, F("Phase S"));
+				this->Text(10, 4, WHITE, F("Phase T"));
+				this->Text(11, 4, WHITE, F("Average"));
+				this->Text(6, 15, WHITE, F("Instant"));
+				this->Text(6, 28, WHITE, F("RMS"));
+				this->Text(6, 37, WHITE, F("Fund."));
+				this->Text(6, 48, WHITE, F("Harm."));
+				this->Text(6, 59, WHITE, F("Offset"));
+				this->Text(6, 70, WHITE, F("Gain"));
+				this->Text(11, 14, WHITE, F("--------"));
+				this->Text(11, 36, WHITE, F("--------"));
+				this->Text(11, 47, WHITE, F("--------"));
+				this->Text(11, 58, WHITE, F("-------"));
+				this->Text(11, 68, WHITE, F("-------"));
+
+				// Draw Current
+				this->Draw_Box(5, 78, 13, 159, "Current", 2, false, false);
+				this->Text(7, 80, WHITE, F("────────┬─────────┬─────────┬─────────┬─────────┬─────────┬─────────┬─────────"));
+				this->Text(8, 88, WHITE, F("│         │         │         │         │         │         │"));
+				this->Text(9, 88, WHITE, F("│         │         │         │         │         │         │"));
+				this->Text(10, 88, WHITE, F("│         │         │         │         │         │         │"));
+				this->Text(11, 88, WHITE, F("│         │         │         │         │         │         │"));
+				this->Text(12, 80, WHITE, F("────────┴─────────┴─────────┴─────────┴─────────┴─────────┴─────────┴─────────"));
+				Text(8, 80, WHITE, F("Phase R"));
+				Text(9, 80, WHITE, F("Phase S"));
+				Text(10, 80, WHITE, F("Phase T"));
+				Text(11, 80, WHITE, F("Average"));
+				Text(6, 90, WHITE, F("Instant"));
+				Text(6, 101, WHITE, F("Peak"));
+				Text(6, 112, WHITE, F("RMS"));
+				Text(6, 121, WHITE, F("Fund."));
+				Text(6, 131, WHITE, F("Harm."));
+				Text(6, 141, WHITE, F("Offset"));
+				Text(6, 152, WHITE, F("Gain"));
+				Text(11, 90, WHITE, F("-------"));
+				Text(11, 100, WHITE, F("-------"));
+				Text(11, 120, WHITE, F("-------"));
+				Text(11, 130, WHITE, F("-------"));
+				Text(11, 140, WHITE, F("-------"));
+				Text(11, 150, WHITE, F("-------"));
+
+				// Draw Power
+				this->Draw_Box(15, 2, 22, 132, "Power", 3, false, false);
+				this->Text(17, 4, WHITE, F("────────┬──────────┬──────────┬──────────┬──────────┬──────────┬──────────┬──────────┬──────────┬─────────┬─────────┬──────────"));
+				this->Text(18, 12, WHITE, F("│          │          │          │          │          │          │          │          │         │         │"));
+				this->Text(19, 12, WHITE, F("│          │          │          │          │          │          │          │          │         │         │"));
+				this->Text(20, 12, WHITE, F("│          │          │          │          │          │          │          │          │         │         │"));
+				this->Text(21, 12, WHITE, F("│          │          │          │          │          │          │          │          │         │         │"));
+				Text(18, 4, WHITE, F("Phase R"));
+				Text(19, 4, WHITE, F("Phase S"));
+				Text(20, 4, WHITE, F("Phase T"));
+				Text(21, 4, WHITE, F("Average"));
+				Text(16, 15, WHITE, F("Active"));
+				Text(16, 25, WHITE, F("ReActive"));
+				Text(16, 36, WHITE, F("Apparent"));
+				Text(16, 49, WHITE, F("Harm."));
+				Text(16, 60, WHITE, F("Fund."));
+				Text(16, 69, WHITE, F("Harm.R."));
+				Text(16, 80, WHITE, F("Fund.R."));
+				Text(16, 92, WHITE, F("VAFUND"));
+				Text(16, 102, WHITE, F("Power F."));
+				Text(16, 112, WHITE, F("P. Offs."));
+				Text(16, 123, WHITE, F("Q. Offs."));
+				Text(21, 47, WHITE, F("--------"));
+				Text(21, 58, WHITE, F("--------"));
+				Text(21, 69, WHITE, F("--------"));
+				Text(21, 80, WHITE, F("--------"));
+				Text(21, 91, WHITE, F("--------"));
+				Text(21, 113, WHITE, F("-----"));
+				Text(21, 124, WHITE, F("-----"));
+
+				// Draw Device
+				this->Draw_Box(15, 133, 22, 159, "Device", 4, false, false);
+				Text(16, 135, WHITE, F("Device Addres :"));
+				Text(17, 135, WHITE, F("Firmware      :"));
+				Text(18, 135, WHITE, F("Baud          :"));
+				Text(19, 135, WHITE, F("Temperature   :"));
+				Text(20, 135, WHITE, F("VScale        :"));
+				Text(21, 135, WHITE, F("IScale        :"));
+
+				// Draw Min/Max Mask
+				this->Draw_Box(24, 2, 29, 104, "Min/Max Mask", 5, false, false);
+				this->Text(26, 4, WHITE, F("──────────┬──────────┬──────────┬──────────┬──────────┬──────────┬──────────┬──────────┬──────────"));
+				this->Text(27, 14, WHITE, F("│          │          │          │          │          │          │          │"));
+				this->Text(28, 14, WHITE, F("│          │          │          │          │          │          │          │"));
+				Text(27, 4, WHITE, F("Minimum"));
+				Text(28, 4, WHITE, F("Maximum"));
+				Text(25, 17, WHITE, F("Mask-0"));
+				Text(25, 28, WHITE, F("Mask-1"));
+				Text(25, 39, WHITE, F("Mask-2"));
+				Text(25, 50, WHITE, F("Mask-3"));
+				Text(25, 61, WHITE, F("Mask-4"));
+				Text(25, 72, WHITE, F("Mask-5"));
+				Text(25, 83, WHITE, F("Mask-6"));
+				Text(25, 94, WHITE, F("Mask-7"));
+
+				// Draw Other
+				this->Draw_Box(24, 105, 29, 123, "Other", 7, false, false);
+				Text(25, 107, WHITE, F("STICKY......[ ]"));
+				Text(26, 107, WHITE, F("FREQ....[     ]"));
+				Text(27, 107, WHITE, F("BUCKET_L [    ]"));
+				Text(28, 107, WHITE, F("BUCKET_H [    ]"));
+
+				// Draw Status Limits
+				this->Draw_Box(30, 2, 34, 123, "Status Limits", 8, false, false);
+				this->Text(32, 4, WHITE, F("────────┬───────────┬───────────┬──────────┬──────────┬──────────┬──────────┬────────┬───────┬───────┬────────┬───────"));
+				this->Text(33, 12, WHITE, F("│           │           │          │          │          │          │        │       │       │        │"));
+				Text(33, 4, WHITE, F("Limit"));
+				Text(31, 14, WHITE, F("V_IMB_MAX"));
+				Text(31, 26, WHITE, F("I_IMB_MAX"));
+				Text(31, 38, WHITE, F("VRMS_MIN"));
+				Text(31, 49, WHITE, F("VRMS_MAX"));
+				Text(31, 60, WHITE, F("VSAG_LIM"));
+				Text(31, 71, WHITE, F("IRMS_MAX"));
+				Text(31, 82, WHITE, F("PF_MIN"));
+				Text(31, 91, WHITE, F("T_MIN"));
+				Text(31, 99, WHITE, F("T_MAX"));
+				Text(31, 107, WHITE, F("F_MIN"));
+				Text(31, 116, WHITE, F("F_MAX"));
+
+				// Draw Status
+				this->Draw_Box(24, 124, 34, 159, "Status", 9, false, false);
+				Text(25, 126, WHITE, F("OV_VRMSA....[ ]"));
+				Text(26, 126, WHITE, F("UN_VRMSA....[ ]"));
+				Text(27, 126, WHITE, F("OV_VRMSB....[ ]"));
+				Text(28, 126, WHITE, F("UN_VRMSB....[ ]"));
+				Text(29, 126, WHITE, F("OV_VRMSC....[ ]"));
+				Text(30, 126, WHITE, F("UN_VRMSC....[ ]"));
+				Text(31, 126, WHITE, F("OV_IRMSA....[ ]"));
+				Text(32, 126, WHITE, F("OV_IRMSB....[ ]"));
+				Text(33, 126, WHITE, F("OV_IRMSC....[ ]"));
+				Text(25, 144, WHITE, F("OV_FREQ....[ ]"));
+				Text(26, 144, WHITE, F("UN_FREQ....[ ]"));
+				Text(27, 144, WHITE, F("UN_PFA.....[ ]"));
+				Text(28, 144, WHITE, F("UN_PFB.....[ ]"));
+				Text(29, 144, WHITE, F("UN_PFC.....[ ]"));
+				Text(30, 144, WHITE, F("VA_SAG.....[ ]"));
+				Text(31, 144, WHITE, F("VB_SAG.....[ ]"));
+				Text(32, 144, WHITE, F("VC_SAG.....[ ]"));
+				Text(33, 144, WHITE, F("V_IMBAL....[ ]"));
+
+				// Draw Energy
+				this->Draw_Box(36, 2, 40, 159, "Energy Counter", 10, false, false);
+				this->Text(38, 4, WHITE, F("────────┬──────────┬──────────┬──────────┬──────────┬──────────┬──────────┬────────────┬────────────┬────────────┬────────────┬────────────┬─────────────"));
+				this->Text(39, 12, WHITE, F("│          │          │          │          │          │          │            │            │            │            │            │"));
+				Text(37, 15, WHITE, F("WHA_POS"));
+				Text(37, 26, WHITE, F("WHA_NEG"));
+				Text(37, 37, WHITE, F("WHB_POS"));
+				Text(37, 48, WHITE, F("WHB_NEG"));
+				Text(37, 59, WHITE, F("WHC_POS"));
+				Text(37, 70, WHITE, F("WHC_NEG"));
+				Text(37, 81, WHITE, F("VARHA_POS"));
+				Text(37, 94, WHITE, F("VARHA_NEG"));
+				Text(37, 107, WHITE, F("VARHB_POS"));
+				Text(37, 120, WHITE, F("VARHB_NEG"));
+				Text(37, 133, WHITE, F("VARHC_POS"));
+				Text(37, 146, WHITE, F("VARHC_NEG"));
+
+			#endif
 			
 		}
 

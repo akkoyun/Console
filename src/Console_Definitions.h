@@ -24,3 +24,6 @@
 #define LINE 		    	(uint8_t)2
 #define SCREEN 			    (uint8_t)3
 #define ALL 			    (uint8_t)4
+
+// Templete Definitions
+//#define FULL_ENERGY_TEMPLATE
