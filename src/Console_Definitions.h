@@ -1,3 +1,14 @@
+// Template Definitions
+// #define CONSOLE_TEMPLATE_I2C_SCANNER
+// #define CONSOLE_TEMPLATE_MAX78630
+#define CONSOLE_TEMPLATE_POWERSTAT
+// #define CONSOLE_TEMPLATE_FILTERSTAT
+// #define CONSOLE_TEMPLATE_GE910
+// #define CONSOLE_TEMPLATE_VOLTMETER
+// #define CONSOLE_TEMPLATE_TH_METER
+// #define CONSOLE_TEMPLATE_PRESSURE
+// #define CONSOLE_TEMPLATE_MAX78630_FULL
+
 // Color Definitions
 #define BLACK				(uint8_t)30
 #define RED					(uint8_t)31
@@ -24,6 +35,3 @@
 #define LINE 		    	(uint8_t)2
 #define SCREEN 			    (uint8_t)3
 #define ALL 			    (uint8_t)4
-
-// Templete Definitions
-//#define FULL_ENERGY_TEMPLATE
