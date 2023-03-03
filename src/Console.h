@@ -338,24 +338,6 @@ class Console {
 
 		}
 
-		// OK Decide Function.
-		void OK_Decide(const bool _Result, const uint8_t _X, const uint8_t _Y) {
-
-			// Print Command State
-			if (_Result) {
-
-				// Print OK 
-				Text(_X, _Y, Terminal_GREEN, F(" OK "));
-
-			} else {
-
-				// Print FAIL
-				Text(_X, _Y, Terminal_RED, F("FAIL"));
-
-			}
-	
-		}
-
 		// Draw Box Function.
 		void Box(const uint8_t _X1, const uint8_t _Y1, const uint8_t _X2, const uint8_t _Y2, const String _Text, const uint8_t _Number, const bool _Header, const bool _Footer) {
 
@@ -556,24 +538,18 @@ class Console {
 		void GSM_Detail(const uint8_t _X, const uint8_t _Y, uint8_t _Wide) {
 
 			// Handle Wide
-			if (_Wide < 75) _Wide = 75;
+			if (_Wide < 36) _Wide = 36;
 
 			// Draw Hardware Diagnostic
 			this->Box(_X, _Y, (_X + 7), (_Y + _Wide), "GSM Details", 4, false, false);
 
 			// Print Texts
-			this->Set_Cursor(_X + 1, _Y + 2); Console_Serial->print(F("Manufacturer"));			this->Dot(_X + 1, (_Y + 2 + 12), (_Wide - 2 - 43 - 12)); this->Bracket(_X + 1, _Y + _Wide - 43, 1);
-			this->Set_Cursor(_X + 2, _Y + 2); Console_Serial->print(F("Model"));				this->Dot(_X + 2, (_Y + 2 + 5), (_Wide - 2 - 43 - 5)); this->Bracket(_X + 2, _Y + _Wide - 43, 1);
-			this->Set_Cursor(_X + 3, _Y + 2); Console_Serial->print(F("Firmware"));				this->Dot(_X + 3, (_Y + 2 + 8), (_Wide - 2 - 51 - 8)); this->Bracket(_X + 3, _Y + _Wide - 51, 9);
-			this->Set_Cursor(_X + 4, _Y + 2); Console_Serial->print(F("IMEI"));					this->Dot(_X + 4, (_Y + 2 + 4), (_Wide - 2 - 57 - 4)); this->Bracket(_X + 4, _Y + _Wide - 57, 15);
-			this->Set_Cursor(_X + 5, _Y + 2); Console_Serial->print(F("Serial ID"));			this->Dot(_X + 5, (_Y + 2 + 9), (_Wide - 2 - 52 - 9)); this->Bracket(_X + 5, _Y + _Wide - 52, 10);
-			this->Set_Cursor(_X + 6, _Y + 2); Console_Serial->print(F("ICCID"));				this->Dot(_X + 6, (_Y + 2 + 5), (_Wide - 2 - 61 - 5)); this->Bracket(_X + 6, _Y + _Wide - 61, 19);
-			this->Set_Cursor(_X + 1, _Y + 41); Console_Serial->print(F("GSM Connection Time"));	this->Dot(_X + 1, (_Y + 41 + 19), (_Wide - 2 - 46 - 19)); this->Bracket(_X + 1, _Y + _Wide - 7, 4);
-			this->Set_Cursor(_X + 2, _Y + 41); Console_Serial->print(F("Signal Level"));		this->Dot(_X + 2, (_Y + 41 + 12), (_Wide - 2 - 46 - 12)); this->Bracket(_X + 2, _Y + _Wide - 8, 5);
-			this->Set_Cursor(_X + 3, _Y + 41); Console_Serial->print(F("GSM Operator"));		this->Dot(_X + 3, (_Y + 41 + 12), (_Wide - 2 - 46 - 12)); this->Bracket(_X + 3, _Y + _Wide - 8, 5);
-			this->Set_Cursor(_X + 4, _Y + 41); Console_Serial->print(F("IP Address"));			this->Dot(_X + 4, (_Y + 41 + 10), (_Wide - 2 - 46 - 21)); this->Bracket(_X + 4, _Y + _Wide - 18, 15);
-			this->Set_Cursor(_X + 5, _Y + 41); Console_Serial->print(F("LAC"));					this->Dot(_X + 5, (_Y + 41 + 3), (_Wide - 2 - 46 - 3)); this->Bracket(_X + 5, _Y + _Wide - 7, 4);
-			this->Set_Cursor(_X + 6, _Y + 41); Console_Serial->print(F("Cell ID"));				this->Dot(_X + 6, (_Y + 41 + 7), (_Wide - 2 - 46 - 7)); this->Bracket(_X + 6, _Y + _Wide - 7, 4);
+			this->Set_Cursor(_X + 1, _Y + 2); Console_Serial->print(F("Manufacturer"));	this->Dot(_X + 1, (_Y + 2 + 12), (_Wide - 2 - 4 - 12)); this->Bracket(_X + 1, _Y + _Wide - 4, 1);
+			this->Set_Cursor(_X + 2, _Y + 2); Console_Serial->print(F("Model")); 		this->Dot(_X + 2, (_Y + 2 + 5), (_Wide - 2 - 4 - 5)); this->Bracket(_X + 2, _Y + _Wide - 4, 1);
+			this->Set_Cursor(_X + 3, _Y + 2); Console_Serial->print(F("Firmware")); 	this->Dot(_X + 3, (_Y + 2 + 8), (_Wide - 2 - 12 - 8)); this->Bracket(_X + 3, _Y + _Wide - 12, 9);
+			this->Set_Cursor(_X + 4, _Y + 2); Console_Serial->print(F("IMEI")); 		this->Dot(_X + 4, (_Y + 2 + 4), (_Wide - 2 - 18 - 4)); this->Bracket(_X + 4, _Y + _Wide - 18, 15);
+			this->Set_Cursor(_X + 5, _Y + 2); Console_Serial->print(F("Serial ID")); 	this->Dot(_X + 5, (_Y + 2 + 9), (_Wide - 2 - 13 - 9)); this->Bracket(_X + 5, _Y + _Wide - 13, 10);
+			this->Set_Cursor(_X + 6, _Y + 2); Console_Serial->print(F("ICCID")); 		this->Dot(_X + 6, (_Y + 2 + 5), (_Wide - 2 - 13 - 5)); this->Bracket(_X + 6, _Y + _Wide - 13, 10);
 
 			// Flush
 			Console_Serial->flush();
@@ -583,103 +559,173 @@ class Console {
 
 		}
 
+		// Connection Box
+		void Connection_Detail(const uint8_t _X, const uint8_t _Y, uint8_t _Wide) {
 
+			// Handle Wide
+			if (_Wide < 36) _Wide = 36;
 
+			// Draw Hardware Diagnostic
+			this->Box(_X, _Y, (_X + 7), (_Y + _Wide), "Connection Details", 5, false, false);
 
+			// Print Texts
+			this->Set_Cursor(_X + 1, _Y + 2); Console_Serial->print(F("Connection Time"));		this->Dot(_X + 1, (_Y + 2 + 15), (_Wide - 2 - 7 - 15)); this->Bracket(_X + 1, _Y + _Wide - 7, 4);
+			this->Set_Cursor(_X + 2, _Y + 2); Console_Serial->print(F("Signal Level")); 		this->Dot(_X + 2, (_Y + 2 + 12), (_Wide - 2 - 8 - 12)); this->Bracket(_X + 2, _Y + _Wide - 8, 5);
+			this->Set_Cursor(_X + 3, _Y + 2); Console_Serial->print(F("GSM Operator")); 		this->Dot(_X + 3, (_Y + 2 + 12), (_Wide - 2 - 8 - 12)); this->Bracket(_X + 3, _Y + _Wide - 8, 5);
+			this->Set_Cursor(_X + 4, _Y + 2); Console_Serial->print(F("IP Address")); 			this->Dot(_X + 4, (_Y + 2 + 10), (_Wide - 2 - 18 - 10)); this->Bracket(_X + 4, _Y + _Wide - 18, 15);
+			this->Set_Cursor(_X + 5, _Y + 2); Console_Serial->print(F("LAC")); 					this->Dot(_X + 5, (_Y + 2 + 3), (_Wide - 2 - 7 - 3)); this->Bracket(_X + 5, _Y + _Wide - 7, 4);
+			this->Set_Cursor(_X + 6, _Y + 2); Console_Serial->print(F("Cell ID")); 				this->Dot(_X + 6, (_Y + 2 + 7), (_Wide - 2 - 7 - 7)); this->Bracket(_X + 6, _Y + _Wide - 7, 4);
 
+			// Flush
+			Console_Serial->flush();
 
+			// Command Delay
+			delay(1);
 
+		}
 
+		// FOTA Box
+		void FOTA_Detail(const uint8_t _X, const uint8_t _Y, uint8_t _Wide) {
 
-		/**
-		 * @brief Draw Box Function.
-		 * @version 01.00.00
-		 * @param _X1 Upper Left Corner X.
-		 * @param _Y1 Upper Left Corner Y.
-		 * @param _X2 Lower Right Corner X.
-		 * @param _Y2 Lower Right Corner Y.
-		 * @param _Text Header Text.
-		 * @param _Number Box Number.
-		 * @param _Header Box Header.
-		 * @param _Footer Box Footer.
-		 */
-		void Draw_Box(uint8_t _X1, uint8_t _Y1, uint8_t _X2, uint8_t _Y2, String _Text, uint8_t _Number, bool _Header, bool _Footer) {
+			// Handle Wide
+			if (_Wide < 36) _Wide = 36;
 
-			// Set Text Color
-			this->Text_Color(WHITE);
+			// Draw Hardware Diagnostic
+			this->Box(_X, _Y, (_X + 7), (_Y + _Wide), "FOTA", 6, false, false);
 
-			// Set Text Format
-			Console_Serial->print(F("\e["));
-			Console_Serial->print(DIM);
-			Console_Serial->write('m');
+			// Print Texts
+			this->Set_Cursor(_X + 1, _Y + 2); Console_Serial->print(F("File ID"));			this->Dot(_X + 1, (_Y + 2 + 7), (_Wide - 2 - 9 - 7)); this->Bracket(_X + 1, _Y + _Wide - 9, 6);
+			this->Set_Cursor(_X + 2, _Y + 2); Console_Serial->print(F("Download Status")); 	this->Dot(_X + 2, (_Y + 2 + 15), (_Wide - 2 - 7 - 15)); this->Bracket(_X + 2, _Y + _Wide - 7, 4);
+			this->Set_Cursor(_X + 3, _Y + 2); Console_Serial->print(F("FTP File Size")); 	this->Dot(_X + 3, (_Y + 2 + 13), (_Wide - 2 - 10 - 13)); this->Bracket(_X + 3, _Y + _Wide - 10, 7);
+			this->Set_Cursor(_X + 4, _Y + 2); Console_Serial->print(F("SD File Size")); 	this->Dot(_X + 4, (_Y + 2 + 12), (_Wide - 2 - 10 - 12)); this->Bracket(_X + 4, _Y + _Wide - 10, 7);
+			this->Set_Cursor(_X + 5, _Y + 2); Console_Serial->print(F("Download Percent")); this->Dot(_X + 5, (_Y + 2 + 16), (_Wide - 2 - 8 - 16)); this->Bracket(_X + 5, _Y + _Wide - 8, 5); this->Set_Cursor(_X + 5, _Y + _Wide - 3); Console_Serial->print(F("%"));
+			this->Set_Cursor(_X + 6, _Y + 2); Console_Serial->print(F("Download Time")); 	this->Dot(_X + 6, (_Y + 2 + 13), (_Wide - 2 - 11 - 13)); this->Bracket(_X + 6, _Y + _Wide - 11, 8); this->Set_Cursor(_X + 6, _Y + _Wide - 5); Console_Serial->print(F("Sec"));
 
-			// Print Corners
-			this->Set_Cursor(_X1, _Y1); Console_Serial->println(F("┌"));
-			this->Set_Cursor(_X2, _Y1); Console_Serial->println(F("└"));
-			this->Set_Cursor(_X1, _Y2); Console_Serial->println(F("┐"));
-			this->Set_Cursor(_X2, _Y2); Console_Serial->println(F("┘"));
+			// Flush
+			Console_Serial->flush();
 
-			// Print Lines
-			for (uint8_t i = _X1 + 1; i <= _X2 - 1; i++) {
-				
-				this->Set_Cursor(i, _Y1); Console_Serial->println(F("│"));
-				this->Set_Cursor(i, _Y2); Console_Serial->println(F("│"));
+			// Command Delay
+			delay(1);
 
-			}
-			for (uint8_t i = _Y1 + 1; i <= _Y2 - 1; i++) {
-				
-				this->Set_Cursor(_X1, i); Console_Serial->println(F("─"));
-				this->Set_Cursor(_X2, i); Console_Serial->println(F("─"));
-				
-			}
+		}
 
-			// Print Header
-			this->Text_Color(YELLOW); this->Set_Cursor(_X1, _Y1 + 2); Console_Serial->println(_Text);
+		// Status Box
+		void Status_Detail(const uint8_t _X, const uint8_t _Y, uint8_t _Wide) {
 
-			// Print Header Number
-			if (_Number != 0) {
-				this->Text_Color(WHITE); this->Set_Cursor(_X1, _Y2 - 4); Console_Serial->println(F("[ ]"));
-				this->Text_Color(YELLOW); this->Set_Cursor(_X1, _Y2 - 3); Console_Serial->println(_Number);
-			}
+			// Handle Wide
+			if (_Wide < 36) _Wide = 36;
 
-			// Draw Header
-			if (_Header) {
+			// Draw Hardware Diagnostic
+			this->Box(_X, _Y, (_X + 2), (_Y + _Wide), "", 0, false, false);
 
-				// Set Text Color
-				this->Text_Color(WHITE);
+			// Print Texts
+			this->Set_Cursor(_X + 1, _Y + 2); Console_Serial->print(F("Device Status :"));
 
-				// Print Corners
-				this->Set_Cursor(_X1 + 2, _Y1); Console_Serial->println(F("├"));
-				this->Set_Cursor(_X1 + 2, _Y2); Console_Serial->println(F("┤"));
+			// Flush
+			Console_Serial->flush();
 
-				// Print Lines
-				for (uint8_t i = _Y1 + 1; i <= _Y2 - 1; i++) {
-					
-					this->Set_Cursor(_X1 + 2, i); Console_Serial->println(F("─"));
-					
-				}
+			// Command Delay
+			delay(1);
 
-			}
-			
-			// Draw Footer			
-			if (_Footer) {
+		}
 
-				// Set Text Color
-				this->Text_Color(WHITE);
+		// Pressure Box
+		void Pressure_Detail(const uint8_t _X, const uint8_t _Y, uint8_t _Wide) {
 
-				// Print Corners
-				this->Set_Cursor(_X2 - 2, _Y1); Console_Serial->println(F("├"));
-				this->Set_Cursor(_X2 - 2, _Y2); Console_Serial->println(F("┤"));
+			// Handle Wide
+			if (_Wide < 36) _Wide = 36;
 
-				// Print Lines
-				for (uint8_t i = _Y1 + 1; i <= _Y2 - 1; i++) {
-					
-					this->Set_Cursor(_X2 - 2, i); Console_Serial->println(F("─"));
-					
-				}
+			// Draw Pressure Box
+			this->Box(_X, _Y, (_X + 8), (_Y + _Wide), "Pressure", 7, false, false);
 
-			}
-			
+			// Print Texts
+			this->Set_Cursor(_X + 1, _Y + 2); Console_Serial->print(F("Instant"));		this->Dot(_X + 1, (_Y + 2 + 7), (_Wide - 2 - 12 - 7)); this->Bracket(_X + 1, _Y + _Wide - 12, 9); this->Set_Cursor(_X + 1, _Y + _Wide - 5); Console_Serial->print(F("Bar"));
+			this->Set_Cursor(_X + 2, _Y + 2); Console_Serial->print(F("Min")); 			this->Dot(_X + 2, (_Y + 2 + 3), (_Wide - 2 - 12 - 3)); this->Bracket(_X + 2, _Y + _Wide - 12, 9); this->Set_Cursor(_X + 2, _Y + _Wide - 5); Console_Serial->print(F("Bar"));
+			this->Set_Cursor(_X + 3, _Y + 2); Console_Serial->print(F("Max")); 			this->Dot(_X + 3, (_Y + 2 + 3), (_Wide - 2 - 12 - 3)); this->Bracket(_X + 3, _Y + _Wide - 12, 9); this->Set_Cursor(_X + 3, _Y + _Wide - 5); Console_Serial->print(F("Bar"));
+			this->Set_Cursor(_X + 4, _Y + 2); Console_Serial->print(F("Average")); 		this->Dot(_X + 4, (_Y + 2 + 7), (_Wide - 2 - 12 - 7)); this->Bracket(_X + 4, _Y + _Wide - 12, 9); this->Set_Cursor(_X + 4, _Y + _Wide - 5); Console_Serial->print(F("Bar"));
+			this->Set_Cursor(_X + 5, _Y + 2); Console_Serial->print(F("Deviation")); 	this->Dot(_X + 5, (_Y + 2 + 9), (_Wide - 2 - 12 - 9)); this->Bracket(_X + 5, _Y + _Wide - 12, 9); this->Set_Cursor(_X + 5, _Y + _Wide - 5); Console_Serial->print(F("Bar"));
+			this->Set_Cursor(_X + 6, _Y + 2); Console_Serial->print(F("Slope")); 		this->Dot(_X + 6, (_Y + 2 + 5), (_Wide - 2 - 12 - 5)); this->Bracket(_X + 6, _Y + _Wide - 12, 9); this->Set_Cursor(_X + 6, _Y + _Wide - 3); Console_Serial->print(F("%"));
+			this->Set_Cursor(_X + 7, _Y + 2); Console_Serial->print(F("Data Count"));	this->Dot(_X + 7, (_Y + 2 + 10), (_Wide - 2 - 8 - 10)); this->Bracket(_X + 7, _Y + _Wide - 8, 5);
+ 			this->Set_Cursor(_X + 1, _Y + _Wide - 20); Console_Serial->print(F("[    ]"));
+ 			this->Set_Cursor(_X + 2, _Y + _Wide - 20); Console_Serial->print(F("[    ]"));
+ 			this->Set_Cursor(_X + 3, _Y + _Wide - 20); Console_Serial->print(F("[    ]"));
+ 			this->Set_Cursor(_X + 6, _Y + _Wide - 20); Console_Serial->print(F("[    ]"));
+
+			// Flush
+			Console_Serial->flush();
+
+			// Command Delay
+			delay(1);
+
+		}
+
+		// Voltage Box
+		void Voltage_Detail(const uint8_t _X, const uint8_t _Y, uint8_t _Wide) {
+
+			// Handle Wide
+			if (_Wide < 36) _Wide = 36;
+
+			// Draw Pressure Box
+			this->Box(_X, _Y, (_X + 5), (_Y + _Wide), "Voltage", 8, false, false);
+
+			// Print Texts
+			this->Set_Cursor(_X + 1, _Y + 2); Console_Serial->print(F("Phase R"));		this->Dot(_X + 1, (_Y + 2 + 7), (_Wide - 2 - 7 - 11)); this->Bracket(_X + 1, _Y + _Wide - 11, 8); this->Set_Cursor(_X + 1, _Y + _Wide - 3); Console_Serial->print(F("V"));
+			this->Set_Cursor(_X + 2, _Y + 2); Console_Serial->print(F("Phase S"));		this->Dot(_X + 2, (_Y + 2 + 7), (_Wide - 2 - 7 - 11)); this->Bracket(_X + 2, _Y + _Wide - 11, 8); this->Set_Cursor(_X + 2, _Y + _Wide - 3); Console_Serial->print(F("V"));
+			this->Set_Cursor(_X + 3, _Y + 2); Console_Serial->print(F("Phase T"));		this->Dot(_X + 3, (_Y + 2 + 7), (_Wide - 2 - 7 - 11)); this->Bracket(_X + 3, _Y + _Wide - 11, 8); this->Set_Cursor(_X + 3, _Y + _Wide - 3); Console_Serial->print(F("V"));
+			this->Set_Cursor(_X + 4, _Y + 2); Console_Serial->print(F("Frequency"));	this->Dot(_X + 4, (_Y + 2 + 9), (_Wide - 2 - 9 - 11)); this->Bracket(_X + 4, _Y + _Wide - 11, 8); this->Set_Cursor(_X + 4, _Y + _Wide - 4); Console_Serial->print(F("Hz"));
+
+			// Flush
+			Console_Serial->flush();
+
+			// Command Delay
+			delay(1);
+
+		}
+
+		// Current Box
+		void Current_Detail(const uint8_t _X, const uint8_t _Y, uint8_t _Wide) {
+
+			// Handle Wide
+			if (_Wide < 36) _Wide = 36;
+
+			// Draw Pressure Box
+			this->Box(_X, _Y, (_X + 5), (_Y + _Wide), "Current", 8, false, false);
+
+			// Print Texts
+			this->Set_Cursor(_X + 1, _Y + 2); Console_Serial->print(F("Phase R"));		this->Dot(_X + 1, (_Y + 2 + 7), (_Wide - 2 - 7 - 11)); this->Bracket(_X + 1, _Y + _Wide - 11, 8); this->Set_Cursor(_X + 1, _Y + _Wide - 3); Console_Serial->print(F("A"));
+			this->Set_Cursor(_X + 2, _Y + 2); Console_Serial->print(F("Phase S"));		this->Dot(_X + 2, (_Y + 2 + 7), (_Wide - 2 - 7 - 11)); this->Bracket(_X + 2, _Y + _Wide - 11, 8); this->Set_Cursor(_X + 2, _Y + _Wide - 3); Console_Serial->print(F("A"));
+			this->Set_Cursor(_X + 3, _Y + 2); Console_Serial->print(F("Phase T"));		this->Dot(_X + 3, (_Y + 2 + 7), (_Wide - 2 - 7 - 11)); this->Bracket(_X + 3, _Y + _Wide - 11, 8); this->Set_Cursor(_X + 3, _Y + _Wide - 3); Console_Serial->print(F("A"));
+			this->Set_Cursor(_X + 4, _Y + 2); Console_Serial->print(F("Multiplier"));	this->Dot(_X + 4, (_Y + 2 + 10), (_Wide - 2 - 10 - 8)); this->Bracket(_X + 4, _Y + _Wide - 8, 5);
+
+			// Flush
+			Console_Serial->flush();
+
+			// Command Delay
+			delay(1);
+
+		}
+
+		// Power Box
+		void Power_Detail(const uint8_t _X, const uint8_t _Y, uint8_t _Wide) {
+
+			// Handle Wide
+			if (_Wide < 36) _Wide = 36;
+
+			// Draw Pressure Box
+			this->Box(_X, _Y, (_X + 5), (_Y + _Wide), "Power", 8, false, false);
+
+			// Print Texts
+			this->Set_Cursor(_X + 1, _Y + 2); Console_Serial->print(F("Active Power"));		this->Dot(_X + 1, (_Y + 2 + 12), (_Wide - 2 - 12 - 11)); this->Bracket(_X + 1, _Y + _Wide - 11, 8);
+			this->Set_Cursor(_X + 2, _Y + 2); Console_Serial->print(F("Reactive Power"));	this->Dot(_X + 2, (_Y + 2 + 14), (_Wide - 2 - 14 - 11)); this->Bracket(_X + 2, _Y + _Wide - 11, 8);
+			this->Set_Cursor(_X + 3, _Y + 2); Console_Serial->print(F("Apparent Power"));	this->Dot(_X + 3, (_Y + 2 + 14), (_Wide - 2 - 14 - 11)); this->Bracket(_X + 3, _Y + _Wide - 11, 8);
+			this->Set_Cursor(_X + 4, _Y + 2); Console_Serial->print(F("Cos Fi"));			this->Dot(_X + 4, (_Y + 2 + 6), (_Wide - 2 - 6 - 8)); this->Bracket(_X + 4, _Y + _Wide - 8, 5);
+
+			// Flush
+			Console_Serial->flush();
+
+			// Command Delay
+			delay(1);
+
 		}
 
 		/**
@@ -696,58 +742,6 @@ class Console {
 				this->Text(_X, _Y + i, GRAY, F("."));
 
 			}
-
-		}
-
-		/**
-		 * @brief Horizontal Line Divider Function.
-		 * @version 01.00.00
-		 * @param _X1 Start Cursor X
-		 * @param _Y1 Start Cursor Y
-		 * @param _Length Length
-		 * @param _End End Symbol
-		 */
-		void Horizontal_Divider(uint8_t _X1, uint8_t _Y1, uint8_t _Length, bool _End) {
-
-			//Set Color
-			Text_Color(WHITE);
-
-			// Print Corners
-			if (_End) {
-
-				Set_Cursor(_X1, _Y1); Serial.println(F("├"));
-				Set_Cursor(_X1, _Y1 + _Length); Serial.println(F("┤"));
-
-			}
-
-			// Print Lines
-			for (uint8_t i = _Y1 + 1; i <= _Y1 + _Length - 1; i++) {
-
-				Set_Cursor(_X1, i); Serial.println(F("─"));
-
-			}
-	
-		}
-
-		/**
-		 * @brief Vertical Line Divider Function.
-		 * @version 01.00.00
-		 * @param _X1 Start Cursor X
-		 * @param _Y1 Start Cursor Y
-		 * @param _Length Length
-		 * @param _End End Symbol
-		 */
-		void Vertical_Divider(uint8_t _X1, uint8_t _Y1, uint8_t _Length) {
-
-			//Set Color
-			Text_Color(WHITE);
-
-			// Print Corners
-			Set_Cursor(_X1, _Y1); Console_Serial->println(F("┬"));
-			Set_Cursor(_X1 + _Length, _Y1); Console_Serial->println(F("┴"));
-
-			// Print Lines
-			for (uint8_t i = _X1 + 1; i <= _X1 + _Length - 1; i++) {Set_Cursor(i, _Y1); Console_Serial->println(F("│"));}
 
 		}
 
@@ -779,8 +773,22 @@ class Console {
 			// Set Char Type
 			this->Char_Type(__Normal__);
 
+			// Reset Delay
+			delay(1);
+
+		}
+
+		// Print Screen
+		void PowerStat(void) {
+
 			// Draw Main Box
-			this->Box(1, 1, 41, 122, "", 0, true,true);
+			this->Box(1, 1, 44, 122, "", 0, true,true);
+
+			// Print Uptime Header
+			this->Formatted_Text(2, 3, Terminal_WHITE, __Normal__, F("Up Time :"));
+
+			// Print Header
+			this->Formatted_Text(2, 55, Terminal_WHITE, __Bold__, F("PowerStat V4"));
 
 			// Draw Child Box
 			this->Hardware_Diagnostic(4, 2, 39);
@@ -791,10 +799,23 @@ class Console {
 			this->Box(13, 2, 15, 121, "", 0, false, false);
 
 			// Draw GSM Box
-			this->GSM_Detail(16, 2, 79);
+			this->GSM_Detail(16, 2, 39);
+			this->Connection_Detail(16, 42 ,39);
+			this->FOTA_Detail(16, 82, 39);
 
-			// Reset Delay
-			delay(1);
+			// Draw JSON Box
+			this->Box(24, 2, 35, 81, "JSON", 0, false, false);
+
+			// Draw Status Box
+			this->Status_Detail(24, 82, 39);
+
+			// Draw Pressure Box
+			this->Pressure_Detail(27, 82, 39);
+
+			// Draw Evergy
+			this->Voltage_Detail(36, 2, 39);
+			this->Current_Detail(36, 42, 39);
+			this->Power_Detail(36, 82, 39);
 
 		}
 
@@ -804,6 +825,24 @@ class Console {
 			// Print Millis
 			this->Formatted_Text(2, 13, CYAN, __Bold__, String(millis()));
 			
+		}
+
+		// OK Decide Function.
+		void OK_Decide(const bool _Result, const uint8_t _X, const uint8_t _Y) {
+
+			// Print Command State
+			if (_Result) {
+
+				// Print OK 
+				Text(_X, _Y, Terminal_GREEN, F(" OK "));
+
+			} else {
+
+				// Print FAIL
+				Text(_X, _Y, Terminal_RED, F("FAIL"));
+
+			}
+	
 		}
 
 		// Print Serial ID
@@ -957,6 +996,41 @@ class Console {
 			if (_Status) this->Formatted_Text(2, 103, Terminal_GREEN, __Bold__, F("    Pump is Active"));
 			if (!_Status) this->Formatted_Text(2, 103, Terminal_RED, __Bold__, F("Pump is Not Active"));
 
+		}
+
+		// Print Battery Parameters
+		void GSM_Manufacturer(uint8_t _Value) {
+
+			// Clear Text
+			this->Formatted_Text(17, 38, Terminal_CYAN, __Normal__, F(" "));
+
+			// Print Text
+			this->Formatted_Text(17, 38, Terminal_CYAN, __Normal__, String(_Value));
+			
+		}
+		void GSM_Model(uint8_t _Value) {
+
+			// Clear Text
+			this->Formatted_Text(18, 38, Terminal_CYAN, __Normal__, F(" "));
+
+			// Print Text
+			this->Formatted_Text(18, 38, Terminal_CYAN, __Normal__, String(_Value));
+			
+		}
+		void GSM_Firmware(uint16_t _Segment1, uint16_t _Segment2, uint16_t _Segment3) {
+
+			// Clear Text
+			this->Formatted_Text(19, 30, Terminal_CYAN, __Normal__, F("         "));
+
+			// Declare Variable
+			char _Firmware[10];
+
+			// Handle TimeStamp
+			sprintf(_Firmware, "%02d.%02d.%03d", _Segment1, _Segment2, _Segment3);
+
+			// Print Text
+			this->Formatted_Text(19, 30, Terminal_CYAN, __Normal__, String(_Firmware));
+			
 		}
 
 };
