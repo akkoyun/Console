@@ -1,3 +1,62 @@
+// Text Format Definitions
+#define __Normal__			    0
+#define __Bold__			    1
+#define __Low__				    2
+#define __Italic__		        3
+#define __UnderLine__		    4
+#define __SlowBlink__		    5
+#define __RapidBlink__		    6
+#define __Reverse__			    7
+#define __Hide__			    8
+#define __Overline__	    	9
+
+// Clear Type Definitions
+#define __Clear_AfterLine__		0
+#define __Clear_BeforeLine__	1
+#define __Clear_Line__		    2
+#define __Clear_Screen__		3
+
+// Terminal Colors
+#define Terminal_BLACK			30
+#define Terminal_RED			31
+#define Terminal_GREEN			32
+#define Terminal_YELLOW			33
+#define Terminal_BLUE			34
+#define Terminal_MAGENTA		35
+#define Terminal_CYAN			36
+#define Terminal_WHITE			37
+#define Terminal_GRAY			90
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Color Definitions
+#define BLACK				    30
+#define RED					    31
+#define GREEN				    32
+#define YELLOW				    33
+#define BLUE				    34
+#define MAGENTA				    35
+#define CYAN				    36
+#define WHITE				    37
+#define GRAY				    90
+
+
+
+
+
 // Template Definitions
 // #define CONSOLE_TEMPLATE_I2C_SCANNER
 // #define CONSOLE_TEMPLATE_MAX78630
@@ -9,16 +68,6 @@
 // #define CONSOLE_TEMPLATE_PRESSURE
 // #define CONSOLE_TEMPLATE_MAX78630_FULL
 
-// Color Definitions
-#define BLACK				(uint8_t)30
-#define RED					(uint8_t)31
-#define GREEN				(uint8_t)32
-#define YELLOW				(uint8_t)33
-#define BLUE				(uint8_t)34
-#define MAGENTA				(uint8_t)35
-#define CYAN				(uint8_t)36
-#define WHITE				(uint8_t)37
-#define GRAY				(uint8_t)90
 
 // Text Format Definitions
 #define RST					(uint8_t)0
