@@ -16,6 +16,7 @@
 
 // Include Definitions
 #include "ANSI_Code.h"
+#include "Data_Struct.h"
 
 // Console Class
 class Console {
@@ -27,11 +28,11 @@ class Console {
 		struct Console_Variable_Struct {
 			
 			// Char Type Variable
-			uint8_t Char_Type = Terminal_Normal;
+			uint8_t Char_Type = 0;
 
 			// Color Variable
-			uint8_t Text_Color = Terminal_WHITE;
-			uint8_t	BG_Color = Terminal_BLACK;
+			uint8_t Text_Color = 0;
+			uint8_t	BG_Color = 0;
 
 		} Variables;
 
@@ -105,193 +106,202 @@ class Console {
 		// Normal char mode function.
 		void Char_Type(const uint8_t _Type) {
 
-			// Set Char Mode
-			switch (_Type) {
+			// Control for Char Type
+			if (this->Variables.Char_Type != _Type) {
 
-				case Terminal_Normal: {
+				// Set Char Mode
+				switch (_Type) {
 
-					// Control for Char Type
-					if (this->Variables.Char_Type != Terminal_Normal) {
+					case Terminal_Normal: {
 
-						// Set Char Mode
-						Console_Serial->write(__ANSI_Char_Normal__);
+						// Control for Char Type
+						if (this->Variables.Char_Type != Terminal_Normal) {
 
-						// Set Variable
-						this->Variables.Char_Type = Terminal_Normal;
+							// Set Char Mode
+							Console_Serial->write(__ANSI_Char_Normal__);
+
+							// Set Variable
+							this->Variables.Char_Type = Terminal_Normal;
+
+						}
+
+						// End Switch
+						break;
+
+					}
+					case Terminal_Bold: {
+
+						// Control for Char Type
+						if (this->Variables.Char_Type != Terminal_Bold) {
+
+							// Set Char Mode
+							Console_Serial->write(__ANSI_Char_Bold__);
+
+							// Set Variable
+							this->Variables.Char_Type = Terminal_Bold;
+
+						}
+
+						// End Switch
+						break;
+
+					}
+					case Terminal_Low: {
+
+						// Control for Char Type
+						if (this->Variables.Char_Type != Terminal_Low) {
+
+							// Set Char Mode
+							Console_Serial->write(__ANSI_Char_Low__);
+
+							// Set Variable
+							this->Variables.Char_Type = Terminal_Low;
+
+						}
+
+						// End Switch
+						break;
+
+					}
+					case Terminal_Italic: {
+
+						// Control for Char Type
+						if (this->Variables.Char_Type != Terminal_Italic) {
+
+							// Set Char Mode
+							Console_Serial->write(__ANSI_Char_Italic__);
+
+							// Set Variable
+							this->Variables.Char_Type = Terminal_Italic;
+
+						}
+
+						// End Switch
+						break;
+
+					}
+					case Terminal_UnderLine: {
+
+						// Control for Char Type
+						if (this->Variables.Char_Type != Terminal_UnderLine) {
+
+							// Set Char Mode
+							Console_Serial->write(__ANSI_Char_UnderLine__);
+
+							// Set Variable
+							this->Variables.Char_Type = Terminal_UnderLine;
+
+						}
+
+						// End Switch
+						break;
+
+					}
+					case Terminal_SlowBlink: {
+
+						// Control for Char Type
+						if (this->Variables.Char_Type != Terminal_SlowBlink) {
+
+							// Set Char Mode
+							Console_Serial->write(__ANSI_Char_SlowBlink__);
+
+							// Set Variable
+							this->Variables.Char_Type = Terminal_SlowBlink;
+
+						}
+
+						// End Switch
+						break;
+
+					}
+					case Terminal_RapidBlink: {
+
+						// Control for Char Type
+						if (this->Variables.Char_Type != Terminal_RapidBlink) {
+
+							// Set Char Mode
+							Console_Serial->write(__ANSI_Char_RapidBlink__);
+
+							// Set Variable
+							this->Variables.Char_Type = Terminal_RapidBlink;
+
+						}
+
+						// End Switch
+						break;
+
+					}
+					case Terminal_Reverse: {
+
+						// Control for Char Type
+						if (this->Variables.Char_Type != Terminal_Reverse) {
+
+							// Set Char Mode
+							Console_Serial->write(__ANSI_Char_Reverse__);
+
+							// Set Variable
+							this->Variables.Char_Type = Terminal_Reverse;
+
+						}
+
+						// End Switch
+						break;
+
+					}
+					case Terminal_Hide: {
+
+						// Control for Char Type
+						if (this->Variables.Char_Type != Terminal_Hide) {
+
+							// Set Char Mode
+							Console_Serial->write(__ANSI_Char_Hide__);
+
+							// Set Variable
+							this->Variables.Char_Type = Terminal_Hide;
+
+						}
+
+						// End Switch
+						break;
+
+					}
+					case Terminal_Overline: {
+
+						// Control for Char Type
+						if (this->Variables.Char_Type != Terminal_Overline) {
+
+							// Set Char Mode
+							Console_Serial->write(__ANSI_Char_OverLine__);
+
+							// Set Variable
+							this->Variables.Char_Type = Terminal_Overline;
+
+						}
+
+						// End Switch
+						break;
+
+					}
+					default: {
+
+						// End Switch
+						break;
 
 					}
 
-					// End Switch
-					break;
-
 				}
-				case Terminal_Bold: {
 
-					// Control for Char Type
-					if (this->Variables.Char_Type != Terminal_Bold) {
+				// Set Variable
+				this->Variables.Char_Type = _Type;
 
-						// Set Char Mode
-						Console_Serial->write(__ANSI_Char_Bold__);
+				// Flush
+				Console_Serial->flush();
 
-						// Set Variable
-						this->Variables.Char_Type = Terminal_Bold;
+				// Command Delay
+				delay(1);
 
-					}
-
-					// End Switch
-					break;
-
-				}
-				case Terminal_Low: {
-
-					// Control for Char Type
-					if (this->Variables.Char_Type != Terminal_Low) {
-
-						// Set Char Mode
-						Console_Serial->write(__ANSI_Char_Low__);
-
-						// Set Variable
-						this->Variables.Char_Type = Terminal_Low;
-
-					}
-
-					// End Switch
-					break;
-
-				}
-				case Terminal_Italic: {
-
-					// Control for Char Type
-					if (this->Variables.Char_Type != Terminal_Italic) {
-
-						// Set Char Mode
-						Console_Serial->write(__ANSI_Char_Italic__);
-
-						// Set Variable
-						this->Variables.Char_Type = Terminal_Italic;
-
-					}
-
-					// End Switch
-					break;
-
-				}
-				case Terminal_UnderLine: {
-
-					// Control for Char Type
-					if (this->Variables.Char_Type != Terminal_UnderLine) {
-
-						// Set Char Mode
-						Console_Serial->write(__ANSI_Char_UnderLine__);
-
-						// Set Variable
-						this->Variables.Char_Type = Terminal_UnderLine;
-
-					}
-
-					// End Switch
-					break;
-
-				}
-				case Terminal_SlowBlink: {
-
-					// Control for Char Type
-					if (this->Variables.Char_Type != Terminal_SlowBlink) {
-
-						// Set Char Mode
-						Console_Serial->write(__ANSI_Char_SlowBlink__);
-
-						// Set Variable
-						this->Variables.Char_Type = Terminal_SlowBlink;
-
-					}
-
-					// End Switch
-					break;
-
-				}
-				case Terminal_RapidBlink: {
-
-					// Control for Char Type
-					if (this->Variables.Char_Type != Terminal_RapidBlink) {
-
-						// Set Char Mode
-						Console_Serial->write(__ANSI_Char_RapidBlink__);
-
-						// Set Variable
-						this->Variables.Char_Type = Terminal_RapidBlink;
-
-					}
-
-					// End Switch
-					break;
-
-				}
-				case Terminal_Reverse: {
-
-					// Control for Char Type
-					if (this->Variables.Char_Type != Terminal_Reverse) {
-
-						// Set Char Mode
-						Console_Serial->write(__ANSI_Char_Reverse__);
-
-						// Set Variable
-						this->Variables.Char_Type = Terminal_Reverse;
-
-					}
-
-					// End Switch
-					break;
-
-				}
-				case Terminal_Hide: {
-
-					// Control for Char Type
-					if (this->Variables.Char_Type != Terminal_Hide) {
-
-						// Set Char Mode
-						Console_Serial->write(__ANSI_Char_Hide__);
-
-						// Set Variable
-						this->Variables.Char_Type = Terminal_Hide;
-
-					}
-
-					// End Switch
-					break;
-
-				}
-				case Terminal_Overline: {
-
-					// Control for Char Type
-					if (this->Variables.Char_Type != Terminal_Overline) {
-
-						// Set Char Mode
-						Console_Serial->write(__ANSI_Char_OverLine__);
-
-						// Set Variable
-						this->Variables.Char_Type = Terminal_Overline;
-
-					}
-
-					// End Switch
-					break;
-
-				}
-				default: {
-
-					// End Switch
-					break;
-
-				}
 
 			}
-
-			// Flush
-			Console_Serial->flush();
-
-			// Command Delay
-			delay(1);
 
 		}
 
@@ -733,10 +743,11 @@ class Console {
 			if (_Wide < 36) _Wide = 36;
 
 			// Draw Hardware Diagnostic
-			this->Box(_X, _Y, (_X + 2), (_Y + _Wide), "", 0, false, false);
+			this->Box(_X, _Y, (_X + 3), (_Y + _Wide), "", 0, false, false);
 
 			// Print Texts
-			this->Set_Cursor(_X + 1, _Y + 2); Console_Serial->print(F("Device Status :"));
+			this->Set_Cursor(_X + 1, _Y + 2); Console_Serial->print(F("S:"));
+			this->Set_Cursor(_X + 2, _Y + 2); Console_Serial->print(F("P:"));
 
 			// Flush
 			Console_Serial->flush();
@@ -889,6 +900,9 @@ class Console {
 			// Set Char Type
 			this->Char_Type(Terminal_Normal);
 
+			// Reset Text Color
+			this->Text_Color(Terminal_WHITE);
+
 			// Reset Delay
 			delay(1);
 
@@ -914,7 +928,7 @@ class PowerStat_Console : private Console {
 			Console::Begin();
 
 			// Draw Main Box
-			Console::Box(1, 1, 44, 122, "", 0, true,true);
+			Console::Box(1, 1, 45, 122, "", 0, true,true);
 
 			// Print Uptime Header
 			Console::Formatted_Text(2, 3, Terminal_WHITE, Terminal_Normal, F("Up Time :"));
@@ -936,18 +950,18 @@ class PowerStat_Console : private Console {
 			Console::FOTA_Detail(16, 82, 39);
 
 			// Draw JSON Box
-			Console::Box(24, 2, 35, 81, "JSON", 0, false, false);
+			Console::Box(24, 2, 36, 81, "JSON", 0, false, false);
 
 			// Draw Status Box
 			Console::Status_Detail(24, 82, 39);
 
 			// Draw Pressure Box
-			Console::Pressure_Detail(27, 82, 39);
+			Console::Pressure_Detail(28, 82, 39);
 
 			// Draw Evergy
-			Console::Voltage_Detail(36, 2, 39);
-			Console::Current_Detail(36, 42, 39);
-			Console::Power_Detail(36, 82, 39);
+			Console::Voltage_Detail(37, 2, 39);
+			Console::Current_Detail(37, 42, 39);
+			Console::Power_Detail(37, 82, 39);
 
 		}
 
@@ -975,6 +989,20 @@ class PowerStat_Console : private Console {
 
 			}
 	
+		}
+
+		// Hardware Diagnostic
+		void Hardware_Diagnostic(uint8_t _Status) {
+
+			// Diagnostics
+			Console::Formatted_Text(5, 35, (bitRead(_Status, 0) == true ? Terminal_GREEN : Terminal_RED), (bitRead(_Status, 0) == true ? Terminal_Normal : Terminal_RapidBlink), (bitRead(_Status, 0) == true ? F(" OK ") : F("FAIL")));
+			Console::Formatted_Text(6, 35, (bitRead(_Status, 1) == true ? Terminal_GREEN : Terminal_RED), (bitRead(_Status, 1) == true ? Terminal_Normal : Terminal_RapidBlink), (bitRead(_Status, 1) == true ? F(" OK ") : F("FAIL")));
+			Console::Formatted_Text(7, 35, (bitRead(_Status, 2) == true ? Terminal_GREEN : Terminal_RED), (bitRead(_Status, 2) == true ? Terminal_Normal : Terminal_RapidBlink), (bitRead(_Status, 2) == true ? F(" OK ") : F("FAIL")));
+			Console::Formatted_Text(8, 35, (bitRead(_Status, 3) == true ? Terminal_GREEN : Terminal_RED), (bitRead(_Status, 3) == true ? Terminal_Normal : Terminal_RapidBlink), (bitRead(_Status, 3) == true ? F(" OK ") : F("FAIL")));
+			Console::Formatted_Text(9, 35, (bitRead(_Status, 4) == true ? Terminal_GREEN : Terminal_RED), (bitRead(_Status, 4) == true ? Terminal_Normal : Terminal_RapidBlink), (bitRead(_Status, 4) == true ? F(" OK ") : F("FAIL")));
+			Console::Formatted_Text(10, 35, (bitRead(_Status, 5) == true ? Terminal_GREEN : Terminal_RED), (bitRead(_Status, 5) == true ? Terminal_Normal : Terminal_RapidBlink), (bitRead(_Status, 5) == true ? F(" OK ") : F("FAIL")));
+			Console::Formatted_Text(11, 35, (bitRead(_Status, 6) == true ? Terminal_GREEN : Terminal_RED), (bitRead(_Status, 6) == true ? Terminal_Normal : Terminal_RapidBlink), (bitRead(_Status, 6) == true ? F(" OK ") : F("FAIL")));
+
 		}
 
 		// Print Serial ID
@@ -1008,39 +1036,41 @@ class PowerStat_Console : private Console {
 		}
 
 		// Print Interval Parameters
-		void Interval(uint8_t _Online, uint8_t _Offline) {
+		void Interval(uint8_t * _Online, uint8_t * _Offline) {
 			
-			// Clear Text
-			Console::Formatted_Text(10, 72, Terminal_CYAN, Terminal_Normal, F("  "));
-			Console::Formatted_Text(11, 72, Terminal_CYAN, Terminal_Normal, F("  "));
+			// Set Char
+			Console::Char_Type(Terminal_Normal);
+
+			// Set Color
+			Console::Text_Color(Terminal_CYAN);
+
+			// Declare Variable
+			char _Online_Interval[4];
+			char _Offline_Interval[4];
+
+			// Handle Interval
+			sprintf(_Online_Interval, "%03d", *((uint8_t*)_Online));
+			sprintf(_Offline_Interval, "%03d", *((uint8_t*)_Offline));
 
 			// Print Text
-			Console::Formatted_Text(10, 72, Terminal_GREEN, Terminal_Normal, String(_Online));
-			Console::Formatted_Text(11, 72, Terminal_GREEN, Terminal_Normal, String(_Offline));
+			Console::Set_Cursor(10, 72); Console::Console_Serial->print(_Online_Interval);
+			Console::Set_Cursor(11, 72); Console::Console_Serial->print(_Offline_Interval);
+
 		}
 
 		// Print Battery Parameters
-		void Battery(float _IV, float _T, float _IC, float _SOC, uint16_t _FB, uint16_t _IB, uint8_t _Charge) {
-
-			// Clear Text
-			Console::Set_Cursor(5, 113); Console::Console_Serial->print(F("    "));
-			Console::Set_Cursor(6, 112); Console::Console_Serial->print(F("     "));
-			Console::Set_Cursor(7, 110); Console::Console_Serial->print(F("       "));
-			Console::Set_Cursor(8, 112); Console::Console_Serial->print(F("     "));
-			Console::Set_Cursor(9, 112); Console::Console_Serial->print(F("    "));
-			Console::Set_Cursor(10, 112); Console::Console_Serial->print(F("    "));
-			Console::Set_Cursor(11, 105); Console::Console_Serial->print(F("              "));
+		void Battery(Battery_Struct* _Bat) {
 
 			// Print Text
-			Console::Formatted_Text(5, 113, Terminal_CYAN, Terminal_Normal, String(_IV, 2));
-			Console::Formatted_Text(6, 112, Terminal_CYAN, Terminal_Normal, String(_T, 2));
-			Console::Formatted_Text(7, 110, Terminal_CYAN, Terminal_Normal, String(_IC, 2));
-			Console::Formatted_Text(8, 112, Terminal_CYAN, Terminal_Normal, String(_SOC, 2));
-			Console::Formatted_Text(9, 112, Terminal_CYAN, Terminal_Normal, String(_FB));
-			Console::Formatted_Text(10, 112, Terminal_CYAN, Terminal_Normal, String(_IB));
+			Console::Formatted_Text(5, 113, Terminal_CYAN, Terminal_Normal, String(_Bat->IV, 2));
+			Console::Formatted_Text(6, 112, Terminal_CYAN, Terminal_Normal, String(_Bat->T, 2));
+			Console::Formatted_Text(7, 110, Terminal_CYAN, Terminal_Normal, String(_Bat->IC, 2));
+			Console::Formatted_Text(8, 112, Terminal_CYAN, Terminal_Normal, String(_Bat->SOC, 2));
+			Console::Formatted_Text(9, 112, Terminal_CYAN, Terminal_Normal, String(_Bat->FB));
+			Console::Formatted_Text(10, 112, Terminal_CYAN, Terminal_Normal, String(_Bat->IB));
 
 			// Print Charge Status
-			switch (_Charge) {
+			switch (_Bat->Charge) {
 
 				// Not Charging
 				case 0: {
@@ -1111,38 +1141,30 @@ class PowerStat_Console : private Console {
 		}
 
 		// Print Battery Parameters
-		void GSM(uint8_t _Manufacturer, uint8_t _Model, uint16_t _Firmware_Segment1, uint16_t _Firmware_Segment2, uint16_t _Firmware_Segment3, char * _IMEI, uint32_t _Serial, char * _ICCID) {
-
-			// Clear Text
-			Console::Set_Cursor(17, 38); Console::Console_Serial->print(F(" "));
-			Console::Set_Cursor(18, 38); Console::Console_Serial->print(F(" "));
-			Console::Set_Cursor(19, 30); Console::Console_Serial->print(F("         "));
-			Console::Set_Cursor(20, 24); Console::Console_Serial->print(F("               "));
-			Console::Set_Cursor(21, 29); Console::Console_Serial->print(F("          "));
-			Console::Set_Cursor(22, 20); Console::Console_Serial->print(F("                   "));
+		void GSM(GSM_Init_Struct* _GSM_Init) {
 
 			// Print Text
-			Console::Formatted_Text(17, 38, Terminal_CYAN, Terminal_Normal, String(_Manufacturer));
-			Console::Formatted_Text(18, 38, Terminal_CYAN, Terminal_Normal, String(_Model));
-			Console::Formatted_Text(20, 24, Terminal_CYAN, Terminal_Normal, String(_IMEI));
-			Console::Formatted_Text(21, 29, Terminal_CYAN, Terminal_Normal, String(_Serial));
-			Console::Formatted_Text(22, 20, Terminal_CYAN, Terminal_Normal, String(_ICCID));
+			Console::Formatted_Text(17, 38, Terminal_CYAN, Terminal_Normal, String(_GSM_Init->Manufacturer));
+			Console::Formatted_Text(18, 38, Terminal_CYAN, Terminal_Normal, String(_GSM_Init->Model));
+			Console::Formatted_Text(20, 24, Terminal_CYAN, Terminal_Normal, String(_GSM_Init->IMEI));
+			Console::Formatted_Text(21, 29, Terminal_CYAN, Terminal_Normal, String(_GSM_Init->Serial));
+			Console::Formatted_Text(22, 20, Terminal_CYAN, Terminal_Normal, String(_GSM_Init->ICCID));
 
 			// Handle Firmware
 			char _Formatted_Firmware[10];
-			sprintf(_Formatted_Firmware, "%02d.%02d.%03d", _Firmware_Segment1, _Firmware_Segment2, _Firmware_Segment3);
+			sprintf(_Formatted_Firmware, "%02d.%02d.%03d", _GSM_Init->Firmware_1, _GSM_Init->Firmware_2, _GSM_Init->Firmware_3);
 			Console::Formatted_Text(19, 30, Terminal_CYAN, Terminal_Normal, String(_Formatted_Firmware));
 
 		}
 
 		// Print Interval Parameters
-		void Connection_Time(uint8_t _ConnTime) {
+		void Connection_Time(uint8_t * _ConnTime) {
 
 			// Declare Variable
 			char _Connection[5];
 
 			// Handle TimeStamp
-			sprintf(_Connection, "%04d", _ConnTime);
+			sprintf(_Connection, "%04d", *((uint8_t*)_ConnTime));
 
 			// Print Text
 			Console::Formatted_Text(17, 75, Terminal_CYAN, Terminal_Normal, String(_Connection));
@@ -1150,45 +1172,45 @@ class PowerStat_Console : private Console {
 		}
 
 		// Print Signal Level
-		void Signal_Level(uint8_t _dbm) {
+		void Signal_Level(uint8_t * _dbm) {
 
 			// Declare Variable
 			char _Signal[4];
 
 			// Handle TimeStamp
-			sprintf(_Signal, "%03d", _dbm);
+			sprintf(_Signal, "%03d", *((uint8_t*)_dbm));
 
 			// Print Text
 			Console::Formatted_Text(18, 65, Terminal_WHITE, Terminal_Normal, F("[-   ]"));
 			Console::Formatted_Text(18, 67, Terminal_CYAN, Terminal_Normal, String(_Signal));
 
 			// Calculate Signal Level
-			if (_dbm >= 51 and _dbm < 65) {
+			if (*((uint8_t*)_dbm) >= 51 and *((uint8_t*)_dbm) < 65) {
 
 				// Print Signal Bar
 				Console::Formatted_Text(18, 74, Terminal_GREEN, Terminal_Bold, F("XXXXX"));
 
-			} else if (_dbm >= 66 and _dbm < 77) {
+			} else if (*((uint8_t*)_dbm) >= 66 and *((uint8_t*)_dbm) < 77) {
 
 				// Print Signal Bar
 				Console::Formatted_Text(18, 74, Terminal_GREEN, Terminal_Normal, F("XXXX_"));
 
-			} else if (_dbm >= 78 and _dbm < 89) {
+			} else if (*((uint8_t*)_dbm) >= 78 and *((uint8_t*)_dbm) < 89) {
 
 				// Print Signal Bar
 				Console::Formatted_Text(18, 74, Terminal_GREEN, Terminal_Normal, F("XXX__"));
 
-			} else if (_dbm >= 90 and _dbm < 101) {
+			} else if (*((uint8_t*)_dbm) >= 90 and *((uint8_t*)_dbm) < 101) {
 
 				// Print Signal Bar
 				Console::Formatted_Text(18, 74, Terminal_YELLOW, Terminal_Normal, F("XX___"));
 
-			} else if (_dbm >= 102 and _dbm < 111) {
+			} else if (*((uint8_t*)_dbm) >= 102 and *((uint8_t*)_dbm) < 111) {
 
 				// Print Signal Bar
 				Console::Formatted_Text(18, 74, Terminal_YELLOW, Terminal_Normal, F("X____"));
 
-			} else if (_dbm >= 112 and _dbm < 113) {
+			} else if (*((uint8_t*)_dbm) >= 112 and *((uint8_t*)_dbm) < 113) {
 
 				// Print Signal Bar
 				Console::Formatted_Text(18, 74, Terminal_RED, Terminal_Normal, F("_____"));
@@ -1198,13 +1220,13 @@ class PowerStat_Console : private Console {
 		}
 
 		// Print Operator
-		void Operator(uint16_t _Operator) {
+		void Operator(uint16_t * _Operator) {
 
 			// Clear Text
 			Console::Set_Cursor(19, 74); Console::Console_Serial->print(F("     "));
 
 			// Print Operator
-			Console::Formatted_Text(19, 74, Terminal_CYAN, Terminal_Normal, String(_Operator));
+			Console::Formatted_Text(19, 74, Terminal_CYAN, Terminal_Normal, String(*((uint16_t*)_Operator)));
 
 		}
 
@@ -1219,20 +1241,26 @@ class PowerStat_Console : private Console {
 		}
 
 		// Print Operator
-		void Location(uint16_t _LAC, uint16_t _CellID) {
+		void Location(uint16_t * _LAC, uint16_t * _CellID) {
+
+			// Set Char
+			Console::Char_Type(Terminal_Normal);
+
+			// Set Color
+			Console::Text_Color(Terminal_CYAN);
 
 			// Clear Text
 			Console::Set_Cursor(21, 75); Console::Console_Serial->print(F("    "));
 			Console::Set_Cursor(22, 75); Console::Console_Serial->print(F("    "));
 
-			// Print Location
-			Console::Formatted_Text(21, 75, Terminal_CYAN, Terminal_Normal, String(_LAC, HEX));
-			Console::Formatted_Text(22, 75, Terminal_CYAN, Terminal_Normal, String(_CellID, HEX));
+			// Print Text
+			Console::Set_Cursor(21, 75); Console::Console_Serial->print((*((uint16_t*)_LAC)), HEX);
+			Console::Set_Cursor(22, 75); Console::Console_Serial->print((*((uint16_t*)_CellID)), HEX);
 
 		}
 
 		// Print Pressure
-		void Pressure(float & _Inst, float & _Min, float _MinLimit, float & _Max, float _MaxLimit, float & _Average, float & _Deviation, float & _Slope, float _SlopeLimit, uint16_t & _DataCount) {
+		void Pressure(Pressure_Struct* _Pressure, float _MinLimit, float _MaxLimit, float _Slope, float _SlopeLimit) {
 
 			// Set Text Color
 			Console::Text_Color(Terminal_CYAN);
@@ -1241,16 +1269,16 @@ class PowerStat_Console : private Console {
 			Console::Char_Type(Terminal_Normal);
 
 			// Print Pressure Value
-			Console::Set_Cursor(29, 110); Console::Console_Serial->print(String(_Min, 3));
-			Console::Set_Cursor(30, 110); Console::Console_Serial->print(String(_Max, 3));
-			Console::Set_Cursor(31, 110); Console::Console_Serial->print(String(_Average, 3));
-			Console::Set_Cursor(32, 110); Console::Console_Serial->print(String(_Deviation, 3));
-			Console::Set_Cursor(34, 114); Console::Console_Serial->print(String(_DataCount));
-			Console::Set_Cursor(29, 102); Console::Console_Serial->print(String(_MinLimit, 2));
-			Console::Set_Cursor(30, 102); Console::Console_Serial->print(String(_MaxLimit, 2));
+			Console::Set_Cursor(30, 110); Console::Console_Serial->print(String(_Pressure->Min, 3));
+			Console::Set_Cursor(31, 110); Console::Console_Serial->print(String(_Pressure->Max, 3));
+			Console::Set_Cursor(32, 110); Console::Console_Serial->print(String(_Pressure->Average, 3));
+			Console::Set_Cursor(33, 110); Console::Console_Serial->print(String(_Pressure->Deviation, 3));
+			Console::Set_Cursor(35, 114); Console::Console_Serial->print(String(_Pressure->DataCount));
+			Console::Set_Cursor(30, 102); Console::Console_Serial->print(String(_MinLimit, 2));
+			Console::Set_Cursor(31, 102); Console::Console_Serial->print(String(_MaxLimit, 2));
 
 			// Control for High Pressure
-			if (_Inst <= _MinLimit) {
+			if (_Pressure->Instant <= 1) {
 
 				// Set Text Color
 				Console::Text_Color(Terminal_RED);
@@ -1259,12 +1287,12 @@ class PowerStat_Console : private Console {
 				Console::Char_Type(Terminal_RapidBlink);
 
 				// Print Pressure Value
-				Console::Set_Cursor(28, 102); Console::Console_Serial->print(F(" LOW"));
+				Console::Set_Cursor(29, 102); Console::Console_Serial->print(F(" LOW"));
 
 				// Print Pressure Value
-				Console::Set_Cursor(28, 110); Console::Console_Serial->print(String(_Inst, 3));
+				Console::Set_Cursor(29, 110); Console::Console_Serial->print(String(_Pressure->Instant, 3));
 
-			} else if (_Inst >= _MaxLimit) {
+			} else if (_Pressure->Instant >= 2) {
 
 				// Set Text Color
 				Console::Text_Color(Terminal_RED);
@@ -1273,12 +1301,12 @@ class PowerStat_Console : private Console {
 				Console::Char_Type(Terminal_RapidBlink);
 
 				// Print Pressure Value
-				Console::Set_Cursor(28, 102); Console::Console_Serial->print(F("HIGH"));
+				Console::Set_Cursor(29, 102); Console::Console_Serial->print(F("HIGH"));
 
 				// Print Pressure Value
-				Console::Set_Cursor(28, 110); Console::Console_Serial->print(String(_Inst, 3));
+				Console::Set_Cursor(29, 110); Console::Console_Serial->print(String(_Pressure->Instant, 3));
 
-			} else if (_Inst > _MinLimit and _Inst < _MaxLimit) {
+			} else if (_Pressure->Instant > 1 and _Pressure->Instant < 2) {
 
 				// Set Text Color
 				Console::Text_Color(Terminal_CYAN);
@@ -1287,12 +1315,13 @@ class PowerStat_Console : private Console {
 				Console::Char_Type(Terminal_Normal);
 
 				// Print Pressure Value
-				Console::Set_Cursor(28, 102); Console::Console_Serial->print(F("    "));
+				Console::Set_Cursor(29, 102); Console::Console_Serial->print(F("    "));
 
 				// Print Pressure Value
-				Console::Set_Cursor(28, 110); Console::Console_Serial->print(String(_Inst, 3));
+				Console::Set_Cursor(29, 110); Console::Console_Serial->print(String(_Pressure->Instant, 3));
 
 			}
+
 
 			// Control for Slope Limit
 			if (_Slope >= _SlopeLimit) {
@@ -1304,10 +1333,10 @@ class PowerStat_Console : private Console {
 				Console::Char_Type(Terminal_RapidBlink);
 
 				// Print Pressure Value
-				Console::Set_Cursor(33, 102); Console::Console_Serial->print(F("RISE"));
+				Console::Set_Cursor(34, 102); Console::Console_Serial->print(F("RISE"));
 
 				// Print Pressure Slope
-				Console::Set_Cursor(33, 110); Console::Console_Serial->print(String(_Slope, 5));
+				Console::Set_Cursor(34, 110); Console::Console_Serial->print(String(_Slope, 5));
 
 			} else if (_Slope <= (-1 * _SlopeLimit)) {
 
@@ -1318,10 +1347,10 @@ class PowerStat_Console : private Console {
 				Console::Char_Type(Terminal_RapidBlink);
 
 				// Print Pressure Value
-				Console::Set_Cursor(33, 102); Console::Console_Serial->print(F("DROP"));
+				Console::Set_Cursor(34, 102); Console::Console_Serial->print(F("DROP"));
 
 				// Print Pressure Slope
-				Console::Set_Cursor(33, 110); Console::Console_Serial->print(String(_Slope, 5));
+				Console::Set_Cursor(34, 110); Console::Console_Serial->print(String(_Slope, 5));
 
 			} else {
 
@@ -1332,12 +1361,27 @@ class PowerStat_Console : private Console {
 				Console::Char_Type(Terminal_Normal);
 
 				// Print Pressure Value
-				Console::Set_Cursor(33, 102); Console::Console_Serial->print(F("    "));
+				Console::Set_Cursor(34, 102); Console::Console_Serial->print(F("    "));
 
 				// Print Pressure Slope
-				Console::Set_Cursor(33, 110); Console::Console_Serial->print(String(_Slope, 5));
+				Console::Set_Cursor(34, 110); Console::Console_Serial->print(String(_Slope, 5));
 
 			}
+
+		}
+
+		// Print Operator
+		void Status(uint32_t _Status, uint32_t _Publish) {
+
+			// Set Char
+			Console::Char_Type(Terminal_Normal);
+
+			// Set Color
+			Console::Text_Color(Terminal_CYAN);
+
+			// Handle Status Text
+			Console::Set_Cursor(25, 87); Console::Console_Serial->print(_Status, BIN);
+			Console::Set_Cursor(26, 87); Console::Console_Serial->print(_Publish, BIN);
 
 		}
 

@@ -20,15 +20,15 @@
 	#define Terminal_Clear_Screen		3
 
 	// Terminal Colors
-	#define Terminal_BLACK				30
-	#define Terminal_RED				31
-	#define Terminal_GREEN				32
-	#define Terminal_YELLOW				33
-	#define Terminal_BLUE				34
-	#define Terminal_MAGENTA			35
-	#define Terminal_CYAN				36
-	#define Terminal_WHITE				37
-	#define Terminal_GRAY				90
+	#define Terminal_BLACK				(uint8_t)30
+	#define Terminal_RED				(uint8_t)31
+	#define Terminal_GREEN				(uint8_t)32
+	#define Terminal_YELLOW				(uint8_t)33
+	#define Terminal_BLUE				(uint8_t)34
+	#define Terminal_MAGENTA			(uint8_t)35
+	#define Terminal_CYAN				(uint8_t)36
+	#define Terminal_WHITE				(uint8_t)37
+	#define Terminal_GRAY				(uint8_t)90
 
 	// Define Char Types
 	#define __ANSI_Char_Normal__		"\033[0m"
