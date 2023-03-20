@@ -36,12 +36,3 @@ typedef struct {
     uint32_t Serial;
     char * ICCID;
 } GSM_Init_Struct;
-
-
-
-
-
-
-
-
-//uint8_t * _Manufacturer, uint8_t * _Model, uint16_t _Firmware_Segment1, uint16_t _Firmware_Segment2, uint16_t _Firmware_Segment3, char * _IMEI, uint32_t _Serial, char * _ICCID

@@ -28,11 +28,11 @@ class Console {
 		struct Console_Variable_Struct {
 			
 			// Char Type Variable
-			uint8_t Char_Type = 0;
+			unsigned char Char_Type = 0;
 
 			// Color Variable
-			uint8_t Text_Color = 0;
-			uint8_t	BG_Color = 0;
+			unsigned char Text_Color = 0;
+			unsigned char	BG_Color = 0;
 
 		} Variables;
 
@@ -45,55 +45,14 @@ class Console {
 		HardwareSerial * Console_Serial;
 
 		// Clear functions
-		void Clear(const uint8_t _Type) {
+		void Clear(const unsigned char _Type) {
 
-			// Set Clear Mode
-			switch (_Type) {
-
-				case Terminal_Clear_AfterLine: {
-
-					// Set Char Mode
-					Console_Serial->write(__ANSI_Clear_AfterLine__);
-
-					// End Switch
-					break;
-
-				}
-				case Terminal_Clear_BeforeLine: {
-
-					// Set Char Mode
-					Console_Serial->write(__ANSI_Clear_BeforeLine__);
-
-					// End Switch
-					break;
-
-				}
-				case Terminal_Clear_Line: {
-
-					// Set Char Mode
-					Console_Serial->write(__ANSI_Clear_Line__);
-
-					// End Switch
-					break;
-
-				}
-				case Terminal_Clear_Screen: {
-
-					// Set Char Mode
-					Console_Serial->write(__ANSI_Clear_Screen__);
-
-					// End Switch
-					break;
-
-				}
-				default: {
-
-					// End Switch
-					break;
-
-				}
-
-			}
+			// Set Char Mode
+			Console_Serial->print((char)27);
+			Console_Serial->print((char)91);
+			Console_Serial->print(_Type);
+			if (_Type != 3) Console_Serial->print((char)75);
+			if (_Type == 3) Console_Serial->print((char)74);
 
 			// Flush
 			Console_Serial->flush();
@@ -104,195 +63,16 @@ class Console {
 		}
 
 		// Normal char mode function.
-		void Char_Type(const uint8_t _Type) {
+		void Char_Type(const unsigned char _Type) {
 
 			// Control for Char Type
 			if (this->Variables.Char_Type != _Type) {
 
 				// Set Char Mode
-				switch (_Type) {
-
-					case Terminal_Normal: {
-
-						// Control for Char Type
-						if (this->Variables.Char_Type != Terminal_Normal) {
-
-							// Set Char Mode
-							Console_Serial->write(__ANSI_Char_Normal__);
-
-							// Set Variable
-							this->Variables.Char_Type = Terminal_Normal;
-
-						}
-
-						// End Switch
-						break;
-
-					}
-					case Terminal_Bold: {
-
-						// Control for Char Type
-						if (this->Variables.Char_Type != Terminal_Bold) {
-
-							// Set Char Mode
-							Console_Serial->write(__ANSI_Char_Bold__);
-
-							// Set Variable
-							this->Variables.Char_Type = Terminal_Bold;
-
-						}
-
-						// End Switch
-						break;
-
-					}
-					case Terminal_Low: {
-
-						// Control for Char Type
-						if (this->Variables.Char_Type != Terminal_Low) {
-
-							// Set Char Mode
-							Console_Serial->write(__ANSI_Char_Low__);
-
-							// Set Variable
-							this->Variables.Char_Type = Terminal_Low;
-
-						}
-
-						// End Switch
-						break;
-
-					}
-					case Terminal_Italic: {
-
-						// Control for Char Type
-						if (this->Variables.Char_Type != Terminal_Italic) {
-
-							// Set Char Mode
-							Console_Serial->write(__ANSI_Char_Italic__);
-
-							// Set Variable
-							this->Variables.Char_Type = Terminal_Italic;
-
-						}
-
-						// End Switch
-						break;
-
-					}
-					case Terminal_UnderLine: {
-
-						// Control for Char Type
-						if (this->Variables.Char_Type != Terminal_UnderLine) {
-
-							// Set Char Mode
-							Console_Serial->write(__ANSI_Char_UnderLine__);
-
-							// Set Variable
-							this->Variables.Char_Type = Terminal_UnderLine;
-
-						}
-
-						// End Switch
-						break;
-
-					}
-					case Terminal_SlowBlink: {
-
-						// Control for Char Type
-						if (this->Variables.Char_Type != Terminal_SlowBlink) {
-
-							// Set Char Mode
-							Console_Serial->write(__ANSI_Char_SlowBlink__);
-
-							// Set Variable
-							this->Variables.Char_Type = Terminal_SlowBlink;
-
-						}
-
-						// End Switch
-						break;
-
-					}
-					case Terminal_RapidBlink: {
-
-						// Control for Char Type
-						if (this->Variables.Char_Type != Terminal_RapidBlink) {
-
-							// Set Char Mode
-							Console_Serial->write(__ANSI_Char_RapidBlink__);
-
-							// Set Variable
-							this->Variables.Char_Type = Terminal_RapidBlink;
-
-						}
-
-						// End Switch
-						break;
-
-					}
-					case Terminal_Reverse: {
-
-						// Control for Char Type
-						if (this->Variables.Char_Type != Terminal_Reverse) {
-
-							// Set Char Mode
-							Console_Serial->write(__ANSI_Char_Reverse__);
-
-							// Set Variable
-							this->Variables.Char_Type = Terminal_Reverse;
-
-						}
-
-						// End Switch
-						break;
-
-					}
-					case Terminal_Hide: {
-
-						// Control for Char Type
-						if (this->Variables.Char_Type != Terminal_Hide) {
-
-							// Set Char Mode
-							Console_Serial->write(__ANSI_Char_Hide__);
-
-							// Set Variable
-							this->Variables.Char_Type = Terminal_Hide;
-
-						}
-
-						// End Switch
-						break;
-
-					}
-					case Terminal_Overline: {
-
-						// Control for Char Type
-						if (this->Variables.Char_Type != Terminal_Overline) {
-
-							// Set Char Mode
-							Console_Serial->write(__ANSI_Char_OverLine__);
-
-							// Set Variable
-							this->Variables.Char_Type = Terminal_Overline;
-
-						}
-
-						// End Switch
-						break;
-
-					}
-					default: {
-
-						// End Switch
-						break;
-
-					}
-
-				}
-
-				// Set Variable
-				this->Variables.Char_Type = _Type;
+				Console_Serial->print((char)27);
+				Console_Serial->print((char)91);
+				Console_Serial->print(_Type);
+				Console_Serial->print((char)109);
 
 				// Flush
 				Console_Serial->flush();
@@ -300,19 +80,26 @@ class Console {
 				// Command Delay
 				delay(1);
 
+				// Set Variable
+				this->Variables.Char_Type = _Type;
 
 			}
 
 		}
 
 		// Change Cursor Visibility Function.
-		void Cursor_Type(bool _State) {
+		void Cursor_Type(const bool _State) {
 
-			// Cursor On
-			if (_State) Console_Serial->print(__ANSI_Cursor_ON__);	
+			// Print Command
+			Console_Serial->print((char)27);
+			Console_Serial->print((char)91);
+			Console_Serial->print((char)63);
+			Console_Serial->print((char)50);
+			Console_Serial->print((char)53);
 
-			// Cursor Off
-			if (!_State) Console_Serial->print(__ANSI_Cursor_OFF__);	
+			// Set Cursor Visibility
+			if (_State) Console_Serial->print((char)104);
+			if (!_State) Console_Serial->print((char)108);
 
 			// Flush
 			Console_Serial->flush();
@@ -323,14 +110,15 @@ class Console {
 		}
 
 		// Set Cursor Position Function.
-		void Set_Cursor(const uint8_t _X, const uint8_t _Y) {
+		void Set_Cursor(const unsigned char _X, const unsigned char _Y) {
 
-			// Set Cursor Position
-			Console_Serial->print(F("\033["));
-			Console_Serial->print(_X);
-			Console_Serial->print(F(";"));
-			Console_Serial->print(_Y);
-			Console_Serial->print(F("H"));
+			// Print Command
+			Console_Serial->print((char)27); // ESC
+			Console_Serial->print((char)91); // [
+			Console_Serial->print(_X); // X
+			Console_Serial->print((char)59); // ;
+			Console_Serial->print(_Y); // Y
+			Console_Serial->print((char)72); // H
 
 			// Flush
 			Console_Serial->flush();
@@ -341,24 +129,25 @@ class Console {
 		}
 
 		// Set Text Color Function.
-		void Text_Color(const uint8_t _Color) {
+		void Text_Color(const unsigned char _Color) {
 
 			// Control for Text Color
 			if (this->Variables.Text_Color != _Color) {
 
 				// Set Text Color.
-				Console_Serial->print(F("\033["));
+				Console_Serial->print((char)27); // ESC
+				Console_Serial->print((char)91); // [
 				Console_Serial->print(_Color);
-				Console_Serial->print(F("m"));
-
-				// Set Variable
-				this->Variables.Text_Color = _Color;
+				Console_Serial->print((char)109); // m
 
 				// Flush
 				Console_Serial->flush();
 
 				// Command Delay
 				delay(1);
+
+				// Set Variable
+				this->Variables.Text_Color = _Color;
 
 			}
 
@@ -370,19 +159,20 @@ class Console {
 			// Control for Back Ground Color
 			if (this->Variables.BG_Color != _Color) {
 
-				// Set Back Ground Color.
-				Console_Serial->print(F("\033["));
+				// Set Text Color.
+				Console_Serial->print((char)27); // ESC
+				Console_Serial->print((char)91); // [
 				Console_Serial->print(_Color + 10);
-				Console_Serial->write('m');
-
-				// Set Variable
-				this->Variables.BG_Color = _Color;
+				Console_Serial->print((char)109); // m
 
 				// Flush
 				Console_Serial->flush();
 
 				// Command Delay
 				delay(1);
+
+				// Set Variable
+				this->Variables.BG_Color = _Color;
 
 			}
 
@@ -392,7 +182,7 @@ class Console {
 		void Beep(void) {
 
 			// Beep Terminal.
-			Console_Serial->print(F("\x07"));
+			Console_Serial->print((char)7);
 
 			// Command Delay
 			delay(1);
