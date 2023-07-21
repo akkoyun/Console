@@ -647,6 +647,36 @@ class Console {
 	
 		}
 
+		// GSM Command Prcocess
+		void GSM_Command(uint8_t _X, uint8_t _Y, String _Command) {
+
+			// Set Text Cursor Position
+			Set_Cursor(_X, _Y); 
+
+			// Clear Line
+			for (uint8_t i = 0; i < 30; i++) Console_Serial->print(F(" "));
+			
+			// Print Dot
+			Text(_X, _Y, GRAY, F(".............................."));
+
+			// Print Command
+			Text(_X, _Y, WHITE, _Command);
+
+			// Print Response Wait Dot
+			Text(_X, _Y + 31, BLUE, F(" .. "));
+	
+		}
+
+
+
+
+
+
+
+
+
+
+
 		/* Console Template Functions */
 
 		/**
@@ -1028,28 +1058,49 @@ class Console {
 			void Telit_xE910(void) {
 
 				// Draw Main Box
-				this->Draw_Box(1, 1, 24, 120, "", 0, true, true);
+				this->Draw_Box(1, 1, 30, 120, "", 0, true, true);
 
 				// Print Main Header Text
-				this->Text(2, 53, WHITE, F("GSM Test Procedure"));
+				this->Text(2, 50, WHITE, F("PostOffice Test Procedure"));
 
 				// Header Titles
 				this->Text(2, 3, WHITE, F("Up Time : "));
+				this->Text(2, 100, WHITE, F("Firmware : "));
 
 				// Draw GSM Setup Box
-				this->Print_GSM_Setup(4, 2, 18, 39);
-
+				this->Draw_Box(4, 2, 24, 39, "GSM Setup", 1, false, false);
+				for (uint8_t i = 5; i < 24; i++) {Dot(i, 4, 28); Bracket(i, 32, 5);}
+			
 				// Draw GSM Connection Box
-				this->Print_GSM_Connection(4, 40, 18, 79);
-
+				this->Draw_Box(4, 2, 24, 39, "GSM Connection", 2, false, false);
+				for (uint8_t i = 5; i < 24; i++) {Dot(i, 42, 30); Bracket(i, 72, 5);}
+				
 				// Draw GSM Detail Box
 				this->Print_GSM_Detail(4, 80, 11, 119);
 
 				// Draw GSM Connection Detail Box
-				this->Print_GSM_Connection_Detail(12, 80, 18, 119);
+				this->Draw_Box(12, 80, 19, 119, "Connection", 4, false, false);
+				for (uint8_t i = 13; i < 19; i++) Dot(i, 82, 30); 
+				this->Text(13, 82, WHITE, F("GSM Connection Time")); Bracket(13, 112, 5);
+				this->Text(14, 82, WHITE, F("Signal Level")); Bracket(14, 111, 6);
+				this->Text(15, 82, WHITE, F("GSM Operator")); Bracket(15, 111, 6);
+				this->Text(16, 82, WHITE, F("IP Address")); Bracket(16, 101, 16);
+				this->Text(17, 82, WHITE, F("LAC")); Bracket(17, 112, 5);
+				this->Text(18, 82, WHITE, F("Cell ID")); Bracket(18, 112, 5);
 
 				// JSON Data Box
-				this->Draw_Box(19, 2, 21, 119, "", 8, false, false);
+				this->Draw_Box(25, 2, 27, 79, "", 6, false, false);
+
+				// Draw GSM Connection Detail Box
+				this->Draw_Box(20, 80, 27, 119, "Firmware", 5, false, false);
+				for (uint8_t i = 21; i < 27; i++) Dot(i, 82, 30); 
+
+				this->Text(21, 82, WHITE, F("File ID")); Bracket(21, 110, 7);
+				this->Text(22, 82, WHITE, F("Download Status")); Bracket(22, 112, 5);
+				this->Text(23, 82, WHITE, F("FTP File Size")); Bracket(23, 109, 8);
+				this->Text(24, 82, WHITE, F("SD File Size")); Bracket(24, 109, 8);
+				this->Text(25, 82, WHITE, F("Download Percent")); Bracket(25, 111, 6); this->Text(25, 116, WHITE, F("%"));
+				this->Text(26, 82, WHITE, F("Download Time")); Bracket(26, 108, 9); this->Text(26, 114, WHITE, F("Sec"));
 
 			}
 
