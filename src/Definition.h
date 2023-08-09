@@ -1,26 +1,30 @@
 // Color Definitions
-#define BLACK				(uint8_t)30
-#define RED					(uint8_t)31
-#define GREEN				(uint8_t)32
-#define YELLOW				(uint8_t)33
-#define BLUE				(uint8_t)34
-#define MAGENTA				(uint8_t)35
-#define CYAN				(uint8_t)36
-#define WHITE				(uint8_t)37
-#define GRAY				(uint8_t)90
+#define BLACK				30
+#define RED					31
+#define GREEN				32
+#define YELLOW				33
+#define BLUE				34
+#define MAGENTA				35
+#define CYAN				36
+#define WHITE				37
+#define GRAY				90
 
 // Text Format Definitions
-#define RST					(uint8_t)0
-#define BRIGHT				(uint8_t)1
-#define DIM					(uint8_t)2
-#define UNDERSCORE			(uint8_t)4
-#define BLINK				(uint8_t)5
-#define REVERSE				(uint8_t)7
-#define HIDDEN				(uint8_t)8
+#define RST					0
+#define BRIGHT				1
+#define DIM					2
+#define UNDERSCORE			4
+#define BLINK				5
+#define REVERSE				7
+#define HIDDEN				8
 
 // Clear Type Definitions
-#define LINE_AFTER_CURSOR 	(uint8_t)0
-#define LINE_TO_CURSOR 		(uint8_t)1
-#define LINE 		    	(uint8_t)2
-#define SCREEN 			    (uint8_t)3
-#define ALL 			    (uint8_t)4
+#define LINE_AFTER_CURSOR 	0
+#define LINE_TO_CURSOR 		1
+#define LINE 		    	2
+#define SCREEN 			    3
+#define ALL 			    4
+
+// Divider Definitions
+#define HORIZONTAL		    true
+#define VERTICAL		    false

@@ -1,14 +1,12 @@
-// Template Definitions
-// #define CONSOLE_TEMPLATE_I2C_SCANNER
-// #define CONSOLE_TEMPLATE_MAX78630
-#define CONSOLE_TEMPLATE_POWERSTAT
-// #define CONSOLE_TEMPLATE_FILTERSTAT
-// #define CONSOLE_TEMPLATE_GE910
-// #define CONSOLE_TEMPLATE_VOLTMETER
-// #define CONSOLE_TEMPLATE_TH_METER
-// #define CONSOLE_TEMPLATE_PRESSURE
-// #define CONSOLE_TEMPLATE_MAX78630_FULL
+// Device Definitions
+//#define PowerStat
+//#define FilterStat
+//#define WeatherStat
 
-// Module Definitions
-// #define B108AA
-
+// Tool Definitions
+//#define I2C_SCANNER
+//#define TH_METER
+//#define VOLTMETER
+//#define ANALOG_PRESSURE
+//#define MAX78630_FULL
+//#define POSTOFFICE_TEST
