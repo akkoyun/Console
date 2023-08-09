@@ -6,32 +6,11 @@
 		#include <Arduino.h>
 	#endif
 
-	// Color Definitions
-	#define BLACK				(uint8_t)30
-	#define RED					(uint8_t)31
-	#define GREEN				(uint8_t)32
-	#define YELLOW				(uint8_t)33
-	#define BLUE				(uint8_t)34
-	#define MAGENTA				(uint8_t)35
-	#define CYAN				(uint8_t)36
-	#define WHITE				(uint8_t)37
-	#define GRAY				(uint8_t)90
+	// Include Definition File
+	#include "Definition.h"
 
-	// Text Format Definitions
-	#define RST					(uint8_t)0
-	#define BRIGHT				(uint8_t)1
-	#define DIM					(uint8_t)2
-	#define UNDERSCORE			(uint8_t)4
-	#define BLINK				(uint8_t)5
-	#define REVERSE				(uint8_t)7
-	#define HIDDEN				(uint8_t)8
-
-	// Clear Type Definitions
-	#define LINE_AFTER_CURSOR 	(uint8_t)0
-	#define LINE_TO_CURSOR 		(uint8_t)1
-	#define LINE 		    	(uint8_t)2
-	#define SCREEN 			    (uint8_t)3
-	#define ALL 			    (uint8_t)4
+	// Include Config File
+	#include "Config.h"
 
 	// Console Class
 	class Console {
@@ -40,6 +19,24 @@
 
 			// Stream Variable
 			Stream * Console_Serial;
+
+			// Variable Declaration
+			struct Struct_Console_Buffer {
+
+				// Text Color
+				uint8_t Text_Color;
+
+				// Background Color
+				uint8_t Background_Color;
+
+				// Text Format
+				uint8_t Text_Format;
+
+				// Cursor Position
+				uint8_t Cursor_X;
+				uint8_t Cursor_Y;
+
+			} Buffer;
 
 			// Clear Terminal Function.
 			void Clear(const uint8_t _Type) {
@@ -126,7 +123,7 @@
 			}
 
 			// Draw Box Function.
-			void Draw_Box(uint8_t _X1, uint8_t _Y1, uint8_t _X2, uint8_t _Y2, String _Text, uint8_t _Number, bool _Header, bool _Footer) {
+			void Box(const uint8_t _X1, const uint8_t _Y1, const uint8_t _X2, const uint8_t _Y2, String _Text = "", const uint8_t _Number = 0, const bool _Header = false, const bool _Footer = false) {
 
 				// Set Text Color
 				this->Text_Color(WHITE);
@@ -135,32 +132,37 @@
 				this->Text_Format(DIM);
 
 				// Print Corners
-				this->Set_Cursor(_X1, _Y1); Console_Serial->println(F("┌"));
-				this->Set_Cursor(_X2, _Y1); Console_Serial->println(F("└"));
-				this->Set_Cursor(_X1, _Y2); Console_Serial->println(F("┐"));
-				this->Set_Cursor(_X2, _Y2); Console_Serial->println(F("┘"));
+				this->Set_Cursor(_X1, _Y1); Console_Serial->print(F("┌"));
+				this->Set_Cursor(_X2, _Y1); Console_Serial->print(F("└"));
+				this->Set_Cursor(_X1, _Y2); Console_Serial->print(F("┐"));
+				this->Set_Cursor(_X2, _Y2); Console_Serial->print(F("┘"));
 
 				// Print Lines
 				for (uint8_t i = _X1 + 1; i <= _X2 - 1; i++) {
 					
-					this->Set_Cursor(i, _Y1); Console_Serial->println(F("│"));
-					this->Set_Cursor(i, _Y2); Console_Serial->println(F("│"));
+					this->Set_Cursor(i, _Y1); Console_Serial->print(F("│"));
+					this->Set_Cursor(i, _Y2); Console_Serial->print(F("│"));
 
 				}
 				for (uint8_t i = _Y1 + 1; i <= _Y2 - 1; i++) {
 					
-					this->Set_Cursor(_X1, i); Console_Serial->println(F("─"));
-					this->Set_Cursor(_X2, i); Console_Serial->println(F("─"));
+					this->Set_Cursor(_X1, i); Console_Serial->print(F("─"));
+					this->Set_Cursor(_X2, i); Console_Serial->print(F("─"));
 					
 				}
 
 				// Print Header
-				this->Text_Color(YELLOW); this->Set_Cursor(_X1, _Y1 + 2); Console_Serial->println(_Text);
+				this->Text_Color(YELLOW); this->Set_Cursor(_X1, _Y1 + 2); Console_Serial->print(_Text);
 
 				// Print Header Number
 				if (_Number != 0) {
-					this->Text_Color(WHITE); this->Set_Cursor(_X1, _Y2 - 4); Console_Serial->println(F("[ ]"));
-					this->Text_Color(YELLOW); this->Set_Cursor(_X1, _Y2 - 3); Console_Serial->println(_Number);
+					this->Text_Color(WHITE); this->Set_Cursor(_X1, _Y2 - 5); Console_Serial->print(F("[  ]"));
+					if (_number < 10) {
+						this->Text_Color(YELLOW); this->Set_Cursor(_X1, _Y2 - 4); Console_Serial->print(F("0"));
+						this->Text_Color(YELLOW); this->Set_Cursor(_X1, _Y2 - 3); Console_Serial->print(_Number);
+					} else {
+						this->Text_Color(YELLOW); this->Set_Cursor(_X1, _Y2 - 4); Console_Serial->print(_Number);
+					}
 				}
 
 				// Draw Header
@@ -170,13 +172,13 @@
 					this->Text_Color(WHITE);
 
 					// Print Corners
-					this->Set_Cursor(_X1 + 2, _Y1); Console_Serial->println(F("├"));
-					this->Set_Cursor(_X1 + 2, _Y2); Console_Serial->println(F("┤"));
+					this->Set_Cursor(_X1 + 2, _Y1); Console_Serial->print(F("├"));
+					this->Set_Cursor(_X1 + 2, _Y2); Console_Serial->print(F("┤"));
 
 					// Print Lines
 					for (uint8_t i = _Y1 + 1; i <= _Y2 - 1; i++) {
 						
-						this->Set_Cursor(_X1 + 2, i); Console_Serial->println(F("─"));
+						this->Set_Cursor(_X1 + 2, i); Console_Serial->print(F("─"));
 						
 					}
 
@@ -189,13 +191,13 @@
 					this->Text_Color(WHITE);
 
 					// Print Corners
-					this->Set_Cursor(_X2 - 2, _Y1); Console_Serial->println(F("├"));
-					this->Set_Cursor(_X2 - 2, _Y2); Console_Serial->println(F("┤"));
+					this->Set_Cursor(_X2 - 2, _Y1); Console_Serial->print(F("├"));
+					this->Set_Cursor(_X2 - 2, _Y2); Console_Serial->print(F("┤"));
 
 					// Print Lines
 					for (uint8_t i = _Y1 + 1; i <= _Y2 - 1; i++) {
 						
-						this->Set_Cursor(_X2 - 2, i); Console_Serial->println(F("─"));
+						this->Set_Cursor(_X2 - 2, i); Console_Serial->print(F("─"));
 						
 					}
 
@@ -204,10 +206,12 @@
 			}
 
 			// Dot Print Function.
-			void Dot(uint8_t _X, uint8_t _Y, uint8_t _Count) {
+			void Dot(const uint8_t _X, const uint8_t _Y, const uint8_t _Count) {
 
+				// Print Dots
 				for (uint8_t i = 0; i < _Count; i++) {
 
+					// Print Dot
 					this->Text(_X, _Y + i, GRAY, F("."));
 
 				}
@@ -215,7 +219,7 @@
 			}
 
 			// Bracket Place Holder Function.
-			void Bracket(uint8_t _X, uint8_t _Y, uint8_t _Space) {
+			void Bracket(const uint8_t _X, const uint8_t _Y, const uint8_t _Space) {
 
 				// Print Bracket Start
 				this->Text(_X, _Y, WHITE, F("["));
@@ -226,7 +230,7 @@
 			}
 
 			// Horizontal Line Divider Function.
-			void Horizontal_Divider(uint8_t _X1, uint8_t _Y1, uint8_t _Length, bool _End) {
+			void Horizontal_Divider(const uint8_t _X, const uint8_t _Y, const uint8_t _Length, const bool _End = false) {
 
 				//Set Color
 				Text_Color(WHITE);
@@ -234,40 +238,134 @@
 				// Print Corners
 				if (_End) {
 
-					Set_Cursor(_X1, _Y1); Serial.println(F("├"));
-					Set_Cursor(_X1, _Y1 + _Length); Serial.println(F("┤"));
+					// Print Corners
+					Set_Cursor(_X, _Y); Console_Serial->print(F("├"));
+					Set_Cursor(_X, _Y + _Length); Console_Serial->print(F("┤"));
 
 				}
 
 				// Print Lines
-				for (uint8_t i = _Y1 + 1; i <= _Y1 + _Length - 1; i++) {
+				for (uint8_t i = _Y + 1; i <= _Y + _Length - 1; i++) {
 
-					Set_Cursor(_X1, i); Serial.println(F("─"));
+					Set_Cursor(_X, i); Console_Serial->print(F("─"));
 
 				}
 		
 			}
 
 			// Vertical Line Divider Function.
-			void Vertical_Divider(uint8_t _X1, uint8_t _Y1, uint8_t _Length) {
+			void Vertical_Divider(const uint8_t _X, const uint8_t _Y, const uint8_t _Length, const bool _End = false) {
 
 				//Set Color
 				Text_Color(WHITE);
 
 				// Print Corners
-				Set_Cursor(_X1, _Y1); Console_Serial->println(F("┬"));
-				Set_Cursor(_X1 + _Length, _Y1); Console_Serial->println(F("┴"));
+				if (_End) {
+
+					// Print Corners
+					Set_Cursor(_X, _Y); Console_Serial->print(F("┬"));
+					Set_Cursor(_X + _Length, _Y); Console_Serial->print(F("┴"));
+
+				}
 
 				// Print Lines
-				for (uint8_t i = _X1 + 1; i <= _X1 + _Length - 1; i++) {Set_Cursor(i, _Y1); Console_Serial->println(F("│"));}
+				for (uint8_t i = _X + 1; i <= _X + _Length - 1; i++) {
+
+					// Print Line
+					Set_Cursor(i, _Y); Console_Serial->print(F("│"));
+
+				}
 
 			}
+
+			// Set Text Color Function.
+			void Text_Color(uint8_t _Color) {
+
+				// Control for Buffer
+				if (_Color != this->Buffer.Text_Color) {
+
+					// Set Text Color.
+					Console_Serial->print(F("\e["));
+					Console_Serial->print(_Color);
+					Console_Serial->write('m');
+
+					// Update Buffer Variable
+					this->Buffer.Text_Color = _Color;
+
+				}
+
+			}
+
+			// Set Back Ground Color Function.
+			void Background_Color(uint8_t _Color) {
+
+				// Control for Buffer
+				if (_Color != this->Buffer.Background_Color) {
+
+					// Set Back Ground Color.
+					Console_Serial->print(F("\e["));
+					Console_Serial->print(_Color + 10);
+					Console_Serial->write('m');
+
+					// Update Buffer Variable
+					this->Buffer.Background_Color = _Color;
+
+				}
+
+			}
+
+			// Set Text Format Function
+			void Text_Format(const uint8_t _Format) {
+
+				// Control for Buffer
+				if (_Format != this->Buffer.Text_Format) {
+
+					// Set Text Format
+					Console_Serial->print(F("\e["));
+					Console_Serial->print(_Format);
+					Console_Serial->write('m');
+
+					// Update Buffer Variable
+					this->Buffer.Text_Format = _Format;
+
+				}
+
+			}
+
+			// Set Cursor Position Function.
+			void Set_Cursor(uint8_t _X, uint8_t _Y) {
+
+				// Control for Buffer
+				if (_X != this->Buffer.X || _Y != this->Buffer.Y) {
+
+					// Set Cursor Position
+					Console_Serial->print(F("\e["));
+					Console_Serial->print(_Y);
+					Console_Serial->print(F(";"));
+					Console_Serial->print(_X);
+					Console_Serial->print(F("H"));
+
+					// Update Buffer Variable
+					this->Buffer.X = _X;
+					this->Buffer.Y = _Y;
+
+				}
+
+			}
+
+
+
+
+
+
+
+
 
 			// Hardware Diagnostic Box Print Function.
 			void Print_Diagnostic(uint8_t _X1, uint8_t _Y1, uint8_t _X2, uint8_t _Y2) {
 
 				// Draw Hardware Diagnostic Box
-				Draw_Box(_X1, _Y1, _X2, _Y2, "Hardware Diagnostic", 1, false, false);
+				Box(_X1, _Y1, _X2, _Y2, "Hardware Diagnostic", 1, false, false);
 
 				// Print Text
 				Text(_X1 + 1, _Y1 + 2, WHITE, F("I2C Multiplexer (0x70)")); 	Dot(_X1 + 1, _Y1 + 24, (_Y2 - 7) - (_Y1 + 24));		Bracket(_X1 + 1, _Y2 - 7, 5);
@@ -284,7 +382,7 @@
 			void Print_Detail(uint8_t _X1, uint8_t _Y1, uint8_t _X2, uint8_t _Y2) {
 
 				// Draw Hardware Diagnostic Box
-				Draw_Box(_X1, _Y1, _X2, _Y2, "Hardware Detail", 2, false, false);
+				Box(_X1, _Y1, _X2, _Y2, "Hardware Detail", 2, false, false);
 
 				// Print Text
 				Text(_X1 + 1, _Y1 + 2, WHITE, F("Serial ID")); 				Dot(_X1 + 1, _Y1 + 11, (_Y2 - 19) - (_Y1 + 11)); 	Bracket(_X1 + 1, _Y2 - 19, 17);
@@ -301,7 +399,7 @@
 			void Print_Battery(uint8_t _X1, uint8_t _Y1, uint8_t _X2, uint8_t _Y2) {
 
 				// Draw Hardware Diagnostic Box
-				Draw_Box(_X1, _Y1, _X2, _Y2, "Battery", 3, false, false);
+				Box(_X1, _Y1, _X2, _Y2, "Battery", 3, false, false);
 
 				// Print Text
 				Text(_X1 + 1, _Y1 + 2, WHITE, F("Instant Voltage")); 			Dot(_X1 + 1, _Y1 + 17, (_Y2 - 9) - (_Y1 + 17)); 	Bracket(_X1 + 1, _Y2 - 9, 7);	Text(_X1 + 1, _Y2 - 3, WHITE, F("V"));
@@ -318,7 +416,7 @@
 			void Print_GSM_Setup(uint8_t _X1, uint8_t _Y1, uint8_t _X2, uint8_t _Y2) {
 
 				// Draw GSM Setup Diagnostic Box
-				Draw_Box(_X1, _Y1, _X2, _Y2, "GSM Setup", 4, false, false);
+				Box(_X1, _Y1, _X2, _Y2, "GSM Setup", 4, false, false);
 
 				// Print Text	
 				Text(_X1 + 1, _Y1 + 2, WHITE, F("ATE=0"));			Dot(_X1 + 1, _Y1 + 7, (_Y2 - 7) - (_Y1 + 7)); 		Bracket(_X1 + 1, _Y2 - 7, 5);
@@ -341,7 +439,7 @@
 			void Print_GSM_Connection(uint8_t _X1, uint8_t _Y1, uint8_t _X2, uint8_t _Y2) {
 
 				// Draw GSM Connection Diagnostic Box
-				Draw_Box(_X1, _Y1, _X2, _Y2, "GSM Connection", 5, false, false);
+				Box(_X1, _Y1, _X2, _Y2, "GSM Connection", 5, false, false);
 
 				// Print Text	
 				Text(_X1 + 1, _Y1 + 2, WHITE, F("AT#REGMODE=0"));					Dot(_X1 + 1, _Y1 + 14, (_Y2 - 7) - (_Y1 + 14)); 	Bracket(_X1 + 1, _Y2 - 7, 5);
@@ -364,7 +462,7 @@
 			void Print_GSM_Detail(uint8_t _X1, uint8_t _Y1, uint8_t _X2, uint8_t _Y2) {
 
 				// Draw GSM Connection Diagnostic Box
-				Draw_Box(_X1, _Y1, _X2, _Y2, "GSM Detail", 4, false, false);
+				Box(_X1, _Y1, _X2, _Y2, "GSM Detail", 4, false, false);
 
 				// Print Text	
 				Text(_X1 + 1, _Y1 + 2, WHITE, F("Manufacturer"));	Dot(_X1 + 1, _Y1 + 14, (_Y2 - 4) - (_Y1 + 14)); 	Bracket(_X1 + 1, _Y2 - 4, 2);
@@ -520,8 +618,15 @@
 			// Construct a new Console object
 			Console(Stream &_Serial) {
 
-				//Set serial port
+				// Set Serial
 				this->Console_Serial = &_Serial;
+
+				// Clear Buffer
+				this->Buffer.Text_Color = WHITE;
+				this->Buffer.Background_Color = BLACK;
+				this->Buffer.Text_Format = RST;
+				this->Buffer.Cursor_X = 1;
+				this->Buffer.Cursor_Y = 1;
 
 			}
 
@@ -539,18 +644,6 @@
 
 			}
 
-			// Set Cursor Position Function.
-			void Set_Cursor(uint8_t _X, uint8_t _Y) {
-
-				// Set Cursor Position
-				Console_Serial->print(F("\e["));
-				Console_Serial->print(_X);
-				Console_Serial->print(F(";"));
-				Console_Serial->print(_Y);
-				Console_Serial->print(F("H"));
-
-			}
-
 			// Terminal Beep Sound Function.
 			void Beep(void) {
 
@@ -560,7 +653,7 @@
 			}
 
 			// Print Text to Specified Position and Color.
-			void Text(uint8_t _X, uint8_t _Y, uint8_t _Color, String _Value) {
+			void Text(const uint8_t _X, const uint8_t _Y, const uint8_t _Color, String _Value) {
 
 				// Set Text Cursor Position
 				Set_Cursor(_X, _Y); 
@@ -569,50 +662,29 @@
 				Text_Color(_Color); 
 
 				// Print Text			
-				Console_Serial->println(String(_Value));
+				Console_Serial->print(String(_Value));
 
 			}
 
-			// Set Text Color Function.
-			void Text_Color(uint8_t _Color) {
 
-				// Set Text Color.
-				Console_Serial->print(F("\e["));
-				Console_Serial->print(_Color);
-				Console_Serial->write('m');
 
-			}
 
-			// Set Text Format Function
-			void Text_Format(const uint8_t _Format) {
 
-				// Set Text Format
-				Serial.print(F("\e["));
-				Serial.print(_Format);
-				Serial.write('m');
 
-			}
 
-			// Set Back Ground Color Function.
-			void Background_Color(uint8_t _Color) {
-
-				// Set Back Ground Color.
-				Console_Serial->print(F("\e["));
-				Console_Serial->print(_Color + 10);
-				Console_Serial->write('m');
-
-			}
 
 			// OK Decide Function.
-			void OK_Decide(bool _Result, uint8_t _X, uint8_t _Y) {
+			void OK(const bool _Result, const uint8_t _X, const uint8_t _Y) {
 
 				// Print Command State
 				if (_Result) {
 
+					// Success
 					Text(_X, _Y, GREEN, F(" OK "));
 
 				} else {
 
+					// Fail
 					Text(_X, _Y, RED, F("FAIL"));
 
 				}
@@ -675,116 +747,124 @@
 			/* Console Template Functions */
 
 			// I2C Scanner Terminal Batch
-			void I2C_Scanner_Table(void) {
+			#ifdef CONSOLE_TEMPLATE_I2C_SCANNER
 
-				// Draw Console Table Grid
-				for (uint8_t i = 1; i <= 23; i = i + 2) Horizontal_Divider(i, 1, 120, false);
-				Vertical_Divider(1, 1, 22);
-				for (uint8_t i = 9; i <= 120; i = i + 7) Vertical_Divider(3, i, 18);
-				Vertical_Divider(1, 121, 22);
+				void I2C_Scanner_Table(void) {
 
-				// Draw Corners
-				this->Text(1, 1, WHITE, F("┌"));
-				this->Text(1, 121, WHITE, F("┐"));
-				this->Text(23, 1, WHITE, F("└"));
-				this->Text(23, 121, WHITE, F("┘"));
+					// Draw Console Table Grid
+					for (uint8_t i = 1; i <= 23; i = i + 2) Horizontal_Divider(i, 1, 120, false);
+					Vertical_Divider(1, 1, 22);
+					for (uint8_t i = 9; i <= 120; i = i + 7) Vertical_Divider(3, i, 18);
+					Vertical_Divider(1, 121, 22);
 
-				// Draw T
-				for (uint8_t i = 3; i <= 21; i = i + 2) {Set_Cursor(i,1); Serial.print(F("├"));}
-				for (uint8_t i = 3; i <= 21; i = i + 2) {Set_Cursor(i,121); Serial.print(F("┤"));}
-				
-				// Draw Cross Section
-				for (uint8_t i = 5; i <= 19; i = i + 2) {for (uint8_t j = 9; j <= 120; j = j + 7) {Set_Cursor(i,j); Serial.print(F("┼"));}}
-				
-				// Write Text
-				this->Text(1, 60, WHITE, F("I2C Device Explorer"));
-				this->Text(22, 3, WHITE, F("Total connected device :"));
-				this->Text(22, 86, WHITE, F("Current Mux Channel [0-8] :"));
-				this->Text(24, 100, WHITE, F("github.com/akkoyun"));
+					// Draw Corners
+					this->Text(1, 1, WHITE, F("┌"));
+					this->Text(1, 121, WHITE, F("┐"));
+					this->Text(23, 1, WHITE, F("└"));
+					this->Text(23, 121, WHITE, F("┘"));
 
-				// Print Colum Headers
-				uint8_t _C = 0;
-				for (uint8_t i = 6; i <= 21; i = i + 2) {
-					this->Text(i, 3, WHITE, F("0x"));
-					this->Text(i, 5, WHITE, String(_C));
-					this->Text(i, 6, WHITE, F("_"));
-					_C++;
+					// Draw T
+					for (uint8_t i = 3; i <= 21; i = i + 2) {Set_Cursor(i,1); Console_Serial->print(F("├"));}
+					for (uint8_t i = 3; i <= 21; i = i + 2) {Set_Cursor(i,121); Console_Serial->print(F("┤"));}
+					
+					// Draw Cross Section
+					for (uint8_t i = 5; i <= 19; i = i + 2) {for (uint8_t j = 9; j <= 120; j = j + 7) {Set_Cursor(i,j); Console_Serial->print(F("┼"));}}
+					
+					// Write Text
+					this->Text(1, 60, WHITE, F("I2C Device Explorer"));
+					this->Text(22, 3, WHITE, F("Total connected device :"));
+					this->Text(22, 86, WHITE, F("Current Mux Channel [0-8] :"));
+					this->Text(24, 100, WHITE, F("github.com/akkoyun"));
+
+					// Print Colum Headers
+					uint8_t _C = 0;
+					for (uint8_t i = 6; i <= 21; i = i + 2) {
+						this->Text(i, 3, WHITE, F("0x"));
+						this->Text(i, 5, WHITE, String(_C));
+						this->Text(i, 6, WHITE, F("_"));
+						_C++;
+					}
+
+					// Print Row Headers
+					uint8_t _R = 0;
+					for (uint8_t i = 11; i <= 121; i = i + 7) {
+						this->Text(4, i, WHITE, F("0x_"));
+						this->Text(4, i + 3, WHITE, String(_R, HEX));
+						_R++;
+					}
+
 				}
 
-				// Print Row Headers
-				uint8_t _R = 0;
-				for (uint8_t i = 11; i <= 121; i = i + 7) {
-					this->Text(4, i, WHITE, F("0x_"));
-					this->Text(4, i + 3, WHITE, String(_R, HEX));
-					_R++;
-				}
-
-			}
+			#endif
 
 			// MAX78630 Terminal Batch
-			void MAX78630(void) {
+			#ifdef CONSOLE_TEMPLATE_MAX78630_FULL
 
-				// Draw Main Box
-				this->Draw_Box(1, 1, 40, 80, "", 0, true, true);
+				void MAX78630(void) {
 
-				// Print Header 
-				this->Text(1, 40, WHITE, F("MAX78630 Energy Meter"));
+					// Draw Main Box
+					this->Draw_Box(1, 1, 40, 80, "", 0, true, true);
 
-				// Draw Voltage
-				this->Draw_Box(4, 2, 27, 32, "Voltage", 1, false, false);
-				this->Text(6, 4, WHITE, F("VScale")); this->Dot(6, 10, 11); this->Bracket(6, 21, 9); this->Text(6, 29, WHITE, F(""));
-				this->Text(7, 4, WHITE, F("VA_GAIN")); this->Dot(7, 11, 10); this->Bracket(7, 21, 9); this->Text(7, 29, WHITE, F(""));
-				this->Text(8, 4, WHITE, F("VB_GAIN")); this->Dot(8, 11, 10); this->Bracket(8, 21, 9); this->Text(8, 29, WHITE, F(""));
-				this->Text(9, 4, WHITE, F("VC_GAIN")); this->Dot(9, 11, 10); this->Bracket(9, 21, 9); this->Text(9, 29, WHITE, F(""));
-				this->Text(10, 4, WHITE, F("VA_OFFS")); this->Dot(10, 11, 10); this->Bracket(10, 21, 9); this->Text(10, 29, WHITE, F(""));
-				this->Text(11, 4, WHITE, F("VB_OFFS")); this->Dot(11, 11, 10); this->Bracket(11, 21, 9); this->Text(11, 29, WHITE, F(""));
-				this->Text(12, 4, WHITE, F("VC_OFFS")); this->Dot(12, 11, 10); this->Bracket(12, 21, 9); this->Text(12, 29, WHITE, F(""));
-				this->Text(13, 4, WHITE, F("HPF_COEF_V")); this->Dot(13, 14, 7); this->Bracket(13, 21, 9); this->Text(13, 29, WHITE, F(""));
-				this->Text(14, 4, WHITE, F("VA_RMS")); this->Dot(14, 10, 11); this->Bracket(14, 21, 9); this->Text(14, 29, WHITE, F("V"));
-				this->Text(15, 4, WHITE, F("VB_RMS")); this->Dot(15, 10, 11); this->Bracket(15, 21, 9); this->Text(15, 29, WHITE, F("V"));
-				this->Text(16, 4, WHITE, F("VC_RMS")); this->Dot(16, 10, 11); this->Bracket(16, 21, 9); this->Text(16, 29, WHITE, F("V"));
-				this->Text(17, 4, WHITE, F("VT_RMS")); this->Dot(17, 10, 11); this->Bracket(17, 21, 9); this->Text(17, 29, WHITE, F("V"));
-				this->Text(18, 4, WHITE, F("VA")); this->Dot(18, 6, 15); this->Bracket(18, 21, 9); this->Text(18, 29, WHITE, F("V"));
-				this->Text(19, 4, WHITE, F("VB")); this->Dot(19, 6, 15); this->Bracket(19, 21, 9); this->Text(19, 29, WHITE, F("V"));
-				this->Text(20, 4, WHITE, F("VC")); this->Dot(20, 6, 15); this->Bracket(20, 21, 9); this->Text(20, 29, WHITE, F("V"));
-				this->Text(21, 4, WHITE, F("VA_FUND")); this->Dot(21, 11, 10); this->Bracket(21, 21, 9); this->Text(21, 29, WHITE, F("V"));
-				this->Text(22, 4, WHITE, F("VB_FUND")); this->Dot(22, 11, 10); this->Bracket(22, 21, 9); this->Text(22, 29, WHITE, F("V"));
-				this->Text(23, 4, WHITE, F("VC_FUND")); this->Dot(23, 11, 10); this->Bracket(23, 21, 9); this->Text(23, 29, WHITE, F("V"));
-				this->Text(24, 4, WHITE, F("VA_HARM")); this->Dot(24, 11, 10); this->Bracket(24, 21, 9); this->Text(24, 29, WHITE, F("V"));
-				this->Text(25, 4, WHITE, F("VB_HARM")); this->Dot(25, 11, 10); this->Bracket(25, 21, 9); this->Text(25, 29, WHITE, F("V"));
-				this->Text(26, 4, WHITE, F("VC_HARM")); this->Dot(26, 11, 10); this->Bracket(26, 21, 9); this->Text(26, 29, WHITE, F("V"));
+					// Print Header 
+					this->Text(1, 40, WHITE, F("MAX78630 Energy Meter"));
 
-				// Draw Voltage
-				this->Draw_Box(4, 33, 27, 63, "Current", 1, false, false);
-				this->Text(6, 35, WHITE, F("IScale")); this->Dot(6, 41, 11); this->Bracket(6, 52, 9); this->Text(6, 60, WHITE, F(""));
-				this->Text(7, 35, WHITE, F("IA_GAIN")); this->Dot(7, 42, 10); this->Bracket(7, 52, 9); this->Text(7, 60, WHITE, F(""));
-				this->Text(8, 35, WHITE, F("IB_GAIN")); this->Dot(8, 42, 10); this->Bracket(8, 52, 9); this->Text(8, 60, WHITE, F(""));
-				this->Text(9, 35, WHITE, F("IC_GAIN")); this->Dot(9, 42, 10); this->Bracket(9, 52, 9); this->Text(9, 60, WHITE, F(""));
-				this->Text(10, 35, WHITE, F("IA_OFFS")); this->Dot(10, 42, 10); this->Bracket(10, 52, 9); this->Text(10, 60, WHITE, F(""));
-				this->Text(11, 35, WHITE, F("IB_OFFS")); this->Dot(11, 42, 10); this->Bracket(11, 52, 9); this->Text(11, 60, WHITE, F(""));
-				this->Text(12, 35, WHITE, F("IC_OFFS")); this->Dot(12, 42, 10); this->Bracket(12, 52, 9); this->Text(12, 60, WHITE, F(""));
-				this->Text(13, 35, WHITE, F("HPF_COEF_I")); this->Dot(13, 45, 7); this->Bracket(13, 52, 9); this->Text(13, 29, WHITE, F(""));
-				this->Text(14, 35, WHITE, F("IA_RMS")); this->Dot(14, 41, 11); this->Bracket(14, 52, 9); this->Text(14, 60, WHITE, F("A"));
-				this->Text(15, 35, WHITE, F("IB_RMS")); this->Dot(15, 41, 11); this->Bracket(15, 52, 9); this->Text(15, 60, WHITE, F("A"));
-				this->Text(16, 35, WHITE, F("IC_RMS")); this->Dot(16, 41, 11); this->Bracket(16, 52, 9); this->Text(16, 60, WHITE, F("A"));
-				this->Text(17, 35, WHITE, F("IT_RMS")); this->Dot(17, 41, 11); this->Bracket(17, 52, 9); this->Text(17, 60, WHITE, F("A"));
-				this->Text(18, 35, WHITE, F("IA")); this->Dot(18, 37, 15); this->Bracket(18, 52, 9); this->Text(18, 60, WHITE, F("A"));
-				this->Text(19, 35, WHITE, F("IB")); this->Dot(19, 37, 15); this->Bracket(19, 52, 9); this->Text(19, 60, WHITE, F("A"));
-				this->Text(20, 35, WHITE, F("IC")); this->Dot(20, 37, 15); this->Bracket(20, 52, 9); this->Text(20, 60, WHITE, F("A"));
-				this->Text(21, 35, WHITE, F("IA_FUND")); this->Dot(21, 42, 10); this->Bracket(21, 52, 9); this->Text(21, 60, WHITE, F("A"));
-				this->Text(22, 35, WHITE, F("IB_FUND")); this->Dot(22, 42, 10); this->Bracket(22, 52, 9); this->Text(22, 60, WHITE, F("A"));
-				this->Text(23, 35, WHITE, F("IC_FUND")); this->Dot(23, 42, 10); this->Bracket(23, 52, 9); this->Text(23, 60, WHITE, F("A"));
-				this->Text(24, 35, WHITE, F("IA_HARM")); this->Dot(24, 42, 10); this->Bracket(24, 52, 9); this->Text(24, 60, WHITE, F("A"));
-				this->Text(25, 35, WHITE, F("IB_HARM")); this->Dot(25, 42, 10); this->Bracket(25, 52, 9); this->Text(25, 60, WHITE, F("A"));
-				this->Text(26, 35, WHITE, F("IC_HARM")); this->Dot(26, 42, 10); this->Bracket(26, 52, 9); this->Text(26, 60, WHITE, F("A"));
+					// Draw Voltage
+					this->Draw_Box(4, 2, 27, 32, "Voltage", 1, false, false);
+					this->Text(6, 4, WHITE, F("VScale")); this->Dot(6, 10, 11); this->Bracket(6, 21, 9); this->Text(6, 29, WHITE, F(""));
+					this->Text(7, 4, WHITE, F("VA_GAIN")); this->Dot(7, 11, 10); this->Bracket(7, 21, 9); this->Text(7, 29, WHITE, F(""));
+					this->Text(8, 4, WHITE, F("VB_GAIN")); this->Dot(8, 11, 10); this->Bracket(8, 21, 9); this->Text(8, 29, WHITE, F(""));
+					this->Text(9, 4, WHITE, F("VC_GAIN")); this->Dot(9, 11, 10); this->Bracket(9, 21, 9); this->Text(9, 29, WHITE, F(""));
+					this->Text(10, 4, WHITE, F("VA_OFFS")); this->Dot(10, 11, 10); this->Bracket(10, 21, 9); this->Text(10, 29, WHITE, F(""));
+					this->Text(11, 4, WHITE, F("VB_OFFS")); this->Dot(11, 11, 10); this->Bracket(11, 21, 9); this->Text(11, 29, WHITE, F(""));
+					this->Text(12, 4, WHITE, F("VC_OFFS")); this->Dot(12, 11, 10); this->Bracket(12, 21, 9); this->Text(12, 29, WHITE, F(""));
+					this->Text(13, 4, WHITE, F("HPF_COEF_V")); this->Dot(13, 14, 7); this->Bracket(13, 21, 9); this->Text(13, 29, WHITE, F(""));
+					this->Text(14, 4, WHITE, F("VA_RMS")); this->Dot(14, 10, 11); this->Bracket(14, 21, 9); this->Text(14, 29, WHITE, F("V"));
+					this->Text(15, 4, WHITE, F("VB_RMS")); this->Dot(15, 10, 11); this->Bracket(15, 21, 9); this->Text(15, 29, WHITE, F("V"));
+					this->Text(16, 4, WHITE, F("VC_RMS")); this->Dot(16, 10, 11); this->Bracket(16, 21, 9); this->Text(16, 29, WHITE, F("V"));
+					this->Text(17, 4, WHITE, F("VT_RMS")); this->Dot(17, 10, 11); this->Bracket(17, 21, 9); this->Text(17, 29, WHITE, F("V"));
+					this->Text(18, 4, WHITE, F("VA")); this->Dot(18, 6, 15); this->Bracket(18, 21, 9); this->Text(18, 29, WHITE, F("V"));
+					this->Text(19, 4, WHITE, F("VB")); this->Dot(19, 6, 15); this->Bracket(19, 21, 9); this->Text(19, 29, WHITE, F("V"));
+					this->Text(20, 4, WHITE, F("VC")); this->Dot(20, 6, 15); this->Bracket(20, 21, 9); this->Text(20, 29, WHITE, F("V"));
+					this->Text(21, 4, WHITE, F("VA_FUND")); this->Dot(21, 11, 10); this->Bracket(21, 21, 9); this->Text(21, 29, WHITE, F("V"));
+					this->Text(22, 4, WHITE, F("VB_FUND")); this->Dot(22, 11, 10); this->Bracket(22, 21, 9); this->Text(22, 29, WHITE, F("V"));
+					this->Text(23, 4, WHITE, F("VC_FUND")); this->Dot(23, 11, 10); this->Bracket(23, 21, 9); this->Text(23, 29, WHITE, F("V"));
+					this->Text(24, 4, WHITE, F("VA_HARM")); this->Dot(24, 11, 10); this->Bracket(24, 21, 9); this->Text(24, 29, WHITE, F("V"));
+					this->Text(25, 4, WHITE, F("VB_HARM")); this->Dot(25, 11, 10); this->Bracket(25, 21, 9); this->Text(25, 29, WHITE, F("V"));
+					this->Text(26, 4, WHITE, F("VC_HARM")); this->Dot(26, 11, 10); this->Bracket(26, 21, 9); this->Text(26, 29, WHITE, F("V"));
 
-				// Draw Frequency
-				this->Draw_Box(28, 2, 33, 32, "Frequency", 1, false, false);
-				this->Text(30, 4, WHITE, F("Frequency")); this->Dot(30, 13, 8); this->Bracket(30, 21, 9); this->Text(30, 28, WHITE, F("Hz"));
-				this->Text(31, 4, WHITE, F("F_MIN")); this->Dot(31, 9, 12); this->Bracket(31, 21, 9); this->Text(31, 28, WHITE, F("Hz"));
-				this->Text(32, 4, WHITE, F("F_MAX")); this->Dot(32, 9, 12); this->Bracket(32, 21, 9); this->Text(32, 28, WHITE, F("Hz"));
+					// Draw Voltage
+					this->Draw_Box(4, 33, 27, 63, "Current", 1, false, false);
+					this->Text(6, 35, WHITE, F("IScale")); this->Dot(6, 41, 11); this->Bracket(6, 52, 9); this->Text(6, 60, WHITE, F(""));
+					this->Text(7, 35, WHITE, F("IA_GAIN")); this->Dot(7, 42, 10); this->Bracket(7, 52, 9); this->Text(7, 60, WHITE, F(""));
+					this->Text(8, 35, WHITE, F("IB_GAIN")); this->Dot(8, 42, 10); this->Bracket(8, 52, 9); this->Text(8, 60, WHITE, F(""));
+					this->Text(9, 35, WHITE, F("IC_GAIN")); this->Dot(9, 42, 10); this->Bracket(9, 52, 9); this->Text(9, 60, WHITE, F(""));
+					this->Text(10, 35, WHITE, F("IA_OFFS")); this->Dot(10, 42, 10); this->Bracket(10, 52, 9); this->Text(10, 60, WHITE, F(""));
+					this->Text(11, 35, WHITE, F("IB_OFFS")); this->Dot(11, 42, 10); this->Bracket(11, 52, 9); this->Text(11, 60, WHITE, F(""));
+					this->Text(12, 35, WHITE, F("IC_OFFS")); this->Dot(12, 42, 10); this->Bracket(12, 52, 9); this->Text(12, 60, WHITE, F(""));
+					this->Text(13, 35, WHITE, F("HPF_COEF_I")); this->Dot(13, 45, 7); this->Bracket(13, 52, 9); this->Text(13, 29, WHITE, F(""));
+					this->Text(14, 35, WHITE, F("IA_RMS")); this->Dot(14, 41, 11); this->Bracket(14, 52, 9); this->Text(14, 60, WHITE, F("A"));
+					this->Text(15, 35, WHITE, F("IB_RMS")); this->Dot(15, 41, 11); this->Bracket(15, 52, 9); this->Text(15, 60, WHITE, F("A"));
+					this->Text(16, 35, WHITE, F("IC_RMS")); this->Dot(16, 41, 11); this->Bracket(16, 52, 9); this->Text(16, 60, WHITE, F("A"));
+					this->Text(17, 35, WHITE, F("IT_RMS")); this->Dot(17, 41, 11); this->Bracket(17, 52, 9); this->Text(17, 60, WHITE, F("A"));
+					this->Text(18, 35, WHITE, F("IA")); this->Dot(18, 37, 15); this->Bracket(18, 52, 9); this->Text(18, 60, WHITE, F("A"));
+					this->Text(19, 35, WHITE, F("IB")); this->Dot(19, 37, 15); this->Bracket(19, 52, 9); this->Text(19, 60, WHITE, F("A"));
+					this->Text(20, 35, WHITE, F("IC")); this->Dot(20, 37, 15); this->Bracket(20, 52, 9); this->Text(20, 60, WHITE, F("A"));
+					this->Text(21, 35, WHITE, F("IA_FUND")); this->Dot(21, 42, 10); this->Bracket(21, 52, 9); this->Text(21, 60, WHITE, F("A"));
+					this->Text(22, 35, WHITE, F("IB_FUND")); this->Dot(22, 42, 10); this->Bracket(22, 52, 9); this->Text(22, 60, WHITE, F("A"));
+					this->Text(23, 35, WHITE, F("IC_FUND")); this->Dot(23, 42, 10); this->Bracket(23, 52, 9); this->Text(23, 60, WHITE, F("A"));
+					this->Text(24, 35, WHITE, F("IA_HARM")); this->Dot(24, 42, 10); this->Bracket(24, 52, 9); this->Text(24, 60, WHITE, F("A"));
+					this->Text(25, 35, WHITE, F("IB_HARM")); this->Dot(25, 42, 10); this->Bracket(25, 52, 9); this->Text(25, 60, WHITE, F("A"));
+					this->Text(26, 35, WHITE, F("IC_HARM")); this->Dot(26, 42, 10); this->Bracket(26, 52, 9); this->Text(26, 60, WHITE, F("A"));
 
-			}
+					// Draw Frequency
+					this->Draw_Box(28, 2, 33, 32, "Frequency", 1, false, false);
+					this->Text(30, 4, WHITE, F("Frequency")); this->Dot(30, 13, 8); this->Bracket(30, 21, 9); this->Text(30, 28, WHITE, F("Hz"));
+					this->Text(31, 4, WHITE, F("F_MIN")); this->Dot(31, 9, 12); this->Bracket(31, 21, 9); this->Text(31, 28, WHITE, F("Hz"));
+					this->Text(32, 4, WHITE, F("F_MAX")); this->Dot(32, 9, 12); this->Bracket(32, 21, 9); this->Text(32, 28, WHITE, F("Hz"));
+
+				}
+
+			#endif
 
 			// PowerStat Terminal Batch
 			void PowerStat(uint8_t _X = 1, uint8_t _Y = 1) {
