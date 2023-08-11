@@ -24,17 +24,13 @@
 			struct Struct_Console_Buffer {
 
 				// Text Color
-				uint8_t Text_Color = 0;
+				uint8_t Text_Color = 255;
 
 				// Background Color
-				uint8_t Background_Color = 0;
+				uint8_t Background_Color = 255;
 
 				// Text Format
 				uint8_t Text_Format = 255;
-
-				// Cursor Position
-				uint8_t Cursor_X = 0;
-				uint8_t Cursor_Y = 0;
 
 			} Buffer;
 
@@ -328,21 +324,12 @@
 			// Set Cursor Position Function.
 			void Set_Cursor(uint8_t _X, uint8_t _Y) {
 
-				// Control for Buffer
-				if (_X != this->Buffer.Cursor_X || _Y != this->Buffer.Cursor_Y) {
-
-					// Set Cursor Position
-					Console_Serial->print(F("\e["));
-					Console_Serial->print(_X);
-					Console_Serial->print(F(";"));
-					Console_Serial->print(_Y);
-					Console_Serial->print(F("H"));
-
-					// Update Buffer Variable
-					this->Buffer.Cursor_X = _X;
-					this->Buffer.Cursor_Y = _Y;
-
-				}
+				// Set Cursor Position
+				Console_Serial->print(F("\e["));
+				Console_Serial->print(_X);
+				Console_Serial->print(F(";"));
+				Console_Serial->print(_Y);
+				Console_Serial->print(F("H"));
 
 			}
 
