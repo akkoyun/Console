@@ -423,7 +423,7 @@
 			/* Console Device Functions */
 
 			// PowerStat Batchs
-			#if defined(PowerStat)
+			#if defined(_PowerStat_)
 
 				// Hardware Diagnostic Box Print Function.
 				void Diagnostic(const uint8_t _X1, const uint8_t _Y1, const uint8_t _X2, const uint8_t _Y2) {
