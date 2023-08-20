@@ -692,6 +692,9 @@
 			// I2C Scanner Batch Function.
 			void Begin (void) {
 
+				// Start VT100 Console
+				Console::Begin();
+
 				// Draw Console Table Grid
 				for (uint8_t i = 1; i <= 23; i = i + 2) Console::Divider(HORIZONTAL, i, 1, 120, false);
 
@@ -723,12 +726,24 @@
 
 				// Draw Cross Section
 				for (uint8_t i = 5; i <= 19; i = i + 2) for (uint8_t j = 9; j <= 120; j = j + 7) Console::Text(i, j, _Console_WHITE_, F("┼"));
-				
+
+				// Draw T
+				for (uint8_t i = 9; i <= 114; i = i + 7) {
+					
+					// Draw T Start
+					Console::Text(3, i, _Console_WHITE_, F("┬"));
+
+					// Draw T End
+					Console::Text(21, i, _Console_WHITE_, F("┴"));
+
+				}
+
+
 				// Write Text
-				Console::Text(1, 60, _Console_WHITE_, F("I2C Device Explorer"));
+				Console::Text(2, 50, _Console_CYAN_, F("I2C Device Explorer"));
 				Console::Text(22, 3, _Console_WHITE_, F("Total connected device :"));
 				Console::Text(22, 86, _Console_WHITE_, F("Current Mux Channel [0-8] :"));
-				Console::Text(24, 100, _Console_WHITE_, F("github.com/akkoyun"));
+				Console::Text(24, 103, _Console_WHITE_, F("github.com/akkoyun"));
 
 				// Declare Column Variable
 				uint8_t _C = 0;
@@ -737,9 +752,9 @@
 				for (uint8_t i = 6; i <= 21; i = i + 2) {
 					
 					// Print Column Headers
-					Console::Text(i, 3, _Console_WHITE_, F("0x"));
-					Console::Text(i, 5, _Console_WHITE_, String(_C));
-					Console::Text(i, 6, _Console_WHITE_, F("_"));
+					Console::Text(i, 3, _Console_YELLOW_, F("0x"));
+					Console::Text(i, 5, _Console_YELLOW_, String(_C, HEX));
+					Console::Text(i, 6, _Console_YELLOW_, F("_"));
 					
 					// Increment Column
 					_C++;
@@ -753,8 +768,8 @@
 				for (uint8_t i = 11; i <= 121; i = i + 7) {
 					
 					// Print Row Headers
-					Console::Text(4, i, _Console_WHITE_, F("0x_"));
-					Console::Text(4, i + 3, _Console_WHITE_, String(_R, HEX));
+					Console::Text(4, i, _Console_YELLOW_, F("0x_"));
+					Console::Text(4, i + 3, _Console_YELLOW_, String(_R, HEX));
 
 					// Increment Row
 					_R++;

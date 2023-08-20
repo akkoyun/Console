@@ -1,6 +1,6 @@
 {
 	"name": "Console",
-	"version": "1.6.0",
+	"version": "1.6.1",
 	"keywords": "Console, Serial, VT100, UART, Color, Terminal",
 	"description": "Virtual terminal sequences are control character sequences that can control cursor movement, color/font mode, and other operations when written to the output stream. Sequences may also be received on the input stream in response to an output stream query information sequence or as an encoding of user input when the appropriate mode is set. Arduino based VT100 comparable serial console library.",
 	"authors":
