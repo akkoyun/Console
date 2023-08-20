@@ -2,7 +2,7 @@
 #include <Console.h>
 
 // Define Object
-PowerStat_Console Terminal(Serial);
+I2C_Scanner_Console Terminal(Serial);
 
 void setup() {
 
@@ -16,7 +16,5 @@ void setup() {
 
 void loop() {
 
-	// Print Terminal Text
-	Terminal.Text(2, 13, _Console_RED_, String(millis()));
 	
 }
