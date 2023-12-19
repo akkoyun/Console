@@ -434,13 +434,12 @@
 				Console::Box(_X1, _Y1, _X2, _Y2, "Hardware Diagnostic", 1, false, false);
 
 				// Print Text
-				Console::Text(_X1 + 1, _Y1 + 2, _Console_WHITE_, F("I2C Multiplexer (0x70)")); 		Console::Dot(_X1 + 1, _Y1 + 24, (_Y2 - 7) - (_Y1 + 24));	Console::Bracket(_X1 + 1, _Y2 - 7, 5);
-				Console::Text(_X1 + 2, _Y1 + 2, _Console_WHITE_, F("I2C RTC (0x52)")); 				Console::Dot(_X1 + 2, _Y1 + 16, (_Y2 - 7) - (_Y1 + 16)); 	Console::Bracket(_X1 + 2, _Y2 - 7, 5);
-				Console::Text(_X1 + 3, _Y1 + 2, _Console_WHITE_, F("I2C Serial ID (0x50)")); 			Console::Dot(_X1 + 3, _Y1 + 22, (_Y2 - 7) - (_Y1 + 22));	Console::Bracket(_X1 + 3, _Y2 - 7, 5);
-				Console::Text(_X1 + 4, _Y1 + 2, _Console_WHITE_, F("I2C Temperature (0x40)")); 		Console::Dot(_X1 + 4, _Y1 + 24, (_Y2 - 7) - (_Y1 + 24));	Console::Bracket(_X1 + 4, _Y2 - 7, 5);
-				Console::Text(_X1 + 5, _Y1 + 2, _Console_WHITE_, F("I2C Battery Gauge (0x36)")); 		Console::Dot(_X1 + 5, _Y1 + 26, (_Y2 - 7) - (_Y1 + 26));	Console::Bracket(_X1 + 5, _Y2 - 7, 5);
-				Console::Text(_X1 + 6, _Y1 + 2, _Console_WHITE_, F("I2C Battery Charger (0x6B)")); 	Console::Dot(_X1 + 6, _Y1 + 28, (_Y2 - 7) - (_Y1 + 28));	Console::Bracket(_X1 + 6, _Y2 - 7, 5);
-				Console::Text(_X1 + 7, _Y1 + 2, _Console_WHITE_, F("SD Card Connection")); 			Console::Dot(_X1 + 7, _Y1 + 20, (_Y2 - 7) - (_Y1 + 20)); 	Console::Bracket(_X1 + 7, _Y2 - 7, 5);
+				Console::Text(_X1 + 1, _Y1 + 2, _Console_WHITE_, F("I2C RTC (0x52)")); 				Console::Dot(_X1 + 1, _Y1 + 16, (_Y2 - 7) - (_Y1 + 16)); 	Console::Bracket(_X1 + 1, _Y2 - 7, 5);
+				Console::Text(_X1 + 2, _Y1 + 2, _Console_WHITE_, F("I2C Serial ID (0x50)")); 		Console::Dot(_X1 + 2, _Y1 + 22, (_Y2 - 7) - (_Y1 + 22));	Console::Bracket(_X1 + 2, _Y2 - 7, 5);
+				Console::Text(_X1 + 3, _Y1 + 2, _Console_WHITE_, F("I2C Temperature (0x40)")); 		Console::Dot(_X1 + 3, _Y1 + 24, (_Y2 - 7) - (_Y1 + 24));	Console::Bracket(_X1 + 3, _Y2 - 7, 5);
+				Console::Text(_X1 + 4, _Y1 + 2, _Console_WHITE_, F("I2C Battery Gauge (0x36)")); 	Console::Dot(_X1 + 4, _Y1 + 26, (_Y2 - 7) - (_Y1 + 26));	Console::Bracket(_X1 + 4, _Y2 - 7, 5);
+				Console::Text(_X1 + 5, _Y1 + 2, _Console_WHITE_, F("I2C Battery Charger (0x6B)")); 	Console::Dot(_X1 + 5, _Y1 + 28, (_Y2 - 7) - (_Y1 + 28));	Console::Bracket(_X1 + 5, _Y2 - 7, 5);
+				Console::Text(_X1 + 6, _Y1 + 2, _Console_WHITE_, F("SD Card Connection")); 			Console::Dot(_X1 + 6, _Y1 + 20, (_Y2 - 7) - (_Y1 + 20)); 	Console::Bracket(_X1 + 6, _Y2 - 7, 5);
 
 			}
 
