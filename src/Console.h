@@ -46,168 +46,186 @@
 			// Begin Console.
 			void Begin(void) {
 
-				// Cursor Off
-				this->Cursor(false);
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
 
-				// Clear Screen
-				this->Clear(_Console_SCREEN_);
+					// Cursor Off
+					this->Cursor(false);
 
-				// Set Text Color
-				this->Text_Color(_Console_WHITE_);
+					// Clear Screen
+					this->Clear(_Console_SCREEN_);
 
-				// Reset Delay
-				delay(5);
+					// Set Text Color
+					this->Text_Color(_Console_WHITE_);
+
+					// Reset Delay
+					delay(5);
+
+				#endif
 
 			}
 
 			// Clear Terminal Function.
 			void Clear(const uint8_t _Type) {
 
-				// Clear Terminal Type
-				switch (_Type) {
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
 
-					// Clear Line After Cursor
-					case _Console_LINE_AFTER_CURSOR_: {
+					// Clear Terminal Type
+					switch (_Type) {
 
-						// Print Clear Line After Cursor Command
-						Console_Serial->print(F("\e[K"));
+						// Clear Line After Cursor
+						case _Console_LINE_AFTER_CURSOR_: {
 
-						// End Case
-						break;
+							// Print Clear Line After Cursor Command
+							Console_Serial->print(F("\e[K"));
+
+							// End Case
+							break;
+
+						}
+
+						// Clear Line to Cursor
+						case _Console_LINE_TO_CURSOR_: {
+
+							// Print Clear Line to Cursor Command
+							Console_Serial->print(F("\e[1K"));
+
+							// End Case
+							break;
+
+						}
+
+						// Clear Line
+						case _Console_LINE_: {
+
+							// Print Clear Line Command
+							Console_Serial->print(F("\e[2K"));
+
+							// End Case
+							break;
+
+						}
+
+						// Clear Screen
+						case _Console_SCREEN_: {
+
+							// Print Clear Screen Command
+							Console_Serial->print(F("\e[2J"));
+
+							// End Case
+							break;
+
+						}
+
+						// Clear All
+						case _Console_ALL_: {
+
+							// Print Clear All Command
+							Console_Serial->print(F("\e[1;1H\e[2J"));
+
+							// End Case
+							break;
+
+						}
+
+						// Default
+						default: {
+
+							// End Case
+							break;
+
+						}
 
 					}
 
-					// Clear Line to Cursor
-					case _Console_LINE_TO_CURSOR_: {
-
-						// Print Clear Line to Cursor Command
-						Console_Serial->print(F("\e[1K"));
-
-						// End Case
-						break;
-
-					}
-
-					// Clear Line
-					case _Console_LINE_: {
-
-						// Print Clear Line Command
-						Console_Serial->print(F("\e[2K"));
-
-						// End Case
-						break;
-
-					}
-
-					// Clear Screen
-					case _Console_SCREEN_: {
-
-						// Print Clear Screen Command
-						Console_Serial->print(F("\e[2J"));
-
-						// End Case
-						break;
-
-					}
-
-					// Clear All
-					case _Console_ALL_: {
-
-						// Print Clear All Command
-						Console_Serial->print(F("\e[1;1H\e[2J"));
-
-						// End Case
-						break;
-
-					}
-
-					// Default
-					default: {
-
-						// End Case
-						break;
-
-					}
-
-				}
+				#endif
 
 			}
 
 			// Change Cursor Visibility Function.
 			void Cursor(const bool _State) {
 
-				// Cursor On
-				if (_State) Console_Serial->print(F("\e[?25h"));	
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
 
-				// Cursor Off
-				if (!_State) Console_Serial->print(F("\e[?25l"));	
+					// Cursor On
+					if (_State) Console_Serial->print(F("\e[?25h"));	
+
+					// Cursor Off
+					if (!_State) Console_Serial->print(F("\e[?25l"));	
+
+				#endif
 
 			}
 
 			// Draw Box Function.
 			void Box(const uint8_t _X1, const uint8_t _Y1, const uint8_t _X2, const uint8_t _Y2, String _Text = "", const uint8_t _Number = 0, const bool _Header = false, const bool _Footer = false) {
 
-				// Set Text Color
-				this->Text_Color(_Console_WHITE_);
-
-				// Set Text Format
-				this->Text_Format(_Console_DIM_);
-
-				// Print Corners
-				this->Set_Cursor(_X1, _Y1); Console_Serial->print(F("┌"));
-				this->Set_Cursor(_X2, _Y1); Console_Serial->print(F("└"));
-				this->Set_Cursor(_X1, _Y2); Console_Serial->print(F("┐"));
-				this->Set_Cursor(_X2, _Y2); Console_Serial->print(F("┘"));
-
-				// Print Lines
-				for (uint8_t i = _X1 + 1; i <= _X2 - 1; i++) {
-					
-					this->Set_Cursor(i, _Y1); Console_Serial->print(F("│"));
-					this->Set_Cursor(i, _Y2); Console_Serial->print(F("│"));
-
-				}
-				for (uint8_t i = _Y1 + 1; i <= _Y2 - 1; i++) {
-					
-					this->Set_Cursor(_X1, i); Console_Serial->print(F("─"));
-					this->Set_Cursor(_X2, i); Console_Serial->print(F("─"));
-					
-				}
-
-				// Print Header
-				this->Text_Color(_Console_YELLOW_); this->Set_Cursor(_X1, _Y1 + 2); Console_Serial->print(_Text);
-
-				// Print Header Number
-				if (_Number != 0) {
-					this->Text_Color(_Console_WHITE_); this->Set_Cursor(_X1, _Y2 - 5); Console_Serial->print(F("[  ]"));
-					if (_Number < 10) {
-						this->Text_Color(_Console_YELLOW_); this->Set_Cursor(_X1, _Y2 - 4); Console_Serial->print(F("0"));
-						this->Text_Color(_Console_YELLOW_); this->Set_Cursor(_X1, _Y2 - 3); Console_Serial->print(_Number);
-					} else {
-						this->Text_Color(_Console_YELLOW_); this->Set_Cursor(_X1, _Y2 - 4); Console_Serial->print(_Number);
-					}
-				}
-
-				// Draw Header
-				if (_Header) {
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
 
 					// Set Text Color
 					this->Text_Color(_Console_WHITE_);
 
+					// Set Text Format
+					this->Text_Format(_Console_DIM_);
+
 					// Print Corners
-					this->Set_Cursor(_X1 + 2, _Y1); Console_Serial->print(F("├"));
-					this->Set_Cursor(_X1 + 2, _Y2); Console_Serial->print(F("┤"));
+					this->Set_Cursor(_X1, _Y1); Console_Serial->print(F("┌"));
+					this->Set_Cursor(_X2, _Y1); Console_Serial->print(F("└"));
+					this->Set_Cursor(_X1, _Y2); Console_Serial->print(F("┐"));
+					this->Set_Cursor(_X2, _Y2); Console_Serial->print(F("┘"));
 
 					// Print Lines
+					for (uint8_t i = _X1 + 1; i <= _X2 - 1; i++) {
+						
+						this->Set_Cursor(i, _Y1); Console_Serial->print(F("│"));
+						this->Set_Cursor(i, _Y2); Console_Serial->print(F("│"));
+
+					}
 					for (uint8_t i = _Y1 + 1; i <= _Y2 - 1; i++) {
 						
-						this->Set_Cursor(_X1 + 2, i); Console_Serial->print(F("─"));
+						this->Set_Cursor(_X1, i); Console_Serial->print(F("─"));
+						this->Set_Cursor(_X2, i); Console_Serial->print(F("─"));
 						
 					}
 
-				}
-				
-				// Draw Footer			
-				if (_Footer) {
+					// Print Header
+					this->Text_Color(_Console_YELLOW_); this->Set_Cursor(_X1, _Y1 + 2); Console_Serial->print(_Text);
+
+					// Print Header Number
+					if (_Number != 0) {
+						this->Text_Color(_Console_WHITE_); this->Set_Cursor(_X1, _Y2 - 5); Console_Serial->print(F("[  ]"));
+						if (_Number < 10) {
+							this->Text_Color(_Console_YELLOW_); this->Set_Cursor(_X1, _Y2 - 4); Console_Serial->print(F("0"));
+							this->Text_Color(_Console_YELLOW_); this->Set_Cursor(_X1, _Y2 - 3); Console_Serial->print(_Number);
+						} else {
+							this->Text_Color(_Console_YELLOW_); this->Set_Cursor(_X1, _Y2 - 4); Console_Serial->print(_Number);
+						}
+					}
+
+					// Draw Header
+					if (_Header) {
+
+						// Set Text Color
+						this->Text_Color(_Console_WHITE_);
+
+						// Print Corners
+						this->Set_Cursor(_X1 + 2, _Y1); Console_Serial->print(F("├"));
+						this->Set_Cursor(_X1 + 2, _Y2); Console_Serial->print(F("┤"));
+
+						// Print Lines
+						for (uint8_t i = _Y1 + 1; i <= _Y2 - 1; i++) {
+							
+							this->Set_Cursor(_X1 + 2, i); Console_Serial->print(F("─"));
+							
+						}
+
+					}
+					
+					// Draw Footer			
+					if (_Footer) {
 
 					// Set Text Color
 					this->Text_Color(_Console_WHITE_);
@@ -225,198 +243,255 @@
 
 				}
 
+				#endif
+
 			}
 
 			// Dot Print Function.
 			void Dot(const uint8_t _X, const uint8_t _Y, const uint8_t _Count) {
 
-				// Print Dots
-				for (uint8_t i = 0; i < _Count; i++) {
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
 
-					// Print Dot
-					this->Text(_X, _Y + i, _Console_GRAY_, F("."));
+					// Print Dots
+					for (uint8_t i = 0; i < _Count; i++) {
 
-				}
+						// Print Dot
+						this->Text(_X, _Y + i, _Console_GRAY_, F("."));
+
+					}
+
+				#endif
 
 			}
 
 			// Bracket Place Holder Function.
 			void Bracket(const uint8_t _X, const uint8_t _Y, const uint8_t _Space) {
 
-				// Print Bracket Start
-				this->Text(_X, _Y, _Console_WHITE_, F("["));
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
 
-				// Print Bracket Left
-				this->Text(_X, _Y + _Space, _Console_WHITE_, F("]"));
+					// Print Bracket Start
+					this->Text(_X, _Y, _Console_WHITE_, F("["));
+
+					// Print Bracket Left
+					this->Text(_X, _Y + _Space, _Console_WHITE_, F("]"));
+
+				#endif
 
 			}
 
 			// Horizontal Line Divider Function.
 			void Divider(const bool _Type, const uint8_t _X, const uint8_t _Y, const uint8_t _Length, const bool _End = false) {
 
-				//Set Color
-				this->Text_Color(_Console_WHITE_);
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
 
-				// Control Horizontal divider type
-				if (_Type == HORIZONTAL) {
+					//Set Color
+					this->Text_Color(_Console_WHITE_);
 
-					// Print Corners
-					if (_End) {
+					// Control Horizontal divider type
+					if (_Type == HORIZONTAL) {
 
 						// Print Corners
-						this->Set_Cursor(_X, _Y); Console_Serial->print(F("├"));
-						this->Set_Cursor(_X, _Y + _Length); Console_Serial->print(F("┤"));
+						if (_End) {
+
+							// Print Corners
+							this->Set_Cursor(_X, _Y); Console_Serial->print(F("├"));
+							this->Set_Cursor(_X, _Y + _Length); Console_Serial->print(F("┤"));
+
+						}
+
+						// Print Line
+						for (uint8_t i = _Y + 1; i <= _Y + _Length - 1; i++) {this->Set_Cursor(_X, i); Console_Serial->print(F("─"));}
 
 					}
 
-					// Print Line
-					for (uint8_t i = _Y + 1; i <= _Y + _Length - 1; i++) {this->Set_Cursor(_X, i); Console_Serial->print(F("─"));}
-
-				}
-
-				// Control Vertical divider type
-				if (_Type == VERTICAL) {
-
-					// Print Corners
-					if (_End) {
+					// Control Vertical divider type
+					if (_Type == VERTICAL) {
 
 						// Print Corners
-						this->Set_Cursor(_X, _Y); Console_Serial->print(F("┬"));
-						this->Set_Cursor(_X + _Length, _Y); Console_Serial->print(F("┴"));
+						if (_End) {
+
+							// Print Corners
+							this->Set_Cursor(_X, _Y); Console_Serial->print(F("┬"));
+							this->Set_Cursor(_X + _Length, _Y); Console_Serial->print(F("┴"));
+
+						}
+
+						// Print Lines
+						for (uint8_t i = _X + 1; i <= _X + _Length - 1; i++) {this->Set_Cursor(i, _Y); Console_Serial->print(F("│"));}
 
 					}
 
-					// Print Lines
-					for (uint8_t i = _X + 1; i <= _X + _Length - 1; i++) {this->Set_Cursor(i, _Y); Console_Serial->print(F("│"));}
-
-				}
+				#endif
 
 			}
 
 			// Set Text Color Function.
 			void Text_Color(uint8_t _Color) {
 
-				// Control for Buffer
-				if (_Color != this->Buffer.Text_Color) {
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
 
-					// Set Text Color.
-					Console_Serial->print(F("\e["));
-					Console_Serial->print(_Color);
-					Console_Serial->write('m');
+					// Control for Buffer
+					if (_Color != this->Buffer.Text_Color) {
 
-					// Update Buffer Variable
-					this->Buffer.Text_Color = _Color;
+						// Set Text Color.
+						Console_Serial->print(F("\e["));
+						Console_Serial->print(_Color);
+						Console_Serial->write('m');
 
-				}
+						// Update Buffer Variable
+						this->Buffer.Text_Color = _Color;
+
+					}
+
+				#endif
 
 			}
 
 			// Set Back Ground Color Function.
 			void Background_Color(uint8_t _Color) {
 
-				// Control for Buffer
-				if (_Color != this->Buffer.Background_Color) {
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
 
-					// Set Back Ground Color.
-					Console_Serial->print(F("\e["));
-					Console_Serial->print(_Color + 10);
-					Console_Serial->write('m');
+					// Control for Buffer
+					if (_Color != this->Buffer.Background_Color) {
 
-					// Update Buffer Variable
-					this->Buffer.Background_Color = _Color;
+						// Set Back Ground Color.
+						Console_Serial->print(F("\e["));
+						Console_Serial->print(_Color + 10);
+						Console_Serial->write('m');
 
-				}
+						// Update Buffer Variable
+						this->Buffer.Background_Color = _Color;
+
+					}
+
+				#endif
 
 			}
 
 			// Set Text Format Function
 			void Text_Format(const uint8_t _Format) {
 
-				// Control for Buffer
-				if (_Format != this->Buffer.Text_Format) {
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
 
-					// Set Text Format
-					Console_Serial->print(F("\e["));
-					Console_Serial->print(_Format);
-					Console_Serial->write('m');
+					// Control for Buffer
+					if (_Format != this->Buffer.Text_Format) {
 
-					// Update Buffer Variable
-					this->Buffer.Text_Format = _Format;
+						// Set Text Format
+						Console_Serial->print(F("\e["));
+						Console_Serial->print(_Format);
+						Console_Serial->write('m');
 
-				}
+						// Update Buffer Variable
+						this->Buffer.Text_Format = _Format;
+
+					}
+
+				#endif
 
 			}
 
 			// Set Cursor Position Function.
 			void Set_Cursor(uint8_t _X, uint8_t _Y) {
 
-				// Set Cursor Position
-				Console_Serial->print(F("\e["));
-				Console_Serial->print(_X);
-				Console_Serial->print(F(";"));
-				Console_Serial->print(_Y);
-				Console_Serial->print(F("H"));
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
+
+					// Set Cursor Position
+					Console_Serial->print(F("\e["));
+					Console_Serial->print(_X);
+					Console_Serial->print(F(";"));
+					Console_Serial->print(_Y);
+					Console_Serial->print(F("H"));
+
+				#endif
 
 			}
 
 			// Terminal Beep Sound Function.
 			void Beep(void) {
 
-				// Beep Terminal.
-				Console_Serial->print(F("\x07"));
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
+
+					// Beep Terminal.
+					Console_Serial->print(F("\x07"));
+
+				#endif
 
 			}
 
 			// Print Text to Specified Position and Color.
 			void Text(const uint8_t _X, const uint8_t _Y, const uint8_t _Color, String _Value) {
 
-				// Set Text Cursor Position
-				Set_Cursor(_X, _Y); 
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
 
-				// Set Text Color
-				Text_Color(_Color); 
+					// Set Text Cursor Position
+					Set_Cursor(_X, _Y); 
 
-				// Print Text			
-				Console_Serial->print(String(_Value));
+					// Set Text Color
+					Text_Color(_Color); 
+
+					// Print Text			
+					Console_Serial->print(String(_Value));
+
+				#endif
 
 			}
 
 			// OK Decide Function.
 			void OK(const bool _Result, const uint8_t _X, const uint8_t _Y) {
 
-				// Print Command State
-				if (_Result) {
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
 
-					// Success
-					this->Text(_X, _Y, _Console_GREEN_, F(" OK "));
+					// Print Command State
+					if (_Result) {
 
-				} else {
+						// Success
+						this->Text(_X, _Y, _Console_GREEN_, F(" OK "));
 
-					// Fail
-					this->Text(_X, _Y, _Console_RED_, F("FAIL"));
+					} else {
 
-				}
-		
+						// Fail
+						this->Text(_X, _Y, _Console_RED_, F("FAIL"));
+
+					}
+
+				#endif
+
 			}
 
 			// GSM Command Proccess
 			void AT_Command(uint8_t _X, uint8_t _Y, String _Command) {
 
-				// Set Text Cursor Position
-				this->Set_Cursor(_X, _Y);
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
 
-				// Clear Line
-				for (uint8_t i = 0; i < 30; i++) Console_Serial->print(F(" "));
+					// Set Text Cursor Position
+					this->Set_Cursor(_X, _Y);
 
-				// Print Dot
-				this->Text(_X, _Y, _Console_GRAY_, F(".............................."));
+					// Clear Line
+					for (uint8_t i = 0; i < 30; i++) Console_Serial->print(F(" "));
 
-				// Print Command
-				this->Text(_X, _Y, _Console_WHITE_, _Command);
+					// Print Dot
+					this->Text(_X, _Y, _Console_GRAY_, F(".............................."));
 
-				// Print Response Wait Dot
-				this->Text(_X, _Y + 31, _Console_BLUE_, F(" .. "));
-		
+					// Print Command
+					this->Text(_X, _Y, _Console_WHITE_, _Command);
+
+					// Print Response Wait Dot
+					this->Text(_X, _Y + 31, _Console_BLUE_, F(" .. "));
+
+				#endif
+
 			}
 
 	};
@@ -430,125 +505,163 @@
 			// Hardware Diagnostic Box Print Function.
 			void Diagnostic(const uint8_t _X1, const uint8_t _Y1, const uint8_t _X2, const uint8_t _Y2) {
 
-				// Draw Hardware Diagnostic Box
-				Console::Box(_X1, _Y1, _X2, _Y2, "Hardware Diagnostic", 1, false, false);
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
 
-				// Print Text
-				Console::Text(_X1 + 1, _Y1 + 2, _Console_WHITE_, F("I2C RTC (0x52)")); 				Console::Dot(_X1 + 1, _Y1 + 16, (_Y2 - 7) - (_Y1 + 16)); 	Console::Bracket(_X1 + 1, _Y2 - 7, 5);
-				Console::Text(_X1 + 2, _Y1 + 2, _Console_WHITE_, F("I2C Serial ID (0x50)")); 		Console::Dot(_X1 + 2, _Y1 + 22, (_Y2 - 7) - (_Y1 + 22));	Console::Bracket(_X1 + 2, _Y2 - 7, 5);
-				Console::Text(_X1 + 3, _Y1 + 2, _Console_WHITE_, F("I2C Temperature (0x40)")); 		Console::Dot(_X1 + 3, _Y1 + 24, (_Y2 - 7) - (_Y1 + 24));	Console::Bracket(_X1 + 3, _Y2 - 7, 5);
-				Console::Text(_X1 + 4, _Y1 + 2, _Console_WHITE_, F("I2C Battery Gauge (0x36)")); 	Console::Dot(_X1 + 4, _Y1 + 26, (_Y2 - 7) - (_Y1 + 26));	Console::Bracket(_X1 + 4, _Y2 - 7, 5);
-				Console::Text(_X1 + 5, _Y1 + 2, _Console_WHITE_, F("I2C Battery Charger (0x6B)")); 	Console::Dot(_X1 + 5, _Y1 + 28, (_Y2 - 7) - (_Y1 + 28));	Console::Bracket(_X1 + 5, _Y2 - 7, 5);
-				Console::Text(_X1 + 6, _Y1 + 2, _Console_WHITE_, F("SD Card Connection")); 			Console::Dot(_X1 + 6, _Y1 + 20, (_Y2 - 7) - (_Y1 + 20)); 	Console::Bracket(_X1 + 6, _Y2 - 7, 5);
+					// Draw Hardware Diagnostic Box
+					Console::Box(_X1, _Y1, _X2, _Y2, "Hardware Diagnostic", 1, false, false);
+
+					// Print Text
+					Console::Text(_X1 + 1, _Y1 + 2, _Console_WHITE_, F("I2C RTC (0x52)")); 				Console::Dot(_X1 + 1, _Y1 + 16, (_Y2 - 7) - (_Y1 + 16)); 	Console::Bracket(_X1 + 1, _Y2 - 7, 5);
+					Console::Text(_X1 + 2, _Y1 + 2, _Console_WHITE_, F("I2C Serial ID (0x50)")); 		Console::Dot(_X1 + 2, _Y1 + 22, (_Y2 - 7) - (_Y1 + 22));	Console::Bracket(_X1 + 2, _Y2 - 7, 5);
+					Console::Text(_X1 + 3, _Y1 + 2, _Console_WHITE_, F("I2C Temperature (0x40)")); 		Console::Dot(_X1 + 3, _Y1 + 24, (_Y2 - 7) - (_Y1 + 24));	Console::Bracket(_X1 + 3, _Y2 - 7, 5);
+					Console::Text(_X1 + 4, _Y1 + 2, _Console_WHITE_, F("I2C Battery Gauge (0x36)")); 	Console::Dot(_X1 + 4, _Y1 + 26, (_Y2 - 7) - (_Y1 + 26));	Console::Bracket(_X1 + 4, _Y2 - 7, 5);
+					Console::Text(_X1 + 5, _Y1 + 2, _Console_WHITE_, F("I2C Battery Charger (0x6B)")); 	Console::Dot(_X1 + 5, _Y1 + 28, (_Y2 - 7) - (_Y1 + 28));	Console::Bracket(_X1 + 5, _Y2 - 7, 5);
+					Console::Text(_X1 + 6, _Y1 + 2, _Console_WHITE_, F("SD Card Connection")); 			Console::Dot(_X1 + 6, _Y1 + 20, (_Y2 - 7) - (_Y1 + 20)); 	Console::Bracket(_X1 + 6, _Y2 - 7, 5);
+
+				#endif
 
 			}
 
 			// Detail Box Print Function.
 			void Device_Detail(const uint8_t _X1, const uint8_t _Y1, const uint8_t _X2, const uint8_t _Y2) {
 
-				// Draw Hardware Diagnostic Box
-				Console::Box(_X1, _Y1, _X2, _Y2, "Hardware Detail", 2, false, false);
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
 
-				// Print Text
-				Console::Text(_X1 + 1, _Y1 + 2, _Console_WHITE_, F("Serial ID")); 			Console::Dot(_X1 + 1, _Y1 + 11, (_Y2 - 19) - (_Y1 + 11)); 	Console::Bracket(_X1 + 1, _Y2 - 19, 17);
-				Console::Text(_X1 + 2, _Y1 + 2, _Console_WHITE_, F("Firmware Version")); 		Console::Dot(_X1 + 2, _Y1 + 18, (_Y2 - 11) - (_Y1 + 18)); 	Console::Bracket(_X1 + 2, _Y2 - 11, 9);
-				Console::Text(_X1 + 3, _Y1 + 2, _Console_WHITE_, F("Hardware Version")); 		Console::Dot(_X1 + 3, _Y1 + 18, (_Y2 - 11) - (_Y1 + 18)); 	Console::Bracket(_X1 + 3, _Y2 - 11, 9);
-				Console::Text(_X1 + 4, _Y1 + 2, _Console_WHITE_, F("Module Temperature")); 	Console::Dot(_X1 + 4, _Y1 + 20, (_Y2 - 10) - (_Y1 + 20)); 	Console::Bracket(_X1 + 4, _Y2 - 10, 8); Console::Text(_X1 + 4, _Y2 - 3, _Console_WHITE_, F("C"));
-				Console::Text(_X1 + 5, _Y1 + 2, _Console_WHITE_, F("Module Humidity")); 		Console::Dot(_X1 + 5, _Y1 + 17, (_Y2 - 10) - (_Y1 + 17)); 	Console::Bracket(_X1 + 5, _Y2 - 10, 8); Console::Text(_X1 + 5, _Y2 - 3, _Console_WHITE_, F("%"));
-				Console::Text(_X1 + 6, _Y1 + 2, _Console_WHITE_, F("Online Send Interval"));	Console::Dot(_X1 + 6, _Y1 + 22, (_Y2 - 10) - (_Y1 + 22)); 	Console::Bracket(_X1 + 6, _Y2 - 10, 8); Console::Text(_X1 + 6, _Y2 - 5, _Console_WHITE_, F("Min"));
-				Console::Text(_X1 + 7, _Y1 + 2, _Console_WHITE_, F("Offline Send Interval")); Console::Dot(_X1 + 7, _Y1 + 23, (_Y2 - 10) - (_Y1 + 23)); 	Console::Bracket(_X1 + 7, _Y2 - 10, 8); Console::Text(_X1 + 7, _Y2 - 5, _Console_WHITE_, F("Min"));
+					// Draw Hardware Diagnostic Box
+					Console::Box(_X1, _Y1, _X2, _Y2, "Hardware Detail", 2, false, false);
+
+					// Print Text
+					Console::Text(_X1 + 1, _Y1 + 2, _Console_WHITE_, F("Serial ID")); 			Console::Dot(_X1 + 1, _Y1 + 11, (_Y2 - 19) - (_Y1 + 11)); 	Console::Bracket(_X1 + 1, _Y2 - 19, 17);
+					Console::Text(_X1 + 2, _Y1 + 2, _Console_WHITE_, F("Firmware Version")); 		Console::Dot(_X1 + 2, _Y1 + 18, (_Y2 - 11) - (_Y1 + 18)); 	Console::Bracket(_X1 + 2, _Y2 - 11, 9);
+					Console::Text(_X1 + 3, _Y1 + 2, _Console_WHITE_, F("Hardware Version")); 		Console::Dot(_X1 + 3, _Y1 + 18, (_Y2 - 11) - (_Y1 + 18)); 	Console::Bracket(_X1 + 3, _Y2 - 11, 9);
+					Console::Text(_X1 + 4, _Y1 + 2, _Console_WHITE_, F("Module Temperature")); 	Console::Dot(_X1 + 4, _Y1 + 20, (_Y2 - 10) - (_Y1 + 20)); 	Console::Bracket(_X1 + 4, _Y2 - 10, 8); Console::Text(_X1 + 4, _Y2 - 3, _Console_WHITE_, F("C"));
+					Console::Text(_X1 + 5, _Y1 + 2, _Console_WHITE_, F("Module Humidity")); 		Console::Dot(_X1 + 5, _Y1 + 17, (_Y2 - 10) - (_Y1 + 17)); 	Console::Bracket(_X1 + 5, _Y2 - 10, 8); Console::Text(_X1 + 5, _Y2 - 3, _Console_WHITE_, F("%"));
+					Console::Text(_X1 + 6, _Y1 + 2, _Console_WHITE_, F("Online Send Interval"));	Console::Dot(_X1 + 6, _Y1 + 22, (_Y2 - 10) - (_Y1 + 22)); 	Console::Bracket(_X1 + 6, _Y2 - 10, 8); Console::Text(_X1 + 6, _Y2 - 5, _Console_WHITE_, F("Min"));
+					Console::Text(_X1 + 7, _Y1 + 2, _Console_WHITE_, F("Offline Send Interval")); Console::Dot(_X1 + 7, _Y1 + 23, (_Y2 - 10) - (_Y1 + 23)); 	Console::Bracket(_X1 + 7, _Y2 - 10, 8); Console::Text(_X1 + 7, _Y2 - 5, _Console_WHITE_, F("Min"));
+
+				#endif
 
 			}
 
 			// Battery Print Function.
 			void Battery(const uint8_t _X1, const uint8_t _Y1, const uint8_t _X2, const uint8_t _Y2) {
 
-				// Draw Hardware Diagnostic Box
-				Console::Box(_X1, _Y1, _X2, _Y2, "Battery", 3, false, false);
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
 
-				// Print Text
-				Console::Text(_X1 + 1, _Y1 + 2, _Console_WHITE_, F("Instant Voltage")); 			Console::Dot(_X1 + 1, _Y1 + 17, (_Y2 - 9) - (_Y1 + 17)); 	Console::Bracket(_X1 + 1, _Y2 - 9, 7);		Console::Text(_X1 + 1, _Y2 - 3, _Console_WHITE_, F("V"));
-				Console::Text(_X1 + 2, _Y1 + 2, _Console_WHITE_, F("Temperature")); 				Console::Dot(_X1 + 2, _Y1 + 13, (_Y2 - 10) - (_Y1 + 13)); 	Console::Bracket(_X1 + 2, _Y2 - 10, 8);		Console::Text(_X1 + 2, _Y2 - 3, _Console_WHITE_, F("C"));
-				Console::Text(_X1 + 3, _Y1 + 2, _Console_WHITE_, F("Average Current")); 			Console::Dot(_X1 + 3, _Y1 + 17, (_Y2 - 13) - (_Y1 + 17)); 	Console::Bracket(_X1 + 3, _Y2 - 13, 11);	Console::Text(_X1 + 3, _Y2 - 4, _Console_WHITE_, F("mA"));
-				Console::Text(_X1 + 4, _Y1 + 2, _Console_WHITE_, F("State of Charge")); 			Console::Dot(_X1 + 4, _Y1 + 17, (_Y2 - 10) - (_Y1 + 17)); 	Console::Bracket(_X1 + 4, _Y2 - 10, 8);		Console::Text(_X1 + 4, _Y2 - 3, _Console_WHITE_, F("%"));
-				Console::Text(_X1 + 5, _Y1 + 2, _Console_WHITE_, F("Full Battery Capacity")); 	Console::Dot(_X1 + 5, _Y1 + 23, (_Y2 - 10) - (_Y1 + 23)); 	Console::Bracket(_X1 + 5, _Y2 - 10, 8);		Console::Text(_X1 + 5, _Y2 - 4, _Console_WHITE_, F("mA"));
-				Console::Text(_X1 + 6, _Y1 + 2, _Console_WHITE_, F("Instant Battery Capacity"));	Console::Dot(_X1 + 6, _Y1 + 26, (_Y2 - 10) - (_Y1 + 26)); 	Console::Bracket(_X1 + 6, _Y2 - 10, 8);		Console::Text(_X1 + 6, _Y2 - 4, _Console_WHITE_, F("mA"));
-				Console::Text(_X1 + 7, _Y1 + 2, _Console_WHITE_, F("Charge State")); 				Console::Dot(_X1 + 7, _Y1 + 14, (_Y2 - 15) - (_Y1 + 14)); 	Console::Bracket(_X1 + 7, _Y2 - 15, 13);
+					// Draw Hardware Diagnostic Box
+					Console::Box(_X1, _Y1, _X2, _Y2, "Battery", 3, false, false);
+
+					// Print Text
+					Console::Text(_X1 + 1, _Y1 + 2, _Console_WHITE_, F("Instant Voltage")); 			Console::Dot(_X1 + 1, _Y1 + 17, (_Y2 - 9) - (_Y1 + 17)); 	Console::Bracket(_X1 + 1, _Y2 - 9, 7);		Console::Text(_X1 + 1, _Y2 - 3, _Console_WHITE_, F("V"));
+					Console::Text(_X1 + 2, _Y1 + 2, _Console_WHITE_, F("Temperature")); 				Console::Dot(_X1 + 2, _Y1 + 13, (_Y2 - 10) - (_Y1 + 13)); 	Console::Bracket(_X1 + 2, _Y2 - 10, 8);		Console::Text(_X1 + 2, _Y2 - 3, _Console_WHITE_, F("C"));
+					Console::Text(_X1 + 3, _Y1 + 2, _Console_WHITE_, F("Average Current")); 			Console::Dot(_X1 + 3, _Y1 + 17, (_Y2 - 13) - (_Y1 + 17)); 	Console::Bracket(_X1 + 3, _Y2 - 13, 11);	Console::Text(_X1 + 3, _Y2 - 4, _Console_WHITE_, F("mA"));
+					Console::Text(_X1 + 4, _Y1 + 2, _Console_WHITE_, F("State of Charge")); 			Console::Dot(_X1 + 4, _Y1 + 17, (_Y2 - 10) - (_Y1 + 17)); 	Console::Bracket(_X1 + 4, _Y2 - 10, 8);		Console::Text(_X1 + 4, _Y2 - 3, _Console_WHITE_, F("%"));
+					Console::Text(_X1 + 5, _Y1 + 2, _Console_WHITE_, F("Full Battery Capacity")); 	Console::Dot(_X1 + 5, _Y1 + 23, (_Y2 - 10) - (_Y1 + 23)); 	Console::Bracket(_X1 + 5, _Y2 - 10, 8);		Console::Text(_X1 + 5, _Y2 - 4, _Console_WHITE_, F("mA"));
+					Console::Text(_X1 + 6, _Y1 + 2, _Console_WHITE_, F("Instant Battery Capacity"));	Console::Dot(_X1 + 6, _Y1 + 26, (_Y2 - 10) - (_Y1 + 26)); 	Console::Bracket(_X1 + 6, _Y2 - 10, 8);		Console::Text(_X1 + 6, _Y2 - 4, _Console_WHITE_, F("mA"));
+					Console::Text(_X1 + 7, _Y1 + 2, _Console_WHITE_, F("Charge State")); 				Console::Dot(_X1 + 7, _Y1 + 14, (_Y2 - 15) - (_Y1 + 14)); 	Console::Bracket(_X1 + 7, _Y2 - 15, 13);
+
+				#endif
 
 			}
 
 			// GSM Detail Function.
 			void GSM_Hardware(const uint8_t _X1, const uint8_t _Y1, const uint8_t _X2, const uint8_t _Y2) {
 
-				// Draw GSM Connection Diagnostic Box
-				Console::Box(_X1, _Y1, _X2, _Y2, "GSM Detail", 4, false, false);
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
 
-				// Print Text	
-				Console::Text(_X1 + 1, _Y1 + 2, _Console_WHITE_, F("Manufacturer"));	Console::Dot(_X1 + 1, _Y1 + 14, (_Y2 - 4) - (_Y1 + 14)); 	Console::Bracket(_X1 + 1, _Y2 - 4, 2);
-				Console::Text(_X1 + 2, _Y1 + 2, _Console_WHITE_, F("Model"));			Console::Dot(_X1 + 2, _Y1 + 7, (_Y2 - 4) - (_Y1 + 7)); 		Console::Bracket(_X1 + 2, _Y2 - 4, 2);
-				Console::Text(_X1 + 3, _Y1 + 2, _Console_WHITE_, F("Firmware"));		Console::Dot(_X1 + 3, _Y1 + 10, (_Y2 - 12) - (_Y1 + 10)); 	Console::Bracket(_X1 + 3, _Y2 - 12, 10);
-				Console::Text(_X1 + 4, _Y1 + 2, _Console_WHITE_, F("IMEI"));			Console::Dot(_X1 + 4, _Y1 + 6, (_Y2 - 18) - (_Y1 + 6)); 	Console::Bracket(_X1 + 4, _Y2 - 18, 16);
-				Console::Text(_X1 + 5, _Y1 + 2, _Console_WHITE_, F("Serial ID"));		Console::Dot(_X1 + 5, _Y1 + 11, (_Y2 - 13) - (_Y1 + 11)); 	Console::Bracket(_X1 + 5, _Y2 - 13, 11);
-				Console::Text(_X1 + 6, _Y1 + 2, _Console_WHITE_, F("ICCID"));			Console::Dot(_X1 + 6, _Y1 + 7, (_Y2 - 22) - (_Y1 + 7)); 	Console::Bracket(_X1 + 6, _Y2 - 22, 20);
+					// Draw GSM Connection Diagnostic Box
+					Console::Box(_X1, _Y1, _X2, _Y2, "GSM Detail", 4, false, false);
+
+					// Print Text	
+					Console::Text(_X1 + 1, _Y1 + 2, _Console_WHITE_, F("Manufacturer"));	Console::Dot(_X1 + 1, _Y1 + 14, (_Y2 - 4) - (_Y1 + 14)); 	Console::Bracket(_X1 + 1, _Y2 - 4, 2);
+					Console::Text(_X1 + 2, _Y1 + 2, _Console_WHITE_, F("Model"));			Console::Dot(_X1 + 2, _Y1 + 7, (_Y2 - 4) - (_Y1 + 7)); 		Console::Bracket(_X1 + 2, _Y2 - 4, 2);
+					Console::Text(_X1 + 3, _Y1 + 2, _Console_WHITE_, F("Firmware"));		Console::Dot(_X1 + 3, _Y1 + 10, (_Y2 - 12) - (_Y1 + 10)); 	Console::Bracket(_X1 + 3, _Y2 - 12, 10);
+					Console::Text(_X1 + 4, _Y1 + 2, _Console_WHITE_, F("IMEI"));			Console::Dot(_X1 + 4, _Y1 + 6, (_Y2 - 18) - (_Y1 + 6)); 	Console::Bracket(_X1 + 4, _Y2 - 18, 16);
+					Console::Text(_X1 + 5, _Y1 + 2, _Console_WHITE_, F("Serial ID"));		Console::Dot(_X1 + 5, _Y1 + 11, (_Y2 - 13) - (_Y1 + 11)); 	Console::Bracket(_X1 + 5, _Y2 - 13, 11);
+					Console::Text(_X1 + 6, _Y1 + 2, _Console_WHITE_, F("ICCID"));			Console::Dot(_X1 + 6, _Y1 + 7, (_Y2 - 22) - (_Y1 + 7)); 	Console::Bracket(_X1 + 6, _Y2 - 22, 20);
+
+				#endif
 
 			}
 
 			// GSM Connection Detail Function.
 			void GSM_Operator(const uint8_t _X1, const uint8_t _Y1, const uint8_t _X2, const uint8_t _Y2) {
 
-				// Draw GSM Connection Diagnostic Box
-				Console::Box(_X1, _Y1, _X2, _Y2, "GSM Connection", 5, false, false);
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
 
-				// Print Text	
-				Console::Text(_X1 + 1, _Y1 + 2, _Console_WHITE_, F("GSM Connection Time"));	Console::Dot(_X1 + 1, _Y1 + 21, (_Y2 - 7) - (_Y1 + 21)); 	Console::Bracket(_X1 + 1, _Y2 - 7, 5);
-				Console::Text(_X1 + 2, _Y1 + 2, _Console_WHITE_, F("Signal Level"));			Console::Dot(_X1 + 2, _Y1 + 14, (_Y2 - 8) - (_Y1 + 14)); 	Console::Bracket(_X1 + 2, _Y2 - 8, 6);
-				Console::Text(_X1 + 3, _Y1 + 2, _Console_WHITE_, F("GSM Operator"));			Console::Dot(_X1 + 3, _Y1 + 14, (_Y2 - 8) - (_Y1 + 14)); 	Console::Bracket(_X1 + 3, _Y2 - 8, 6);
-				Console::Text(_X1 + 4, _Y1 + 2, _Console_WHITE_, F("IP Address"));			Console::Dot(_X1 + 4, _Y1 + 12, (_Y2 - 18) - (_Y1 + 12)); 	Console::Bracket(_X1 + 4, _Y2 - 18, 16);
-				Console::Text(_X1 + 5, _Y1 + 2, _Console_WHITE_, F("LAC"));					Console::Dot(_X1 + 5, _Y1 + 5, (_Y2 - 7) - (_Y1 + 5)); 		Console::Bracket(_X1 + 5, _Y2 - 7, 5);
-				Console::Text(_X1 + 6, _Y1 + 2, _Console_WHITE_, F("CELL ID"));				Console::Dot(_X1 + 6, _Y1 + 9, (_Y2 - 7) - (_Y1 + 9)); 		Console::Bracket(_X1 + 6, _Y2 - 7, 5);
+					// Draw GSM Connection Diagnostic Box
+					Console::Box(_X1, _Y1, _X2, _Y2, "GSM Connection", 5, false, false);
+
+					// Print Text	
+					Console::Text(_X1 + 1, _Y1 + 2, _Console_WHITE_, F("GSM Connection Time"));	Console::Dot(_X1 + 1, _Y1 + 21, (_Y2 - 7) - (_Y1 + 21)); 	Console::Bracket(_X1 + 1, _Y2 - 7, 5);
+					Console::Text(_X1 + 2, _Y1 + 2, _Console_WHITE_, F("Signal Level"));			Console::Dot(_X1 + 2, _Y1 + 14, (_Y2 - 8) - (_Y1 + 14)); 	Console::Bracket(_X1 + 2, _Y2 - 8, 6);
+					Console::Text(_X1 + 3, _Y1 + 2, _Console_WHITE_, F("GSM Operator"));			Console::Dot(_X1 + 3, _Y1 + 14, (_Y2 - 8) - (_Y1 + 14)); 	Console::Bracket(_X1 + 3, _Y2 - 8, 6);
+					Console::Text(_X1 + 4, _Y1 + 2, _Console_WHITE_, F("IP Address"));			Console::Dot(_X1 + 4, _Y1 + 12, (_Y2 - 18) - (_Y1 + 12)); 	Console::Bracket(_X1 + 4, _Y2 - 18, 16);
+					Console::Text(_X1 + 5, _Y1 + 2, _Console_WHITE_, F("LAC"));					Console::Dot(_X1 + 5, _Y1 + 5, (_Y2 - 7) - (_Y1 + 5)); 		Console::Bracket(_X1 + 5, _Y2 - 7, 5);
+					Console::Text(_X1 + 6, _Y1 + 2, _Console_WHITE_, F("CELL ID"));				Console::Dot(_X1 + 6, _Y1 + 9, (_Y2 - 7) - (_Y1 + 9)); 		Console::Bracket(_X1 + 6, _Y2 - 7, 5);
+
+				#endif
 
 			}
 
 			// GSM FOTA
 			void GSM_FOTA_Detail(const uint8_t _X1, const uint8_t _Y1, const uint8_t _X2, const uint8_t _Y2) {
 
-				// Draw GSM Connection Diagnostic Box
-				Console::Box(_X1, _Y1, _X2, _Y2, "FOTA", 6, false, false);
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
 
-				// Print Text	
-				Console::Text(_X1 + 1, _Y1 + 2, _Console_WHITE_, F("File ID"));			Console::Dot(_X1 + 1, _Y1 + 9, (_Y2 - 9) - (_Y1 + 9)); 		Console::Bracket(_X1 + 1, _Y2 - 9, 7);
-				Console::Text(_X1 + 2, _Y1 + 2, _Console_WHITE_, F("Download Status"));	Console::Dot(_X1 + 2, _Y1 + 17, (_Y2 - 7) - (_Y1 + 17)); 	Console::Bracket(_X1 + 2, _Y2 - 7, 5);
-				Console::Text(_X1 + 3, _Y1 + 2, _Console_WHITE_, F("FTP File Size"));		Console::Dot(_X1 + 3, _Y1 + 15, (_Y2 - 10) - (_Y1 + 15)); 	Console::Bracket(_X1 + 3, _Y2 - 10, 8);
-				Console::Text(_X1 + 4, _Y1 + 2, _Console_WHITE_, F("SD File Size"));		Console::Dot(_X1 + 4, _Y1 + 14, (_Y2 - 10) - (_Y1 + 14)); 	Console::Bracket(_X1 + 4, _Y2 - 10, 8);
-				Console::Text(_X1 + 5, _Y1 + 2, _Console_WHITE_, F("Download Percent"));	Console::Dot(_X1 + 5, _Y1 + 18, (_Y2 - 8) - (_Y1 + 18)); 	Console::Bracket(_X1 + 5, _Y2 - 8, 6);		Console::Text(_X1 + 5, _Y2 - 3, _Console_WHITE_, F("%"));
-				Console::Text(_X1 + 6, _Y1 + 2, _Console_WHITE_, F("Download Time"));		Console::Dot(_X1 + 6, _Y1 + 15, (_Y2 - 11) - (_Y1 + 15)); 	Console::Bracket(_X1 + 6, _Y2 - 11, 9);		Console::Text(_X1 + 6, _Y2 - 5, _Console_WHITE_, F("Sec"));
+					// Draw GSM Connection Diagnostic Box
+					Console::Box(_X1, _Y1, _X2, _Y2, "FOTA", 6, false, false);
+
+					// Print Text	
+					Console::Text(_X1 + 1, _Y1 + 2, _Console_WHITE_, F("File ID"));			Console::Dot(_X1 + 1, _Y1 + 9, (_Y2 - 9) - (_Y1 + 9)); 		Console::Bracket(_X1 + 1, _Y2 - 9, 7);
+					Console::Text(_X1 + 2, _Y1 + 2, _Console_WHITE_, F("Download Status"));	Console::Dot(_X1 + 2, _Y1 + 17, (_Y2 - 7) - (_Y1 + 17)); 	Console::Bracket(_X1 + 2, _Y2 - 7, 5);
+					Console::Text(_X1 + 3, _Y1 + 2, _Console_WHITE_, F("FTP File Size"));		Console::Dot(_X1 + 3, _Y1 + 15, (_Y2 - 10) - (_Y1 + 15)); 	Console::Bracket(_X1 + 3, _Y2 - 10, 8);
+					Console::Text(_X1 + 4, _Y1 + 2, _Console_WHITE_, F("SD File Size"));		Console::Dot(_X1 + 4, _Y1 + 14, (_Y2 - 10) - (_Y1 + 14)); 	Console::Bracket(_X1 + 4, _Y2 - 10, 8);
+					Console::Text(_X1 + 5, _Y1 + 2, _Console_WHITE_, F("Download Percent"));	Console::Dot(_X1 + 5, _Y1 + 18, (_Y2 - 8) - (_Y1 + 18)); 	Console::Bracket(_X1 + 5, _Y2 - 8, 6);		Console::Text(_X1 + 5, _Y2 - 3, _Console_WHITE_, F("%"));
+					Console::Text(_X1 + 6, _Y1 + 2, _Console_WHITE_, F("Download Time"));		Console::Dot(_X1 + 6, _Y1 + 15, (_Y2 - 11) - (_Y1 + 15)); 	Console::Bracket(_X1 + 6, _Y2 - 11, 9);		Console::Text(_X1 + 6, _Y2 - 5, _Console_WHITE_, F("Sec"));
+
+				#endif
 
 			}
 
 			// Pressure Stats
 			void Pressure(const uint8_t _X1, const uint8_t _Y1, const uint8_t _X2, const uint8_t _Y2) {
 
-				// Draw GSM Connection Diagnostic Box
-				Console::Box(_X1, _Y1, _X2, _Y2, "Pressure", 7, false, false);
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
 
-				// Print Text	
-				Console::Text(_X1 + 1, _Y1 + 2, _Console_WHITE_, F("Instant"));		Console::Dot(_X1 + 1, _Y1 + 9, (_Y2 - 12) - (_Y1 + 9)); 	Console::Bracket(_X1 + 1, _Y2 - 12, 10); Console::Text(_X1 + 1, _Y2 - 5, _Console_WHITE_, F("Bar"));
-				Console::Text(_X1 + 2, _Y1 + 2, _Console_WHITE_, F("Min"));			Console::Dot(_X1 + 2, _Y1 + 5, (_Y2 - 12) - (_Y1 + 5)); 	Console::Bracket(_X1 + 2, _Y2 - 12, 10); Console::Text(_X1 + 2, _Y2 - 5, _Console_WHITE_, F("Bar"));
-				Console::Text(_X1 + 3, _Y1 + 2, _Console_WHITE_, F("Max"));			Console::Dot(_X1 + 3, _Y1 + 5, (_Y2 - 12) - (_Y1 + 5)); 	Console::Bracket(_X1 + 3, _Y2 - 12, 10); Console::Text(_X1 + 3, _Y2 - 5, _Console_WHITE_, F("Bar"));
-				Console::Text(_X1 + 4, _Y1 + 2, _Console_WHITE_, F("Average"));		Console::Dot(_X1 + 4, _Y1 + 9, (_Y2 - 12) - (_Y1 + 9)); 	Console::Bracket(_X1 + 4, _Y2 - 12, 10); Console::Text(_X1 + 4, _Y2 - 5, _Console_WHITE_, F("Bar"));
-				Console::Text(_X1 + 5, _Y1 + 2, _Console_WHITE_, F("Deviation"));		Console::Dot(_X1 + 5, _Y1 + 11, (_Y2 - 12) - (_Y1 + 11)); 	Console::Bracket(_X1 + 5, _Y2 - 12, 10); Console::Text(_X1 + 5, _Y2 - 5, _Console_WHITE_, F("Bar"));
-				Console::Text(_X1 + 6, _Y1 + 2, _Console_WHITE_, F("Slope"));			Console::Dot(_X1 + 6, _Y1 + 7, (_Y2 - 12) - (_Y1 + 7)); 	Console::Bracket(_X1 + 6, _Y2 - 12, 10); Console::Text(_X1 + 6, _Y2 - 3, _Console_WHITE_, F("%"));
-				Console::Text(_X1 + 7, _Y1 + 2, _Console_WHITE_, F("Data Count"));	Console::Dot(_X1 + 7, _Y1 + 12, (_Y2 - 6) - (_Y1 + 12)); 	Console::Bracket(_X1 + 7, _Y2 - 6, 4);
+					// Draw GSM Connection Diagnostic Box
+					Console::Box(_X1, _Y1, _X2, _Y2, "Pressure", 7, false, false);
 
-				// Limit Detail
-				Console::Text(_X1 + 2, _Y1 + 16, _Console_WHITE_, F("[     Bar]"));
-				Console::Text(_X1 + 3, _Y1 + 16, _Console_WHITE_, F("[     Bar]"));
-				Console::Text(_X1 + 6, _Y1 + 20, _Console_WHITE_, F("[   %]"));
+					// Print Text	
+					Console::Text(_X1 + 1, _Y1 + 2, _Console_WHITE_, F("Instant"));		Console::Dot(_X1 + 1, _Y1 + 9, (_Y2 - 12) - (_Y1 + 9)); 	Console::Bracket(_X1 + 1, _Y2 - 12, 10); Console::Text(_X1 + 1, _Y2 - 5, _Console_WHITE_, F("Bar"));
+					Console::Text(_X1 + 2, _Y1 + 2, _Console_WHITE_, F("Min"));			Console::Dot(_X1 + 2, _Y1 + 5, (_Y2 - 12) - (_Y1 + 5)); 	Console::Bracket(_X1 + 2, _Y2 - 12, 10); Console::Text(_X1 + 2, _Y2 - 5, _Console_WHITE_, F("Bar"));
+					Console::Text(_X1 + 3, _Y1 + 2, _Console_WHITE_, F("Max"));			Console::Dot(_X1 + 3, _Y1 + 5, (_Y2 - 12) - (_Y1 + 5)); 	Console::Bracket(_X1 + 3, _Y2 - 12, 10); Console::Text(_X1 + 3, _Y2 - 5, _Console_WHITE_, F("Bar"));
+					Console::Text(_X1 + 4, _Y1 + 2, _Console_WHITE_, F("Average"));		Console::Dot(_X1 + 4, _Y1 + 9, (_Y2 - 12) - (_Y1 + 9)); 	Console::Bracket(_X1 + 4, _Y2 - 12, 10); Console::Text(_X1 + 4, _Y2 - 5, _Console_WHITE_, F("Bar"));
+					Console::Text(_X1 + 5, _Y1 + 2, _Console_WHITE_, F("Deviation"));		Console::Dot(_X1 + 5, _Y1 + 11, (_Y2 - 12) - (_Y1 + 11)); 	Console::Bracket(_X1 + 5, _Y2 - 12, 10); Console::Text(_X1 + 5, _Y2 - 5, _Console_WHITE_, F("Bar"));
+					Console::Text(_X1 + 6, _Y1 + 2, _Console_WHITE_, F("Slope"));			Console::Dot(_X1 + 6, _Y1 + 7, (_Y2 - 12) - (_Y1 + 7)); 	Console::Bracket(_X1 + 6, _Y2 - 12, 10); Console::Text(_X1 + 6, _Y2 - 3, _Console_WHITE_, F("%"));
+					Console::Text(_X1 + 7, _Y1 + 2, _Console_WHITE_, F("Data Count"));	Console::Dot(_X1 + 7, _Y1 + 12, (_Y2 - 6) - (_Y1 + 12)); 	Console::Bracket(_X1 + 7, _Y2 - 6, 4);
+
+					// Limit Detail
+					Console::Text(_X1 + 2, _Y1 + 16, _Console_WHITE_, F("[     Bar]"));
+					Console::Text(_X1 + 3, _Y1 + 16, _Console_WHITE_, F("[     Bar]"));
+					Console::Text(_X1 + 6, _Y1 + 20, _Console_WHITE_, F("[   %]"));
+
+				#endif
 
 			}
 
 			// PowerStat V4 Publish Bit Table
 			void Status_Variables(uint8_t _Mask_Type, uint32_t _Mask) {
+
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
 
 					// Set Mask X Position
 					uint8_t _X = 40 + _Mask_Type;
@@ -591,7 +704,9 @@
 					Console::Text(_X, 112, (bitRead(_Mask, 22) ? _Console_GREEN_ : _Console_RED_), F("SD"));
 					Console::Text(_X, 116, (bitRead(_Mask, 23) ? _Console_GREEN_ : _Console_RED_), F("SYS"));
 
-				}
+				#endif
+
+			}
 
 		// Private Context
 		public:
@@ -605,72 +720,77 @@
 			// PowerStat V4 Batch Function.
 			void Begin(const uint8_t _X = 1, const uint8_t _Y = 1) {
 
-				// Start VT100 Console
-				Console::Begin();
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
 
-				// Draw Main Box
-				Console::Box(_X, _Y, _X + 47, _Y + 121, "", 0, true, true);
+					// Start VT100 Console
+					Console::Begin();
 
-				// Print Main Header Text
-				Console::Text_Format(_Console_BRIGHT_);
-				Console::Text(_X + 1, _Y + 54, _Console_WHITE_, F("PowerStat V4"));
-				Console::Text_Format(_Console_RST_);
+					// Draw Main Box
+					Console::Box(_X, _Y, _X + 47, _Y + 121, "", 0, true, true);
 
-				// Header Titles
-				Console::Text(_X + 1, _Y + 2, _Console_WHITE_, F("Up Time :"));
-				Console::Text(_X + 1, _Y + 98, _Console_WHITE_, F("Send Time (mS) :"));
+					// Print Main Header Text
+					Console::Text_Format(_Console_BRIGHT_);
+					Console::Text(_X + 1, _Y + 54, _Console_WHITE_, F("PowerStat V4"));
+					Console::Text_Format(_Console_RST_);
 
-				// Draw Hardware Diagnostic
-				this->Diagnostic(_X + 3, _Y + 1, _X + 11, _Y + 40);
+					// Header Titles
+					Console::Text(_X + 1, _Y + 2, _Console_WHITE_, F("Up Time :"));
+					Console::Text(_X + 1, _Y + 98, _Console_WHITE_, F("Send Time (mS) :"));
 
-				// Draw Detail Box
-				this->Device_Detail(_X + 3, _Y + 41, _X + 11, _Y + 80);
+					// Draw Hardware Diagnostic
+					this->Diagnostic(_X + 3, _Y + 1, _X + 11, _Y + 40);
 
-				// Draw Battery Box
-				this->Battery(_X + 3, _Y + 81, _X + 11, _Y + 120);
+					// Draw Detail Box
+					this->Device_Detail(_X + 3, _Y + 41, _X + 11, _Y + 80);
 
-				// Draw Command Box
-				Console::Box(_X + 12, _Y + 1, _X + 14, _Y + 40, "", 0, false, false);
+					// Draw Battery Box
+					this->Battery(_X + 3, _Y + 81, _X + 11, _Y + 120);
 
-				// Draw Description Box
-				Console::Box(_X + 12, _Y + 41, _X + 14, _Y + 80, "", 0, false, false);
+					// Draw Command Box
+					Console::Box(_X + 12, _Y + 1, _X + 14, _Y + 40, "", 0, false, false);
 
-				// Draw Status Box
-				Console::Box(_X + 12, _Y + 81, _X + 14, _Y + 120, "", 0, false, false);
-				Console::Text(_X + 13, _Y + 83, _Console_WHITE_, "Device Status"); Console::Dot(_X + 13, _Y + 96, 11); Console::Bracket(_X + 13, _Y + 107, 11); Console::Text(_X + 13, _Y + 108, _Console_GRAY_, "0x");
+					// Draw Description Box
+					Console::Box(_X + 12, _Y + 41, _X + 14, _Y + 80, "", 0, false, false);
 
-				// Draw GSM Detail Box
-				this->GSM_Hardware(_X + 15, _Y + 1, _X + 22, _Y + 40);
+					// Draw Status Box
+					Console::Box(_X + 12, _Y + 81, _X + 14, _Y + 120, "", 0, false, false);
+					Console::Text(_X + 13, _Y + 83, _Console_WHITE_, "Device Status"); Console::Dot(_X + 13, _Y + 96, 11); Console::Bracket(_X + 13, _Y + 107, 11); Console::Text(_X + 13, _Y + 108, _Console_GRAY_, "0x");
 
-				// Draw GSM Connection Box
-				this->GSM_Operator(_X + 15, _Y + 41, _X + 22, _Y + 80);
+					// Draw GSM Detail Box
+					this->GSM_Hardware(_X + 15, _Y + 1, _X + 22, _Y + 40);
 
-				// Draw FOTA Detail Box
-				this->GSM_FOTA_Detail(_X + 15, _Y + 81, _X + 22, _Y + 120);
+					// Draw GSM Connection Box
+					this->GSM_Operator(_X + 15, _Y + 41, _X + 22, _Y + 80);
 
-				// JSON Box
-				Console::Box(_X + 23, _Y + 1, _X + 31, _Y + 80, "JSON", 0, false, false);
+					// Draw FOTA Detail Box
+					this->GSM_FOTA_Detail(_X + 15, _Y + 81, _X + 22, _Y + 120);
 
-				// Pressure Detail
-				this->Pressure(_X + 23, _Y + 81, _X + 31, _Y + 120);
+					// JSON Box
+					Console::Box(_X + 23, _Y + 1, _X + 31, _Y + 80, "JSON", 0, false, false);
 
-				// Draw Voltage Box
-				Console::Box(_X + 32, _Y + 1, _X + 37, _Y + 40, "Voltage", 8, false, false);
+					// Pressure Detail
+					this->Pressure(_X + 23, _Y + 81, _X + 31, _Y + 120);
 
-				// Draw Current Box
-				Console::Box(_X + 32, _Y + 41, _X + 37, _Y + 80, "Current", 8, false, false);
+					// Draw Voltage Box
+					Console::Box(_X + 32, _Y + 1, _X + 37, _Y + 40, "Voltage", 8, false, false);
 
-				// Draw Power Box
-				Console::Box(_X + 32, _Y + 81, _X + 37, _Y + 120, "Power", 8, false, false);
+					// Draw Current Box
+					Console::Box(_X + 32, _Y + 41, _X + 37, _Y + 80, "Current", 8, false, false);
 
-				// Draw Status
-				Console::Box(_X + 38, _Y + 1, _X + 40, _Y + 120, "", 0, false, false);
-				Console::Text(_X + 39, _Y + 3, _Console_WHITE_, "Status  :");
+					// Draw Power Box
+					Console::Box(_X + 32, _Y + 81, _X + 37, _Y + 120, "Power", 8, false, false);
 
-				// Draw Mask
-				Console::Box(_X + 41, _Y + 1, _X + 44, _Y + 120, "", 0, false, false);
-				Console::Text(_X + 42, _Y + 3, _Console_WHITE_, "Publish :");
-				Console::Text(_X + 43, _Y + 3, _Console_WHITE_, "Stop    :");
+					// Draw Status
+					Console::Box(_X + 38, _Y + 1, _X + 40, _Y + 120, "", 0, false, false);
+					Console::Text(_X + 39, _Y + 3, _Console_WHITE_, "Status  :");
+
+					// Draw Mask
+					Console::Box(_X + 41, _Y + 1, _X + 44, _Y + 120, "", 0, false, false);
+					Console::Text(_X + 42, _Y + 3, _Console_WHITE_, "Publish :");
+					Console::Text(_X + 43, _Y + 3, _Console_WHITE_, "Stop    :");
+
+				#endif
 
 			}
 

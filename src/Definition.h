@@ -1,3 +1,6 @@
+// Debug Mode Definitions
+//#define _DEBUG_
+
 // Color Definitions
 #define _Console_BLACK_		            30
 #define _Console_RED_	                31
