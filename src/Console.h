@@ -709,6 +709,40 @@
 
 			}
 
+			// PowerStat V4 Publish Bit Table
+			void Status_Detail(const uint8_t _X1, const uint8_t _Y1, const uint8_t _X2, const uint8_t _Y2) {
+
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
+
+					// Draw GSM Connection Diagnostic Box
+					Console::Box(_X1, _Y1, _X2, _Y2, "", 0, false, false);
+
+					// Print Header
+					Console::Text(_X1 + 1, _Y1 + 23, _Console_WHITE_, "31 30 29 28 27 26 25 24 23 22 21 20 19 18 17 16 15 14 13 12 11 10 09 08 07 06 05 04 03 02 01 00");
+
+					// Print Divider
+					Console::Divider(HORIZONTAL, _X1 + 2, _Y1 + 1, _Y2 - 4, false);
+
+					// Print Text
+					Console::Text(_X1 + 3, _Y1 + 2, _Console_WHITE_, "Status"); 
+					Console::Text(_X1 + 4, _Y1 + 2, _Console_WHITE_, "Publish"); 
+					Console::Text(_X1 + 5, _Y1 + 2, _Console_WHITE_, "Stop"); 
+					
+					// Print HEX
+					Console::Bracket(_X1 + 3, _Y1 + 10, 11); Console::Text(_X1 + 3, _Y1 + 11, _Console_GRAY_, "0x");
+					Console::Bracket(_X1 + 4, _Y1 + 10, 11); Console::Text(_X1 + 4, _Y1 + 11, _Console_GRAY_, "0x");
+					Console::Bracket(_X1 + 5, _Y1 + 10, 11); Console::Text(_X1 + 5, _Y1 + 11, _Console_GRAY_, "0x");
+
+					// Print Status Placeholder
+					Console::Text(_X1 + 3, _Y1 + 23, _Console_GRAY_, "X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X");
+					Console::Text(_X1 + 4, _Y1 + 23, _Console_GRAY_, "X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X");
+					Console::Text(_X1 + 5, _Y1 + 23, _Console_GRAY_, "X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X");
+
+				#endif
+
+			}
+
 		// Private Context
 		public:
 
@@ -748,24 +782,17 @@
 					// Draw Battery Box
 					this->Battery(_X + 3, _Y + 81, _X + 10, _Y + 120);
 
-					// Draw Command Box
-					Console::Box(_X + 11, _Y + 1, _X + 13, _Y + 40, "", 0, false, false);
-
-					// Draw Description Box
-					Console::Box(_X + 11, _Y + 41, _X + 13, _Y + 80, "", 0, false, false);
-
-					// Draw Status Box
-					Console::Box(_X + 11, _Y + 81, _X + 13, _Y + 120, "", 0, false, false);
-					Console::Text(_X + 12, _Y + 83, _Console_WHITE_, "Device Status"); Console::Dot(_X + 12, _Y + 96, 11); Console::Bracket(_X + 12, _Y + 107, 11); Console::Text(_X + 12, _Y + 108, _Console_GRAY_, "0x");
-
 					// Draw GSM Detail Box
-					this->GSM_Hardware(_X + 14, _Y + 1, _X + 21, _Y + 40);
+					this->GSM_Hardware(_X + 11, _Y + 1, _X + 18, _Y + 40);
 
 					// Draw GSM Connection Box
-					this->GSM_Operator(_X + 14, _Y + 41, _X + 21, _Y + 80);
+					this->GSM_Operator(_X + 11, _Y + 41, _X + 18, _Y + 80);
 
 					// Draw FOTA Detail Box
-					this->GSM_FOTA_Detail(_X + 14, _Y + 81, _X + 21, _Y + 120);
+					this->GSM_FOTA_Detail(_X + 11, _Y + 81, _X + 18, _Y + 120);
+
+					// Draw Command Box
+					Console::Box(_X + 19, _Y + 1, _X + 21, _Y + 120, "", 0, false, false);
 
 					// JSON Box
 					Console::Box(_X + 22, _Y + 1, _X + 30, _Y + 80, "JSON", 0, false, false);
@@ -782,14 +809,8 @@
 					// Draw Power Box
 					Console::Box(_X + 31, _Y + 81, _X + 36, _Y + 120, "Power", 8, false, false);
 
-					// Draw Status
-					Console::Box(_X + 37, _Y + 1, _X + 39, _Y + 120, "", 0, false, false);
-					Console::Text(_X + 38, _Y + 3, _Console_WHITE_, "Status  :");
-
 					// Draw Mask
-					Console::Box(_X + 40, _Y + 1, _X + 43, _Y + 120, "", 0, false, false);
-					Console::Text(_X + 41, _Y + 3, _Console_WHITE_, "Publish :");
-					Console::Text(_X + 42, _Y + 3, _Console_WHITE_, "Stop    :");
+					this->Status_Detail(_X + 37, _Y + 1, _X + 43, _Y + 120);
 
 					// Print Board Type
 					#if defined(_B107AA_)
