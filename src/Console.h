@@ -520,7 +520,7 @@
 					Console::Text(_X1 + 3, _Y1 + 2, _Console_WHITE_, F("I2C Temperature (0x40)")); 		Console::Dot(_X1 + 3, _Y1 + 24, (_Y2 - 7) - (_Y1 + 24));	Console::Bracket(_X1 + 3, _Y2 - 7, 5);
 					Console::Text(_X1 + 4, _Y1 + 2, _Console_WHITE_, F("I2C Battery Gauge (0x36)")); 	Console::Dot(_X1 + 4, _Y1 + 26, (_Y2 - 7) - (_Y1 + 26));	Console::Bracket(_X1 + 4, _Y2 - 7, 5);
 					Console::Text(_X1 + 5, _Y1 + 2, _Console_WHITE_, F("I2C Battery Charger (0x6B)")); 	Console::Dot(_X1 + 5, _Y1 + 28, (_Y2 - 7) - (_Y1 + 28));	Console::Bracket(_X1 + 5, _Y2 - 7, 5);
-					Console::Text(_X1 + 6, _Y1 + 2, _Console_WHITE_, F("SD Card Connection")); 			Console::Dot(_X1 + 6, _Y1 + 20, (_Y2 - 7) - (_Y1 + 20)); 	Console::Bracket(_X1 + 6, _Y2 - 7, 5);
+					Console::Text(_X1 + 6, _Y1 + 2, _Console_WHITE_, F("Energy Analyser")); 			Console::Dot(_X1 + 6, _Y1 + 17, (_Y2 - 7) - (_Y1 + 17)); 	Console::Bracket(_X1 + 6, _Y2 - 7, 5);
 
 				#endif
 
@@ -819,7 +819,63 @@
 						Console::Text(_X + 45, _Y + 114, _Console_YELLOW_, F("B108AA"));
 					#endif
 
+					// Print Interrupt Status Footer
+					Console::Text(_X + 44, _Y + 32, _Console_WHITE_, F("┬")); Console::Text(_X + 45, _Y + 32, _Console_WHITE_, F("│")); Console::Text(_X + 46, _Y + 32, _Console_WHITE_, F("┴"));
+					Console::Text(_X + 44, _Y + 42, _Console_WHITE_, F("┬")); Console::Text(_X + 45, _Y + 42, _Console_WHITE_, F("│")); Console::Text(_X + 46, _Y + 42, _Console_WHITE_, F("┴"));
+					Console::Text(_X + 44, _Y + 52, _Console_WHITE_, F("┬")); Console::Text(_X + 45, _Y + 52, _Console_WHITE_, F("│")); Console::Text(_X + 46, _Y + 52, _Console_WHITE_, F("┴"));
+					Console::Text(_X + 44, _Y + 62, _Console_WHITE_, F("┬")); Console::Text(_X + 45, _Y + 62, _Console_WHITE_, F("│")); Console::Text(_X + 46, _Y + 62, _Console_WHITE_, F("┴"));
+					Console::Text(_X + 44, _Y + 72, _Console_WHITE_, F("┬")); Console::Text(_X + 45, _Y + 72, _Console_WHITE_, F("│")); Console::Text(_X + 46, _Y + 72, _Console_WHITE_, F("┴"));
+					Console::Text(_X + 44, _Y + 84, _Console_WHITE_, F("┬")); Console::Text(_X + 45, _Y + 84, _Console_WHITE_, F("│")); Console::Text(_X + 46, _Y + 84, _Console_WHITE_, F("┴"));
+					Console::Text(_X + 44, _Y + 98, _Console_WHITE_, F("┬")); Console::Text(_X + 45, _Y + 98, _Console_WHITE_, F("│")); Console::Text(_X + 46, _Y + 98, _Console_WHITE_, F("┴"));
+					Console::Text(_X + 44, _Y + 112, _Console_WHITE_, F("┬")); Console::Text(_X + 45, _Y + 112, _Console_WHITE_, F("│")); Console::Text(_X + 46, _Y + 112, _Console_WHITE_, F("┴"));
+					Console::Text(_X + 45, _Y + 34, _Console_WHITE_, F("EN1 [ ]"));
+					Console::Text(_X + 45, _Y + 44, _Console_WHITE_, F("EN2 [ ]"));
+					Console::Text(_X + 45, _Y + 54, _Console_WHITE_, F("ENV [ ]"));
+					Console::Text(_X + 45, _Y + 64, _Console_WHITE_, F("RTC [ ]"));
+					Console::Text(_X + 45, _Y + 74, _Console_WHITE_, F("RS485 [ ]"));
+					Console::Text(_X + 45, _Y + 86, _Console_WHITE_, F("Charger [ ]"));
+					Console::Text(_X + 45, _Y + 100, _Console_WHITE_, F("Battery [ ]"));
+
 				#endif
+
+			}
+
+			// Set Status 
+			void Show_Status(uint8_t _Type, uint32_t _Register) {
+
+				if (bitRead(_Register, 0)) {Console::Text(40+_Type, 118, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 118, _Console_RED_, F("L"));}
+				if (bitRead(_Register, 1)) {Console::Text(40+_Type, 115, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 115, _Console_RED_, F("L"));}
+				if (bitRead(_Register, 2)) {Console::Text(40+_Type, 112, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 112, _Console_RED_, F("L"));}
+				if (bitRead(_Register, 3)) {Console::Text(40+_Type, 109, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 109, _Console_RED_, F("L"));}
+				if (bitRead(_Register, 4)) {Console::Text(40+_Type, 106, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 106, _Console_RED_, F("L"));}
+				if (bitRead(_Register, 5)) {Console::Text(40+_Type, 103, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 103, _Console_RED_, F("L"));}
+				if (bitRead(_Register, 6)) {Console::Text(40+_Type, 100, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 100, _Console_RED_, F("L"));}
+				if (bitRead(_Register, 7)) {Console::Text(40+_Type, 97, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 97, _Console_RED_, F("L"));}
+				if (bitRead(_Register, 8)) {Console::Text(40+_Type, 94, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 94, _Console_RED_, F("L"));}
+				if (bitRead(_Register, 9)) {Console::Text(40+_Type, 91, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 91, _Console_RED_, F("L"));}
+				if (bitRead(_Register, 10)) {Console::Text(40+_Type, 88, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 88, _Console_RED_, F("L"));}
+				if (bitRead(_Register, 11)) {Console::Text(40+_Type, 85, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 85, _Console_RED_, F("L"));}
+				if (bitRead(_Register, 12)) {Console::Text(40+_Type, 82, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 82, _Console_RED_, F("L"));}
+				if (bitRead(_Register, 13)) {Console::Text(40+_Type, 79, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 79, _Console_RED_, F("L"));}
+				if (bitRead(_Register, 14)) {Console::Text(40+_Type, 76, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 76, _Console_RED_, F("L"));}
+				if (bitRead(_Register, 15)) {Console::Text(40+_Type, 73, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 73, _Console_RED_, F("L"));}
+				if (bitRead(_Register, 16)) {Console::Text(40+_Type, 70, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 70, _Console_RED_, F("L"));}
+				if (bitRead(_Register, 17)) {Console::Text(40+_Type, 67, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 67, _Console_RED_, F("L"));}
+				if (bitRead(_Register, 18)) {Console::Text(40+_Type, 64, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 64, _Console_RED_, F("L"));}
+				if (bitRead(_Register, 19)) {Console::Text(40+_Type, 61, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 61, _Console_RED_, F("L"));}
+				if (bitRead(_Register, 20)) {Console::Text(40+_Type, 58, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 58, _Console_RED_, F("L"));}
+				if (bitRead(_Register, 21)) {Console::Text(40+_Type, 55, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 55, _Console_RED_, F("L"));}
+				if (bitRead(_Register, 22)) {Console::Text(40+_Type, 52, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 52, _Console_RED_, F("L"));}
+				if (bitRead(_Register, 23)) {Console::Text(40+_Type, 49, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 49, _Console_RED_, F("L"));}
+				if (bitRead(_Register, 24)) {Console::Text(40+_Type, 46, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 46, _Console_RED_, F("L"));}
+				if (bitRead(_Register, 25)) {Console::Text(40+_Type, 43, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 43, _Console_RED_, F("L"));}
+				if (bitRead(_Register, 26)) {Console::Text(40+_Type, 40, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 40, _Console_RED_, F("L"));}
+				if (bitRead(_Register, 27)) {Console::Text(40+_Type, 37, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 37, _Console_RED_, F("L"));}
+				if (bitRead(_Register, 28)) {Console::Text(40+_Type, 34, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 34, _Console_RED_, F("L"));}
+				if (bitRead(_Register, 29)) {Console::Text(40+_Type, 31, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 31, _Console_RED_, F("L"));}
+				if (bitRead(_Register, 30)) {Console::Text(40+_Type, 28, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 28, _Console_RED_, F("L"));}
+				if (bitRead(_Register, 31)) {Console::Text(40+_Type, 25, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 25, _Console_RED_, F("L"));}
+				
 
 			}
 
