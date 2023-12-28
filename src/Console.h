@@ -719,7 +719,7 @@
 					Console::Box(_X1, _Y1, _X2, _Y2, "", 0, false, false);
 
 					// Print Header
-					Console::Text(_X1 + 1, _Y1 + 23, _Console_WHITE_, "31 30 29 28 27 26 25 24 23 22 21 20 19 18 17 16 15 14 13 12 11 10 09 08 07 06 05 04 03 02 01 00");
+					Console::Text(_X1 + 1, _Y1 + 23, _Console_WHITE_, "S  CT CS CR -  II VI HF LF HI HV LV -  -  -  -  -  -  PR PD HP LP -  IN SA MP TH -  T  S  R  P");
 
 					// Print Divider
 					Console::Divider(HORIZONTAL, _X1 + 2, _Y1 + 1, _Y2 - 4, false);
