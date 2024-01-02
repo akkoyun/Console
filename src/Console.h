@@ -743,6 +743,28 @@
 
 			}
 
+			// HEX to String Function
+			String toHexString(uint32_t value) {
+			
+				// Define HEX String
+				String _HEX_String = "";
+			
+				// Convert to HEX
+				for (int i = 7; i >= 0; i--) {
+					
+					// Get HEX Digit
+					char _HEX_Digit = (value >> (i * 4)) & 0xF;
+					
+					// Add to String
+					if (_HEX_Digit < 10) {_HEX_String += (char)('0' + _HEX_Digit);} else {_HEX_String += (char)('A' + _HEX_Digit - 10);}
+
+				}
+
+				// Return HEX String
+				return _HEX_String;
+
+			}
+		
 		// Private Context
 		public:
 
@@ -843,6 +865,10 @@
 			// Set Status 
 			void Show_Status(uint8_t _Type, uint32_t _Register) {
 
+				// Print HEX Value
+				Console::Text(40+_Type, 15, _Console_GRAY_, String(this->toHexString(_Register)));
+
+				// Print Bits
 				if (bitRead(_Register, 0)) {Console::Text(40+_Type, 118, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 118, _Console_RED_, F("L"));}
 				if (bitRead(_Register, 1)) {Console::Text(40+_Type, 115, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 115, _Console_RED_, F("L"));}
 				if (bitRead(_Register, 2)) {Console::Text(40+_Type, 112, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 112, _Console_RED_, F("L"));}
@@ -875,7 +901,6 @@
 				if (bitRead(_Register, 29)) {Console::Text(40+_Type, 31, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 31, _Console_RED_, F("L"));}
 				if (bitRead(_Register, 30)) {Console::Text(40+_Type, 28, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 28, _Console_RED_, F("L"));}
 				if (bitRead(_Register, 31)) {Console::Text(40+_Type, 25, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 25, _Console_RED_, F("L"));}
-				
 
 			}
 
