@@ -842,21 +842,15 @@
 					#endif
 
 					// Print Interrupt Status Footer
-					Console::Text(_X + 44, _Y + 32, _Console_WHITE_, F("┬")); Console::Text(_X + 45, _Y + 32, _Console_WHITE_, F("│")); Console::Text(_X + 46, _Y + 32, _Console_WHITE_, F("┴"));
-					Console::Text(_X + 44, _Y + 42, _Console_WHITE_, F("┬")); Console::Text(_X + 45, _Y + 42, _Console_WHITE_, F("│")); Console::Text(_X + 46, _Y + 42, _Console_WHITE_, F("┴"));
-					Console::Text(_X + 44, _Y + 52, _Console_WHITE_, F("┬")); Console::Text(_X + 45, _Y + 52, _Console_WHITE_, F("│")); Console::Text(_X + 46, _Y + 52, _Console_WHITE_, F("┴"));
-					Console::Text(_X + 44, _Y + 62, _Console_WHITE_, F("┬")); Console::Text(_X + 45, _Y + 62, _Console_WHITE_, F("│")); Console::Text(_X + 46, _Y + 62, _Console_WHITE_, F("┴"));
-					Console::Text(_X + 44, _Y + 72, _Console_WHITE_, F("┬")); Console::Text(_X + 45, _Y + 72, _Console_WHITE_, F("│")); Console::Text(_X + 46, _Y + 72, _Console_WHITE_, F("┴"));
-					Console::Text(_X + 44, _Y + 84, _Console_WHITE_, F("┬")); Console::Text(_X + 45, _Y + 84, _Console_WHITE_, F("│")); Console::Text(_X + 46, _Y + 84, _Console_WHITE_, F("┴"));
-					Console::Text(_X + 44, _Y + 98, _Console_WHITE_, F("┬")); Console::Text(_X + 45, _Y + 98, _Console_WHITE_, F("│")); Console::Text(_X + 46, _Y + 98, _Console_WHITE_, F("┴"));
+					Console::Text(_X + 44, _Y + 70, _Console_WHITE_, F("┬")); Console::Text(_X + 45, _Y + 70, _Console_WHITE_, F("│")); Console::Text(_X + 46, _Y + 70, _Console_WHITE_, F("┴"));
+					Console::Text(_X + 44, _Y + 80, _Console_WHITE_, F("┬")); Console::Text(_X + 45, _Y + 80, _Console_WHITE_, F("│")); Console::Text(_X + 46, _Y + 80, _Console_WHITE_, F("┴"));
+					Console::Text(_X + 44, _Y + 90, _Console_WHITE_, F("┬")); Console::Text(_X + 45, _Y + 90, _Console_WHITE_, F("│")); Console::Text(_X + 46, _Y + 90, _Console_WHITE_, F("┴"));
+					Console::Text(_X + 44, _Y + 100, _Console_WHITE_, F("┬")); Console::Text(_X + 45, _Y + 100, _Console_WHITE_, F("│")); Console::Text(_X + 46, _Y + 100, _Console_WHITE_, F("┴"));
 					Console::Text(_X + 44, _Y + 112, _Console_WHITE_, F("┬")); Console::Text(_X + 45, _Y + 112, _Console_WHITE_, F("│")); Console::Text(_X + 46, _Y + 112, _Console_WHITE_, F("┴"));
-					Console::Text(_X + 45, _Y + 34, _Console_WHITE_, F("EN1 [ ]"));
-					Console::Text(_X + 45, _Y + 44, _Console_WHITE_, F("EN2 [ ]"));
-					Console::Text(_X + 45, _Y + 54, _Console_WHITE_, F("ENV [ ]"));
-					Console::Text(_X + 45, _Y + 64, _Console_WHITE_, F("RTC [ ]"));
-					Console::Text(_X + 45, _Y + 74, _Console_WHITE_, F("RS485 [ ]"));
-					Console::Text(_X + 45, _Y + 86, _Console_WHITE_, F("Charger [ ]"));
-					Console::Text(_X + 45, _Y + 100, _Console_WHITE_, F("Battery [ ]"));
+					Console::Text(_X + 45, _Y + 72, _Console_WHITE_, F("EN1 [ ]"));
+					Console::Text(_X + 45, _Y + 82, _Console_WHITE_, F("EN2 [ ]"));
+					Console::Text(_X + 45, _Y + 92, _Console_WHITE_, F("ENV [ ]"));
+					Console::Text(_X + 45, _Y + 102, _Console_WHITE_, F("RS485 [ ]"));
 
 				#endif
 
