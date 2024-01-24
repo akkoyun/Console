@@ -578,8 +578,8 @@
 					Console::Box(_X1, _Y1, _X2, _Y2, "GSM Detail", 4, false, false);
 
 					// Print Text	
-					Console::Text(_X1 + 1, _Y1 + 2, _Console_WHITE_, F("Manufacturer"));	Console::Dot(_X1 + 1, _Y1 + 14, (_Y2 - 4) - (_Y1 + 14)); 	Console::Bracket(_X1 + 1, _Y2 - 4, 2);
-					Console::Text(_X1 + 2, _Y1 + 2, _Console_WHITE_, F("Model"));			Console::Dot(_X1 + 2, _Y1 + 7, (_Y2 - 4) - (_Y1 + 7)); 		Console::Bracket(_X1 + 2, _Y2 - 4, 2);
+					Console::Text(_X1 + 1, _Y1 + 2, _Console_WHITE_, F("Manufacturer"));	Console::Dot(_X1 + 1, _Y1 + 14, (_Y2 - 5) - (_Y1 + 14)); 	Console::Bracket(_X1 + 1, _Y2 - 5, 3);
+					Console::Text(_X1 + 2, _Y1 + 2, _Console_WHITE_, F("Model"));			Console::Dot(_X1 + 2, _Y1 + 7, (_Y2 - 5) - (_Y1 + 7)); 		Console::Bracket(_X1 + 2, _Y2 - 5, 3);
 					Console::Text(_X1 + 3, _Y1 + 2, _Console_WHITE_, F("Firmware"));		Console::Dot(_X1 + 3, _Y1 + 10, (_Y2 - 12) - (_Y1 + 10)); 	Console::Bracket(_X1 + 3, _Y2 - 12, 10);
 					Console::Text(_X1 + 4, _Y1 + 2, _Console_WHITE_, F("IMEI"));			Console::Dot(_X1 + 4, _Y1 + 6, (_Y2 - 18) - (_Y1 + 6)); 	Console::Bracket(_X1 + 4, _Y2 - 18, 16);
 					Console::Text(_X1 + 5, _Y1 + 2, _Console_WHITE_, F("Serial ID"));		Console::Dot(_X1 + 5, _Y1 + 11, (_Y2 - 13) - (_Y1 + 11)); 	Console::Bracket(_X1 + 5, _Y2 - 13, 11);
@@ -599,12 +599,12 @@
 					Console::Box(_X1, _Y1, _X2, _Y2, "GSM Connection", 5, false, false);
 
 					// Print Text	
-					Console::Text(_X1 + 1, _Y1 + 2, _Console_WHITE_, F("GSM Connection Time"));	Console::Dot(_X1 + 1, _Y1 + 21, (_Y2 - 7) - (_Y1 + 21)); 	Console::Bracket(_X1 + 1, _Y2 - 7, 5);
-					Console::Text(_X1 + 2, _Y1 + 2, _Console_WHITE_, F("Signal Level"));			Console::Dot(_X1 + 2, _Y1 + 14, (_Y2 - 8) - (_Y1 + 14)); 	Console::Bracket(_X1 + 2, _Y2 - 8, 6);
-					Console::Text(_X1 + 3, _Y1 + 2, _Console_WHITE_, F("GSM Operator"));			Console::Dot(_X1 + 3, _Y1 + 14, (_Y2 - 8) - (_Y1 + 14)); 	Console::Bracket(_X1 + 3, _Y2 - 8, 6);
-					Console::Text(_X1 + 4, _Y1 + 2, _Console_WHITE_, F("IP Address"));			Console::Dot(_X1 + 4, _Y1 + 12, (_Y2 - 18) - (_Y1 + 12)); 	Console::Bracket(_X1 + 4, _Y2 - 18, 16);
-					Console::Text(_X1 + 5, _Y1 + 2, _Console_WHITE_, F("LAC"));					Console::Dot(_X1 + 5, _Y1 + 5, (_Y2 - 7) - (_Y1 + 5)); 		Console::Bracket(_X1 + 5, _Y2 - 7, 5);
-					Console::Text(_X1 + 6, _Y1 + 2, _Console_WHITE_, F("CELL ID"));				Console::Dot(_X1 + 6, _Y1 + 9, (_Y2 - 7) - (_Y1 + 9)); 		Console::Bracket(_X1 + 6, _Y2 - 7, 5);
+					Console::Text(_X1 + 1, _Y1 + 2, _Console_WHITE_, F("Connection Time"));	Console::Dot(_X1 + 1, _Y1 + 17, (_Y2 - 8) - (_Y1 + 17)); 	Console::Bracket(_X1 + 1, _Y2 - 8, 6);
+					Console::Text(_X1 + 2, _Y1 + 2, _Console_WHITE_, F("Signal Level"));	Console::Dot(_X1 + 2, _Y1 + 14, (_Y2 - 8) - (_Y1 + 14)); 	Console::Bracket(_X1 + 2, _Y2 - 8, 6);
+					Console::Text(_X1 + 3, _Y1 + 2, _Console_WHITE_, F("GSM Operator"));	Console::Dot(_X1 + 3, _Y1 + 14, (_Y2 - 8) - (_Y1 + 14)); 	Console::Bracket(_X1 + 3, _Y2 - 8, 6);
+					Console::Text(_X1 + 4, _Y1 + 2, _Console_WHITE_, F("IP Address"));		Console::Dot(_X1 + 4, _Y1 + 12, (_Y2 - 18) - (_Y1 + 12)); 	Console::Bracket(_X1 + 4, _Y2 - 18, 16);
+					Console::Text(_X1 + 5, _Y1 + 2, _Console_WHITE_, F("Connection Type"));	Console::Dot(_X1 + 5, _Y1 + 17, (_Y2 - 12) - (_Y1 + 17)); 	Console::Bracket(_X1 + 5, _Y2 - 12, 10);
+					Console::Text(_X1 + 6, _Y1 + 2, _Console_WHITE_, F("Socket"));			Console::Dot(_X1 + 6, _Y1 + 8, (_Y2 - 20) - (_Y1 + 8)); 	Console::Bracket(_X1 + 6, _Y2 - 20, 18);
 
 				#endif
 
@@ -895,6 +895,76 @@
 				if (bitRead(_Register, 29)) {Console::Text(40+_Type, 31, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 31, _Console_RED_, F("L"));}
 				if (bitRead(_Register, 30)) {Console::Text(40+_Type, 28, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 28, _Console_RED_, F("L"));}
 				if (bitRead(_Register, 31)) {Console::Text(40+_Type, 25, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 25, _Console_RED_, F("L"));}
+
+			}
+
+			// Connection Type Function
+			void Show_Connection_Type(const uint8_t _X = 1, const uint8_t _Y = 1, const uint8_t _Type = 0) {
+
+				// Print RED WDS Type
+				Console::Text(_X, _Y, _Console_RED_, F("2G"));
+				Console::Text(_X, (_Y + 3), _Console_RED_, F("3G"));
+				Console::Text(_X, (_Y + 6), _Console_RED_, F("LTE"));
+
+				// Print WDS Type
+				if (_Type == 12) {
+
+					// Print 2G WDS Type
+					Console::Text(_X, _Y, _Console_GREEN_, F("2G"));
+
+				} else if (_Type == 22) {
+
+					// Print 3G WDS Type
+					Console::Text(_X, (_Y + 3), _Console_GREEN_, F("3G"));
+
+				} else if (_Type == 25) {
+
+					// Print 2G WDS Type
+					Console::Text(_X, _Y, _Console_GREEN_, F("2G"));
+
+					// Print 3G WDS Type
+					Console::Text(_X, (_Y + 3), _Console_GREEN_, F("3G"));
+
+					// Print LTE WDS Type
+					Console::Text(_X, (_Y + 6), _Console_GREEN_, F("LTE"));
+
+				} else if (_Type == 28) {
+
+					// Print LTE WDS Type
+					Console::Text(_X, (_Y + 6), _Console_GREEN_, F("LTE"));
+
+				} else if (_Type == 29) {
+
+					// Print 2G WDS Type
+					Console::Text(_X, _Y, _Console_GREEN_, F("2G"));
+
+					// Print 3G WDS Type
+					Console::Text(_X, (_Y + 3), _Console_GREEN_, F("3G"));
+
+				} else if (_Type == 30) {
+
+					// Print 2G WDS Type
+					Console::Text(_X, _Y, _Console_GREEN_, F("2G"));
+
+					// Print LTE WDS Type
+					Console::Text(_X, (_Y + 6), _Console_GREEN_, F("LTE"));
+
+				} else if (_Type == 31) {
+
+					// Print 3G WDS Type
+					Console::Text(_X, (_Y + 3), _Console_GREEN_, F("3G"));
+
+					// Print LTE WDS Type
+					Console::Text(_X, (_Y + 6), _Console_GREEN_, F("LTE"));
+
+				} else {
+
+					// Print RED WDS Type
+					Console::Text(_X, _Y, _Console_RED_, F("2G"));
+					Console::Text(_X, (_Y + 3), _Console_RED_, F("3G"));
+					Console::Text(_X, (_Y + 6), _Console_RED_, F("LTE"));
+
+				}
 
 			}
 
