@@ -898,6 +898,24 @@
 
 			}
 
+			// Show RSSI
+			void Show_RSSI(const uint8_t _X = 1, const uint8_t _Y = 1, const uint8_t _RSSI = 0) {
+
+				// Print RSSI
+				Console::Text(_X, _Y, _Console_WHITE_, F("[-   ]"));
+				Console::Text(_X, (_Y + 2), _Console_GRAY_, String(_RSSI));
+
+			}
+
+			// Show Signal Quality
+			void Show_Signal_Quality(const uint8_t _X = 1, const uint8_t _Y = 1, const uint8_t _Quality = 0) {
+
+				// Print Signal Level Bar
+				Console::Text(_X, _Y, _Console_GRAY_, F("_____"));
+				for (uint8_t i = 1; i <= _Quality; i++) Console::Text(_X, (_Y - 1) + i, _Console_GRAY_, F("X"));
+
+			}
+
 			// Connection Type Function
 			void Show_Connection_Type(const uint8_t _X = 1, const uint8_t _Y = 1, const uint8_t _Type = 0) {
 
