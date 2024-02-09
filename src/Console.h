@@ -512,7 +512,7 @@
 			    #ifdef _DEBUG_
 
 					// Draw Hardware Diagnostic Box
-					Console::Box(_X1, _Y1, _X2, _Y2, "Hardware Diagnostic", 1, false, false);
+					Console::Box(_X1, _Y1, _X2, _Y2, F("Hardware Diagnostic"), 1, false, false);
 
 					// Print Text
 					Console::Text(_X1 + 1, _Y1 + 2, _Console_WHITE_, F("I2C RTC (0x52)")); 				Console::Dot(_X1 + 1, _Y1 + 16, (_Y2 - 7) - (_Y1 + 16)); 	Console::Bracket(_X1 + 1, _Y2 - 7, 5);
@@ -533,7 +533,7 @@
 			    #ifdef _DEBUG_
 
 					// Draw Hardware Diagnostic Box
-					Console::Box(_X1, _Y1, _X2, _Y2, "Hardware Detail", 2, false, false);
+					Console::Box(_X1, _Y1, _X2, _Y2, F("Hardware Detail"), 2, false, false);
 
 					// Print Text
 					Console::Text(_X1 + 1, _Y1 + 2, _Console_WHITE_, F("Serial ID")); 			Console::Dot(_X1 + 1, _Y1 + 11, (_Y2 - 19) - (_Y1 + 11)); 	Console::Bracket(_X1 + 1, _Y2 - 19, 17);
@@ -554,7 +554,7 @@
 			    #ifdef _DEBUG_
 
 					// Draw Hardware Diagnostic Box
-					Console::Box(_X1, _Y1, _X2, _Y2, "Battery", 3, false, false);
+					Console::Box(_X1, _Y1, _X2, _Y2, F("Battery"), 3, false, false);
 
 					// Print Text
 					Console::Text(_X1 + 1, _Y1 + 2, _Console_WHITE_, F("Instant Voltage")); 			Console::Dot(_X1 + 1, _Y1 + 17, (_Y2 - 9) - (_Y1 + 17)); 	Console::Bracket(_X1 + 1, _Y2 - 9, 7);		Console::Text(_X1 + 1, _Y2 - 3, _Console_WHITE_, F("V"));
@@ -575,7 +575,7 @@
 			    #ifdef _DEBUG_
 
 					// Draw GSM Connection Diagnostic Box
-					Console::Box(_X1, _Y1, _X2, _Y2, "GSM Detail", 4, false, false);
+					Console::Box(_X1, _Y1, _X2, _Y2, F("GSM Detail"), 4, false, false);
 
 					// Print Text	
 					Console::Text(_X1 + 1, _Y1 + 2, _Console_WHITE_, F("Manufacturer"));	Console::Dot(_X1 + 1, _Y1 + 14, (_Y2 - 5) - (_Y1 + 14)); 	Console::Bracket(_X1 + 1, _Y2 - 5, 3);
@@ -596,7 +596,7 @@
 			    #ifdef _DEBUG_
 
 					// Draw GSM Connection Diagnostic Box
-					Console::Box(_X1, _Y1, _X2, _Y2, "GSM Connection", 5, false, false);
+					Console::Box(_X1, _Y1, _X2, _Y2, F("GSM Connection"), 5, false, false);
 
 					// Print Text	
 					Console::Text(_X1 + 1, _Y1 + 2, _Console_WHITE_, F("Connection Time"));	Console::Dot(_X1 + 1, _Y1 + 17, (_Y2 - 8) - (_Y1 + 17)); 	Console::Bracket(_X1 + 1, _Y2 - 8, 6);
@@ -617,7 +617,7 @@
 			    #ifdef _DEBUG_
 
 					// Draw GSM Connection Diagnostic Box
-					Console::Box(_X1, _Y1, _X2, _Y2, "FOTA", 6, false, false);
+					Console::Box(_X1, _Y1, _X2, _Y2, F("FOTA"), 6, false, false);
 
 					// Print Text	
 					Console::Text(_X1 + 1, _Y1 + 2, _Console_WHITE_, F("File ID"));			Console::Dot(_X1 + 1, _Y1 + 9, (_Y2 - 9) - (_Y1 + 9)); 		Console::Bracket(_X1 + 1, _Y2 - 9, 7);
@@ -638,7 +638,7 @@
 			    #ifdef _DEBUG_
 
 					// Draw GSM Connection Diagnostic Box
-					Console::Box(_X1, _Y1, _X2, _Y2, "Pressure", 7, false, false);
+					Console::Box(_X1, _Y1, _X2, _Y2, F("Pressure"), 7, false, false);
 
 					// Print Text	
 					Console::Text(_X1 + 1, _Y1 + 2, _Console_WHITE_, F("Instant"));		Console::Dot(_X1 + 1, _Y1 + 9, (_Y2 - 12) - (_Y1 + 9)); 	Console::Bracket(_X1 + 1, _Y2 - 12, 10); Console::Text(_X1 + 1, _Y2 - 5, _Console_WHITE_, F("Bar"));
@@ -719,25 +719,25 @@
 					Console::Box(_X1, _Y1, _X2, _Y2, "", 0, false, false);
 
 					// Print Header
-					Console::Text(_X1 + 1, _Y1 + 23, _Console_WHITE_, "S  CT CS CR -  II VI HF LF HI HV LV -  -  -  -  -  -  PR PD HP LP -  IN SA MP TH -  T  S  R  P");
+					Console::Text(_X1 + 1, _Y1 + 23, _Console_WHITE_, F("S  CT CS CR -  II VI HF LF HI HV LV -  -  -  -  -  -  PR PD HP LP -  IN SA MP TH -  T  S  R  P"));
 
 					// Print Divider
 					Console::Divider(HORIZONTAL, _X1 + 2, _Y1 + 1, _Y2 - 4, false);
 
 					// Print Text
-					Console::Text(_X1 + 3, _Y1 + 2, _Console_WHITE_, "Status"); 
-					Console::Text(_X1 + 4, _Y1 + 2, _Console_WHITE_, "Publish"); 
-					Console::Text(_X1 + 5, _Y1 + 2, _Console_WHITE_, "Stop"); 
+					Console::Text(_X1 + 3, _Y1 + 2, _Console_WHITE_, F("Status")); 
+					Console::Text(_X1 + 4, _Y1 + 2, _Console_WHITE_, F("Publish")); 
+					Console::Text(_X1 + 5, _Y1 + 2, _Console_WHITE_, F("Stop")); 
 					
 					// Print HEX
-					Console::Bracket(_X1 + 3, _Y1 + 10, 11); Console::Text(_X1 + 3, _Y1 + 11, _Console_GRAY_, "0x");
-					Console::Bracket(_X1 + 4, _Y1 + 10, 11); Console::Text(_X1 + 4, _Y1 + 11, _Console_GRAY_, "0x");
-					Console::Bracket(_X1 + 5, _Y1 + 10, 11); Console::Text(_X1 + 5, _Y1 + 11, _Console_GRAY_, "0x");
+					Console::Bracket(_X1 + 3, _Y1 + 10, 11); Console::Text(_X1 + 3, _Y1 + 11, _Console_GRAY_, F("0x"));
+					Console::Bracket(_X1 + 4, _Y1 + 10, 11); Console::Text(_X1 + 4, _Y1 + 11, _Console_GRAY_, F("0x"));
+					Console::Bracket(_X1 + 5, _Y1 + 10, 11); Console::Text(_X1 + 5, _Y1 + 11, _Console_GRAY_, F("0x"));
 
 					// Print Status Placeholder
-					Console::Text(_X1 + 3, _Y1 + 23, _Console_GRAY_, "X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X");
-					Console::Text(_X1 + 4, _Y1 + 23, _Console_GRAY_, "X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X");
-					Console::Text(_X1 + 5, _Y1 + 23, _Console_GRAY_, "X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X");
+					Console::Text(_X1 + 3, _Y1 + 23, _Console_GRAY_, F("X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X"));
+					Console::Text(_X1 + 4, _Y1 + 23, _Console_GRAY_, F("X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X"));
+					Console::Text(_X1 + 5, _Y1 + 23, _Console_GRAY_, F("X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X"));
 
 				#endif
 
@@ -817,19 +817,19 @@
 					Console::Box(_X + 19, _Y + 1, _X + 21, _Y + 120, "", 0, false, false);
 
 					// JSON Box
-					Console::Box(_X + 22, _Y + 1, _X + 30, _Y + 80, "JSON", 0, false, false);
+					Console::Box(_X + 22, _Y + 1, _X + 30, _Y + 80, F("JSON"), 0, false, false);
 
 					// Pressure Detail
 					this->Pressure(_X + 22, _Y + 81, _X + 30, _Y + 120);
 
 					// Draw Voltage Box
-					Console::Box(_X + 31, _Y + 1, _X + 36, _Y + 40, "Voltage", 8, false, false);
+					Console::Box(_X + 31, _Y + 1, _X + 36, _Y + 40, F("Voltage"), 8, false, false);
 
 					// Draw Current Box
-					Console::Box(_X + 31, _Y + 41, _X + 36, _Y + 80, "Current", 8, false, false);
+					Console::Box(_X + 31, _Y + 41, _X + 36, _Y + 80, F("Current"), 8, false, false);
 
 					// Draw Power Box
-					Console::Box(_X + 31, _Y + 81, _X + 36, _Y + 120, "Power", 8, false, false);
+					Console::Box(_X + 31, _Y + 81, _X + 36, _Y + 120, F("Power"), 8, false, false);
 
 					// Draw Mask
 					this->Status_Detail(_X + 37, _Y + 1, _X + 43, _Y + 120);
@@ -1107,7 +1107,7 @@
 			void Begin (void) {
 
 				// Draw Main Screen
-				Console::Box(1, 1, 8, 38, "HDC2010 T/H Sensor", 1, false, true);
+				Console::Box(1, 1, 8, 38, F("HDC2010 T/H Sensor"), 1, false, true);
 				Console::Text(3, 3, _Console_WHITE_, F("Temperature..........[         C ]"));
 				Console::Text(4, 3, _Console_WHITE_, F("Humidity.............[         % ]"));
 				Console::Text(7, 3, _Console_WHITE_, F("Function Time............[    ms ]"));
@@ -1135,9 +1135,9 @@
 				Console::Box(1, 1, 14, 84, "", 0, true, true);
 
 				// Draw Voltage
-				Console::Box(5, 3, 10, 28, "Phase R", 1, false, false);
-				Console::Box(5, 30, 10, 55, "Phase S", 2, false, false);
-				Console::Box(5, 57, 10, 82, "Phase T", 3, false, false);
+				Console::Box(5, 3, 10, 28, F("Phase R"), 1, false, false);
+				Console::Box(5, 30, 10, 55, F("Phase S"), 2, false, false);
+				Console::Box(5, 57, 10, 82, F("Phase T"), 3, false, false);
 
 				Console::Text(7, 5, _Console_WHITE_, F("VA_RMS......[       V]"));
 				Console::Text(8, 5, _Console_WHITE_, F("VA_MIN......[       V]"));
@@ -1175,7 +1175,7 @@
 				Console::Text(2, 68, _Console_WHITE_, F("MAX78630 Energy Analyzer"));
 
 				// Draw Voltage
-				Console::Box(5, 2, 13, 77, "Voltage", 1, false, false);
+				Console::Box(5, 2, 13, 77, F("Voltage"), 1, false, false);
 				Console::Text(7, 4, _Console_WHITE_, F("────────┬──────────┬──────────┬──────────┬──────────┬─────────┬─────────"));
 				Console::Text(8, 12, _Console_WHITE_, F("│          │          │          │          │         │"));
 				Console::Text(9, 12, _Console_WHITE_, F("│          │          │          │          │         │"));
@@ -1199,7 +1199,7 @@
 				Console::Text(11, 68, _Console_WHITE_, F("-------"));
 
 				// Draw Current
-				Console::Box(5, 78, 13, 159, "Current", 2, false, false);
+				Console::Box(5, 78, 13, 159, F("Current"), 2, false, false);
 				Console::Text(7, 80, _Console_WHITE_, F("────────┬─────────┬─────────┬─────────┬─────────┬─────────┬─────────┬─────────"));
 				Console::Text(8, 88, _Console_WHITE_, F("│         │         │         │         │         │         │"));
 				Console::Text(9, 88, _Console_WHITE_, F("│         │         │         │         │         │         │"));
@@ -1225,7 +1225,7 @@
 				Console::Text(11, 150, _Console_WHITE_, F("-------"));
 
 				// Draw Power
-				Console::Box(15, 2, 22, 132, "Power", 3, false, false);
+				Console::Box(15, 2, 22, 132, F("Power"), 3, false, false);
 				Console::Text(17, 4, _Console_WHITE_, F("────────┬──────────┬──────────┬──────────┬──────────┬──────────┬──────────┬──────────┬──────────┬─────────┬─────────┬──────────"));
 				Console::Text(18, 12, _Console_WHITE_, F("│          │          │          │          │          │          │          │          │         │         │"));
 				Console::Text(19, 12, _Console_WHITE_, F("│          │          │          │          │          │          │          │          │         │         │"));
@@ -1255,7 +1255,7 @@
 				Console::Text(21, 124, _Console_WHITE_, F("-----"));
 
 				// Draw Device
-				Console::Box(15, 133, 22, 159, "Device", 4, false, false);
+				Console::Box(15, 133, 22, 159, F("Device"), 4, false, false);
 				Console::Text(16, 135, _Console_WHITE_, F("Device Address:"));
 				Console::Text(17, 135, _Console_WHITE_, F("Firmware      :"));
 				Console::Text(18, 135, _Console_WHITE_, F("Baud          :"));
@@ -1264,7 +1264,7 @@
 				Console::Text(21, 135, _Console_WHITE_, F("IScale        :"));
 
 				// Draw Min/Max Mask
-				Console::Box(24, 2, 29, 104, "Min/Max Mask", 5, false, false);
+				Console::Box(24, 2, 29, 104, F("Min/Max Mask"), 5, false, false);
 				Console::Text(26, 4, _Console_WHITE_, F("──────────┬──────────┬──────────┬──────────┬──────────┬──────────┬──────────┬──────────┬──────────"));
 				Console::Text(27, 14, _Console_WHITE_, F("│          │          │          │          │          │          │          │"));
 				Console::Text(28, 14, _Console_WHITE_, F("│          │          │          │          │          │          │          │"));
@@ -1280,14 +1280,14 @@
 				Console::Text(25, 94, _Console_WHITE_, F("Mask-7"));
 
 				// Draw Other
-				Console::Box(24, 105, 29, 123, "Other", 7, false, false);
+				Console::Box(24, 105, 29, 123, F("Other"), 7, false, false);
 				Console::Text(25, 107, _Console_WHITE_, F("STICKY......[ ]"));
 				Console::Text(26, 107, _Console_WHITE_, F("FREQ....[     ]"));
 				Console::Text(27, 107, _Console_WHITE_, F("BUCKET_L [    ]"));
 				Console::Text(28, 107, _Console_WHITE_, F("BUCKET_H [    ]"));
 
 				// Draw Status Limits
-				Console::Box(30, 2, 34, 123, "Status Limits", 8, false, false);
+				Console::Box(30, 2, 34, 123, F("Status Limits"), 8, false, false);
 				Console::Text(32, 4, _Console_WHITE_, F("────────┬───────────┬───────────┬──────────┬──────────┬──────────┬──────────┬────────┬───────┬───────┬────────┬───────"));
 				Console::Text(33, 12, _Console_WHITE_, F("│           │           │          │          │          │          │        │       │       │        │"));
 				Console::Text(33, 4, _Console_WHITE_, F("Limit"));
@@ -1304,7 +1304,7 @@
 				Console::Text(31, 116, _Console_WHITE_, F("F_MAX"));
 
 				// Draw Status
-				Console::Box(24, 124, 34, 159, "Status", 9, false, false);
+				Console::Box(24, 124, 34, 159, F("Status"), 9, false, false);
 				Console::Text(25, 126, _Console_WHITE_, F("OV_VRMSA....[ ]"));
 				Console::Text(26, 126, _Console_WHITE_, F("UN_VRMSA....[ ]"));
 				Console::Text(27, 126, _Console_WHITE_, F("OV_VRMSB....[ ]"));
@@ -1325,7 +1325,7 @@
 				Console::Text(33, 144, _Console_WHITE_, F("V_IMBAL....[ ]"));
 
 				// Draw Energy
-				Console::Box(36, 2, 40, 159, "Energy Counter", 10, false, false);
+				Console::Box(36, 2, 40, 159, F("Energy Counter"), 10, false, false);
 				Console::Text(38, 4, _Console_WHITE_, F("────────┬──────────┬──────────┬──────────┬──────────┬──────────┬──────────┬────────────┬────────────┬────────────┬────────────┬────────────┬─────────────"));
 				Console::Text(39, 12, _Console_WHITE_, F("│          │          │          │          │          │          │            │            │            │            │            │"));
 				Console::Text(37, 15, _Console_WHITE_, F("WHA_POS"));
@@ -1361,7 +1361,7 @@
 			void Begin (void) {
 
 				// Draw Main Screen
-				Console::Box(1, 1, 8, 38, "Analog P Sensor", 1, false, true);
+				Console::Box(1, 1, 8, 38, F("Analog P Sensor"), 1, false, true);
 				Console::Text(3, 3, _Console_WHITE_, F("Pressure...........[         Bar ]"));
 				Console::Text(4, 3, _Console_WHITE_, F("Deviation..............[         ]"));
 				Console::Text(7, 3, _Console_WHITE_, F("Function Time............[    ms ]"));
