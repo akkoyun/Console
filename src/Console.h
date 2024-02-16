@@ -1,8 +1,8 @@
 #ifndef __Console__
 #define __Console__
 
-	// Define Arduino Library
-	#ifndef __Arduino__
+	// Include Arduino Library
+	#ifndef Arduino_h
 		#include <Arduino.h>
 	#endif
 
@@ -36,7 +36,7 @@
 		public:
 
 			// Construct a new Console object
-			Console(Stream &_Serial) {
+			explicit Console(Stream &_Serial) {
 
 				// Set Serial
 				this->Console_Serial = &_Serial;
@@ -659,57 +659,6 @@
 			}
 
 			// PowerStat V4 Publish Bit Table
-			void Status_Variables(uint8_t _Mask_Type, uint32_t _Mask) {
-
-				// Control for Debug Mode
-			    #ifdef _DEBUG_
-
-					// Set Mask X Position
-					uint8_t _X = 40 + _Mask_Type;
-
-					// Print Pump Status
-					Console::Text(_X, 15, (bitRead(_Mask, 0) ? _Console_GREEN_ : _Console_RED_), F("P"));
-
-					// Print Phase Status
-					Console::Text(_X, 18, (bitRead(_Mask, 1) ? _Console_GREEN_ : _Console_RED_), F("VR"));
-					Console::Text(_X, 22, (bitRead(_Mask, 2) ? _Console_GREEN_ : _Console_RED_), F("VS"));
-					Console::Text(_X, 26, (bitRead(_Mask, 3) ? _Console_GREEN_ : _Console_RED_), F("VT"));
-
-					// Print Relay Status
-					if (_Mask_Type == 0) Console::Text(_X, 30, (bitRead(_Mask, 4) ? _Console_GREEN_ : _Console_RED_), F("M1"));
-					if (_Mask_Type == 0) Console::Text(_X, 34, (bitRead(_Mask, 5) ? _Console_GREEN_ : _Console_RED_), F("M2"));
-					if (_Mask_Type == 0) Console::Text(_X, 38, (bitRead(_Mask, 6) ? _Console_GREEN_ : _Console_RED_), F("M3"));
-
-					// Print Fault Status
-					Console::Text(_X, 42, (bitRead(_Mask, 7) ? _Console_GREEN_ : _Console_RED_), F("TH"));
-					Console::Text(_X, 46, (bitRead(_Mask, 8) ? _Console_GREEN_ : _Console_RED_), F("MP"));
-					Console::Text(_X, 50, (bitRead(_Mask, 9) ? _Console_GREEN_ : _Console_RED_), F("SA"));
-
-					// Print Pressure Status
-					Console::Text(_X, 54, (bitRead(_Mask, 10) ? _Console_GREEN_ : _Console_RED_), F("PL"));
-					Console::Text(_X, 58, (bitRead(_Mask, 11) ? _Console_GREEN_ : _Console_RED_), F("PH"));
-					Console::Text(_X, 62, (bitRead(_Mask, 12) ? _Console_GREEN_ : _Console_RED_), F("PD"));
-					Console::Text(_X, 66, (bitRead(_Mask, 13) ? _Console_GREEN_ : _Console_RED_), F("PR"));
-
-					// Print Energy Status
-					Console::Text(_X, 70, (bitRead(_Mask, 14) ? _Console_GREEN_ : _Console_RED_), F("VL"));
-					Console::Text(_X, 74, (bitRead(_Mask, 15) ? _Console_GREEN_ : _Console_RED_), F("VH"));
-					Console::Text(_X, 78, (bitRead(_Mask, 16) ? _Console_GREEN_ : _Console_RED_), F("IH"));
-					Console::Text(_X, 82, (bitRead(_Mask, 17) ? _Console_GREEN_ : _Console_RED_), F("FQL"));
-					Console::Text(_X, 87, (bitRead(_Mask, 18) ? _Console_GREEN_ : _Console_RED_), F("FQH"));
-					Console::Text(_X, 92, (bitRead(_Mask, 19) ? _Console_GREEN_ : _Console_RED_), F("VIM"));
-					Console::Text(_X, 97, (bitRead(_Mask, 20) ? _Console_GREEN_ : _Console_RED_), F("IIM"));
-
-					// Print Sensor Status
-					Console::Text(_X, 108, (bitRead(_Mask, 21) ? _Console_GREEN_ : _Console_RED_), F("PS"));
-					Console::Text(_X, 112, (bitRead(_Mask, 22) ? _Console_GREEN_ : _Console_RED_), F("SD"));
-					Console::Text(_X, 116, (bitRead(_Mask, 23) ? _Console_GREEN_ : _Console_RED_), F("SYS"));
-
-				#endif
-
-			}
-
-			// PowerStat V4 Publish Bit Table
 			void Status_Detail(const uint8_t _X1, const uint8_t _Y1, const uint8_t _X2, const uint8_t _Y2) {
 
 				// Control for Debug Mode
@@ -769,7 +718,7 @@
 		public:
 
 			// Class Constructor
-			PowerStat_Console(Stream &_Serial) : Console(_Serial) {
+			explicit PowerStat_Console(Stream &_Serial) : Console(_Serial) {
 
 
 			}
@@ -995,7 +944,7 @@
 		public:
 
 			// Class Constructor
-			I2C_Scanner_Console(Stream &_Serial) : Console(_Serial) {
+			explicit I2C_Scanner_Console(Stream &_Serial) : Console(_Serial) {
 
 
 			}
@@ -1098,7 +1047,7 @@
 		public:
 
 			// Class Constructor
-			TH_Meter_Console(Stream &_Serial) : Console(_Serial) {
+			explicit TH_Meter_Console(Stream &_Serial) : Console(_Serial) {
 
 
 			}
@@ -1123,7 +1072,7 @@
 		public:
 
 			// Class Constructor
-			Voltmeter_Console(Stream &_Serial) : Console(_Serial) {
+			explicit Voltmeter_Console(Stream &_Serial) : Console(_Serial) {
 
 
 			}
@@ -1162,7 +1111,7 @@
 		public:
 
 			// Class Constructor
-			MAX78630_Console(Stream &_Serial) : Console(_Serial) {
+			explicit MAX78630_Console(Stream &_Serial) : Console(_Serial) {
 
 
 			}
@@ -1352,7 +1301,7 @@
 		public:
 
 			// Class Constructor
-			Analog_Pressure_Console(Stream &_Serial) : Console(_Serial) {
+			explicit Analog_Pressure_Console(Stream &_Serial) : Console(_Serial) {
 
 
 			}
