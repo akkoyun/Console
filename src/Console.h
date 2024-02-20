@@ -159,8 +159,178 @@
 
 			}
 
+			// Set Cursor Position Function.
+			void Set_Cursor(const uint8_t _X, const uint8_t _Y) {
+
+				// Control for Debug Mode
+				#ifdef _DEBUG_
+
+					// Declare Buffer
+					char _Buffer[11];
+
+					// Set Command
+					sprintf(_Buffer, "\e[%hhu;%hhuH", _X, _Y);
+
+					// Print Cursor Position
+					Console_Serial->print(_Buffer);
+
+				#endif
+
+			}
+
+			// Set Text Color Function.
+			void Text_Color(const uint8_t _Color) {
+
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
+
+					// Control for Buffer
+					if (_Color != this->Buffer.Text_Color) {
+
+						// Declare Buffer
+						char _Buffer[7];
+
+						// Set Command
+						sprintf(_Buffer, "\e[%hhum", _Color);
+
+						// Print Cursor Position
+						Console_Serial->print(_Buffer);
+
+						// Update Buffer Variable
+						this->Buffer.Text_Color = _Color;
+
+					}
+
+				#endif
+
+			}
+
+			// Set Text Format Function
+			void Text_Format(const uint8_t _Format) {
+
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
+
+					// Control for Buffer
+					if (_Format != this->Buffer.Text_Format) {
+
+						// Declare Buffer
+						char _Buffer[7];
+
+						// Set Command
+						sprintf(_Buffer, "\e[%hhum", _Format);
+
+						// Print Cursor Position
+						Console_Serial->print(_Buffer);
+
+						// Update Buffer Variable
+						this->Buffer.Text_Format = _Format;
+
+					}
+
+				#endif
+
+			}
+
+			// Set Back Ground Color Function.
+			void Background_Color(const uint8_t _Color) {
+
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
+
+					// Control for Buffer
+					if (_Color != this->Buffer.Background_Color) {
+
+						// Declare Buffer
+						char _Buffer[7];
+
+						// Set Command
+						sprintf(_Buffer, "\e[%hhum", (uint8_t)(_Color + 10));
+
+						// Print Cursor Position
+						Console_Serial->print(_Buffer);
+
+						// Update Buffer Variable
+						this->Buffer.Background_Color = _Color;
+
+					}
+
+				#endif
+
+			}
+
+			// Print Text to Specified Position and Color.
+			void Text(const uint8_t _X, const uint8_t _Y, const uint8_t _Color, const __FlashStringHelper * _Value) {
+
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
+
+					// Set Text Cursor Position
+					this->Set_Cursor(_X, _Y); 
+
+					// Set Text Color
+					this->Text_Color(_Color); 
+
+					// Print Text			
+					Console_Serial->print(_Value);
+
+				#endif
+
+			}
+			void Text(const uint8_t _X, const uint8_t _Y, const uint8_t _Color, const char _Value) {
+
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
+
+					// Set Text Cursor Position
+					this->Set_Cursor(_X, _Y); 
+
+					// Set Text Color
+					this->Text_Color(_Color); 
+
+					// Print Text			
+					Console_Serial->print(_Value);
+
+				#endif
+
+			}
+			void Text(const uint8_t _X, const uint8_t _Y, const uint8_t _Color, const char* _Value) {
+
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
+
+					// Set Text Cursor Position
+					this->Set_Cursor(_X, _Y); 
+
+					// Set Text Color
+					this->Text_Color(_Color); 
+
+					// Print Text			
+					Console_Serial->print(_Value);
+
+				#endif
+
+			}
+			template<typename T> void Text(const uint8_t _X, const uint8_t _Y, const uint8_t _Color, T _Value) {
+
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
+
+					// Set Text Cursor Position
+					this->Set_Cursor(_X, _Y); 
+
+					// Set Text Color
+					this->Text_Color(_Color); 
+
+					// Print Text			
+					Console_Serial->print(_Value);
+
+				#endif
+
+			}
+
 			// Draw Box Function.
-			void Box(const uint8_t _X1, const uint8_t _Y1, const uint8_t _X2, const uint8_t _Y2, String _Text = "", const uint8_t _Number = 0, const bool _Header = false, const bool _Footer = false) {
+			void Box(const uint8_t _X1, const uint8_t _Y1, const uint8_t _X2, const uint8_t _Y2, const __FlashStringHelper * _Text, const uint8_t _Number = 0, const bool _Header = false, const bool _Footer = false) {
 
 				// Control for Debug Mode
 			    #ifdef _DEBUG_
@@ -172,74 +342,106 @@
 					this->Text_Format(_Console_DIM_);
 
 					// Print Corners
-					this->Set_Cursor(_X1, _Y1); Console_Serial->print(F("┌"));
-					this->Set_Cursor(_X2, _Y1); Console_Serial->print(F("└"));
-					this->Set_Cursor(_X1, _Y2); Console_Serial->print(F("┐"));
-					this->Set_Cursor(_X2, _Y2); Console_Serial->print(F("┘"));
+					this->Text(_X1, _Y1, _Console_WHITE_, F("┌"));
+					this->Text(_X2, _Y1, _Console_WHITE_, F("└"));
+					this->Text(_X1, _Y2, _Console_WHITE_, F("┐"));
+					this->Text(_X2, _Y2, _Console_WHITE_, F("┘"));
 
 					// Print Lines
 					for (uint8_t i = _X1 + 1; i <= _X2 - 1; i++) {
-						
-						this->Set_Cursor(i, _Y1); Console_Serial->print(F("│"));
-						this->Set_Cursor(i, _Y2); Console_Serial->print(F("│"));
+
+						// Print Lines
+						this->Text(i, _Y1, _Console_WHITE_, F("│"));
+						this->Text(i, _Y2, _Console_WHITE_, F("│"));
 
 					}
 					for (uint8_t i = _Y1 + 1; i <= _Y2 - 1; i++) {
-						
-						this->Set_Cursor(_X1, i); Console_Serial->print(F("─"));
-						this->Set_Cursor(_X2, i); Console_Serial->print(F("─"));
-						
+
+						// Print Lines
+						this->Text(_X1, i, _Console_WHITE_, F("─"));
+						this->Text(_X2, i, _Console_WHITE_, F("─"));
+
 					}
 
 					// Print Header
-					this->Text_Color(_Console_YELLOW_); this->Set_Cursor(_X1, _Y1 + 2); Console_Serial->print(_Text);
+					this->Text(_X1, _Y1 + 2, _Console_YELLOW_, _Text);
 
 					// Print Header Number
-					if (_Number != 0) {
-						this->Text_Color(_Console_WHITE_); this->Set_Cursor(_X1, _Y2 - 5); Console_Serial->print(F("[  ]"));
-						if (_Number < 10) {
-							this->Text_Color(_Console_YELLOW_); this->Set_Cursor(_X1, _Y2 - 4); Console_Serial->print(F("0"));
-							this->Text_Color(_Console_YELLOW_); this->Set_Cursor(_X1, _Y2 - 3); Console_Serial->print(_Number);
-						} else {
-							this->Text_Color(_Console_YELLOW_); this->Set_Cursor(_X1, _Y2 - 4); Console_Serial->print(_Number);
-						}
-					}
+
+					// Declare Buffer
+					char _Buffer[5];
+
+					// Set Format
+					sprintf(_Buffer, "[%02d]", _Number);
+
+					// Print Header Number
+					if (_Number != 0) this->Text(_X1, _Y2 - 5, _Console_GRAY_, _Buffer);
 
 					// Draw Header
 					if (_Header) {
 
-						// Set Text Color
-						this->Text_Color(_Console_WHITE_);
-
 						// Print Corners
-						this->Set_Cursor(_X1 + 2, _Y1); Console_Serial->print(F("├"));
-						this->Set_Cursor(_X1 + 2, _Y2); Console_Serial->print(F("┤"));
+						this->Text(_X1 + 2, _Y1, _Console_WHITE_, F("├"));
+						this->Text(_X1 + 2, _Y2, _Console_WHITE_, F("┤"));
 
 						// Print Lines
-						for (uint8_t i = _Y1 + 1; i <= _Y2 - 1; i++) {
-							
-							this->Set_Cursor(_X1 + 2, i); Console_Serial->print(F("─"));
-							
-						}
+						for (uint8_t i = _Y1 + 1; i <= _Y2 - 1; i++) this->Text(_X1 + 2, i, _Console_WHITE_, F("─"));
 
 					}
 					
 					// Draw Footer			
 					if (_Footer) {
 
-						// Set Text Color
-						this->Text_Color(_Console_WHITE_);
-
 						// Print Corners
-						this->Set_Cursor(_X2 - 2, _Y1); Console_Serial->print(F("├"));
-						this->Set_Cursor(_X2 - 2, _Y2); Console_Serial->print(F("┤"));
+						this->Text(_X2 - 2, _Y1, _Console_WHITE_, F("├"));
+						this->Text(_X2 - 2, _Y2, _Console_WHITE_, F("┤"));
 
 						// Print Lines
-						for (uint8_t i = _Y1 + 1; i <= _Y2 - 1; i++) {
-							
-							this->Set_Cursor(_X2 - 2, i); Console_Serial->print(F("─"));
-							
+						for (uint8_t i = _Y1 + 1; i <= _Y2 - 1; i++) this->Text(_X2 - 2, i, _Console_WHITE_, F("─"));
+
+					}
+
+				#endif
+
+			}
+
+			// Horizontal Line Divider Function.
+			void Divider(const bool _Type, const uint8_t _X, const uint8_t _Y, const uint8_t _Length, const bool _End = false) {
+
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
+
+					// Control Horizontal divider type
+					if (_Type == HORIZONTAL) {
+
+						// Print Corners
+						if (_End) {
+
+							// Print Corners
+							this->Text(_X, _Y, _Console_WHITE_, F("├"));
+							this->Text(_X, _Y + _Length, _Console_WHITE_, F("┤"));
+
 						}
+
+						// Print Line
+						for (uint8_t i = _Y + 1; i <= _Y + _Length - 1; i++) {this->Text(_X, i, _Console_WHITE_, F("─"));}
+
+					}
+
+					// Control Vertical divider type
+					if (_Type == VERTICAL) {
+
+						// Print Corners
+						if (_End) {
+
+							// Print Corners
+							this->Text(_X, _Y, _Console_WHITE_, F("┬"));
+							this->Text(_X + _Length, _Y, _Console_WHITE_, F("┴"));
+
+						}
+
+						// Print Line
+						for (uint8_t i = _X + 1; i <= _X + _Length - 1; i++) this->Text(i, _Y, _Console_WHITE_, F("│"));
 
 					}
 
@@ -265,8 +467,26 @@
 
 			}
 
+			// Dot Space Function.
+			void Space(const uint8_t _X, const uint8_t _Y, const uint8_t _Count) {
+
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
+
+					// Print Dots
+					for (uint8_t i = 0; i < _Count; i++) {
+
+						// Print Dot
+						this->Text(_X, _Y + i, _Console_GRAY_, F(" "));
+
+					}
+
+				#endif
+
+			}
+
 			// Bracket Place Holder Function.
-			void Bracket(const uint8_t _X, const uint8_t _Y, const uint8_t _Space) {
+			void Bracket(const uint8_t _X, const uint8_t _Y, const uint8_t _Size) {
 
 				// Control for Debug Mode
 			    #ifdef _DEBUG_
@@ -275,140 +495,58 @@
 					this->Text(_X, _Y, _Console_WHITE_, F("["));
 
 					// Print Bracket Left
-					this->Text(_X, _Y + _Space, _Console_WHITE_, F("]"));
+					this->Text(_X, _Y + _Size, _Console_WHITE_, F("]"));
 
 				#endif
 
 			}
 
-			// Horizontal Line Divider Function.
-			void Divider(const bool _Type, const uint8_t _X, const uint8_t _Y, const uint8_t _Length, const bool _End = false) {
+			// GSM Command Proccess
+			void AT_Command(const __FlashStringHelper * _Command) {
 
 				// Control for Debug Mode
 			    #ifdef _DEBUG_
 
-					//Set Color
-					this->Text_Color(_Console_WHITE_);
+					// Declare Line Size
+					uint8_t _Message_Size = 35;
 
-					// Control Horizontal divider type
-					if (_Type == HORIZONTAL) {
+					// Clear Line
+					this->Space(_Console_AT_Status_X_, _Console_AT_Status_Y_, _Message_Size);
 
-						// Print Corners
-						if (_End) {
+					// Print Dot
+					this->Dot(_Console_AT_Status_X_, _Console_AT_Status_Y_ + sizeof(_Command), _Message_Size - sizeof(_Command) - 5);
 
-							// Print Corners
-							this->Set_Cursor(_X, _Y); Console_Serial->print(F("├"));
-							this->Set_Cursor(_X, _Y + _Length); Console_Serial->print(F("┤"));
+					// Print Command
+					this->Text(_Console_AT_Status_X_, _Console_AT_Status_Y_, _Console_WHITE_, _Command);
 
-						}
+					// Print Response Wait Bracket
+					this->Bracket(_Console_AT_Status_X_, _Console_AT_Status_Y_ + _Message_Size - 5, 5);
 
-						// Print Line
-						for (uint8_t i = _Y + 1; i <= _Y + _Length - 1; i++) {this->Set_Cursor(_X, i); Console_Serial->print(F("─"));}
-
-					}
-
-					// Control Vertical divider type
-					if (_Type == VERTICAL) {
-
-						// Print Corners
-						if (_End) {
-
-							// Print Corners
-							this->Set_Cursor(_X, _Y); Console_Serial->print(F("┬"));
-							this->Set_Cursor(_X + _Length, _Y); Console_Serial->print(F("┴"));
-
-						}
-
-						// Print Lines
-						for (uint8_t i = _X + 1; i <= _X + _Length - 1; i++) {this->Set_Cursor(i, _Y); Console_Serial->print(F("│"));}
-
-					}
+					// Print Response Wait Dot
+					this->Text(_Console_AT_Status_X_, _Console_AT_Status_Y_ + _Message_Size - 4, _Console_BLUE_, F(" .. "));
 
 				#endif
 
 			}
 
-			// Set Text Color Function.
-			void Text_Color(uint8_t _Color) {
+			// OK Decide Function.
+			void OK(const bool _Result) {
 
 				// Control for Debug Mode
 			    #ifdef _DEBUG_
 
-					// Control for Buffer
-					if (_Color != this->Buffer.Text_Color) {
+					// Print Command State
+					if (_Result) {
 
-						// Set Text Color.
-						Console_Serial->print(F("\e["));
-						Console_Serial->print(_Color);
-						Console_Serial->write('m');
+						// Success
+						this->Text(_Console_AT_Status_X_, _Console_AT_Status_Y_ + 32, _Console_GREEN_, F("OK"));
 
-						// Update Buffer Variable
-						this->Buffer.Text_Color = _Color;
+					} else {
+
+						// Fail
+						this->Text(_Console_AT_Status_X_, _Console_AT_Status_Y_ + 31, _Console_RED_, F("FAIL"));
 
 					}
-
-				#endif
-
-			}
-
-			// Set Back Ground Color Function.
-			void Background_Color(uint8_t _Color) {
-
-				// Control for Debug Mode
-			    #ifdef _DEBUG_
-
-					// Control for Buffer
-					if (_Color != this->Buffer.Background_Color) {
-
-						// Set Back Ground Color.
-						Console_Serial->print(F("\e["));
-						Console_Serial->print(_Color + 10);
-						Console_Serial->write('m');
-
-						// Update Buffer Variable
-						this->Buffer.Background_Color = _Color;
-
-					}
-
-				#endif
-
-			}
-
-			// Set Text Format Function
-			void Text_Format(const uint8_t _Format) {
-
-				// Control for Debug Mode
-			    #ifdef _DEBUG_
-
-					// Control for Buffer
-					if (_Format != this->Buffer.Text_Format) {
-
-						// Set Text Format
-						Console_Serial->print(F("\e["));
-						Console_Serial->print(_Format);
-						Console_Serial->write('m');
-
-						// Update Buffer Variable
-						this->Buffer.Text_Format = _Format;
-
-					}
-
-				#endif
-
-			}
-
-			// Set Cursor Position Function.
-			void Set_Cursor(uint8_t _X, uint8_t _Y) {
-
-				// Control for Debug Mode
-			    #ifdef _DEBUG_
-
-					// Set Cursor Position
-					Console_Serial->print(F("\e["));
-					Console_Serial->print(_X);
-					Console_Serial->print(F(";"));
-					Console_Serial->print(_Y);
-					Console_Serial->print(F("H"));
 
 				#endif
 
@@ -427,70 +565,51 @@
 
 			}
 
-			// Print Text to Specified Position and Color.
-			void Text(const uint8_t _X, const uint8_t _Y, const uint8_t _Color, String _Value) {
+			// Print HEX Function
+			void Print_HEX(const uint8_t _X, const uint8_t _Y, const uint8_t _Color, const uint8_t _Value) {
 
-				// Control for Debug Mode
-			    #ifdef _DEBUG_
+				// Define Buffer
+				char _Buffer[6];
 
-					// Set Text Cursor Position
-					Set_Cursor(_X, _Y); 
+				// Format HEX
+				sprintf(_Buffer, "0x%02X", _Value);
 
-					// Set Text Color
-					Text_Color(_Color); 
-
-					// Print Text			
-					Console_Serial->print(String(_Value));
-
-				#endif
+				// Print HEX
+				this->Text(_X, _Y, _Color, _Buffer);
 
 			}
+			void Print_HEX(const uint8_t _X, const uint8_t _Y, const uint8_t _Color, const uint16_t _Value) {
 
-			// OK Decide Function.
-			void OK(const bool _Result, const uint8_t _X, const uint8_t _Y) {
+				// Define Buffer
+				char _Buffer[8];
 
-				// Control for Debug Mode
-			    #ifdef _DEBUG_
+				// Convert Word to Byte
+				uint8_t _Byte_MSB = (_Value >> 8);
+				uint8_t _Byte_LSB = (_Value & 0xFF);
 
-					// Print Command State
-					if (_Result) {
+				// Format HEX
+				sprintf(_Buffer, "0x%02X%02X", _Byte_MSB, _Byte_LSB);
 
-						// Success
-						this->Text(_X, _Y, _Console_GREEN_, F(" OK "));
-
-					} else {
-
-						// Fail
-						this->Text(_X, _Y, _Console_RED_, F("FAIL"));
-
-					}
-
-				#endif
+				// Print HEX
+				this->Text(_X, _Y, _Color, _Buffer);
 
 			}
+			void Print_HEX(const uint8_t _X, const uint8_t _Y, const uint8_t _Color, const uint32_t _Value) {
 
-			// GSM Command Proccess
-			void AT_Command(uint8_t _X, uint8_t _Y, String _Command) {
+				// Define Buffer
+				char _Buffer[12];
 
-				// Control for Debug Mode
-			    #ifdef _DEBUG_
+				// Convert Word to Byte
+				uint8_t _Byte_MSB_2 = (_Value >> 24);
+				uint8_t _Byte_MSB_1 = (_Value >> 16);
+				uint8_t _Byte_LSB_2 = (_Value >> 8);
+				uint8_t _Byte_LSB_1 = (_Value & 0xFF);
 
-					// Set Text Cursor Position
-					this->Set_Cursor(_X, _Y);
+				// Format HEX
+				sprintf(_Buffer, "0x%02X%02X%02X%02X", _Byte_MSB_2, _Byte_MSB_1, _Byte_LSB_2, _Byte_LSB_1);
 
-					// Clear Line
-					for (uint8_t i = 0; i < 30; i++) Console_Serial->print(F(" "));
-
-					// Print Dot
-					this->Text(_X, _Y, _Console_GRAY_, F(".............................."));
-
-					// Print Command
-					this->Text(_X, _Y, _Console_WHITE_, _Command);
-
-					// Print Response Wait Dot
-					this->Text(_X, _Y + 31, _Console_BLUE_, F(" .. "));
-
-				#endif
+				// Print HEX
+				this->Text(_X, _Y, _Color, _Buffer);
 
 			}
 
@@ -499,17 +618,14 @@
 	// Console Class
 	class PowerStat_Console : public Console {
 
-		// Color Choice
-		#define SELECT_COLOR(_VALUE, _MIN, _MAX) ((_VALUE) <= (_MIN) ? _Console_RED_ : ((_VALUE) >= (_MAX) ? _Console_GREEN_ : _Console_WHITE_))
-
 		// Public Context
 		private:
 
-			// Hardware Diagnostic Box Print Function.
-			void Diagnostic(const uint8_t _X1, const uint8_t _Y1, const uint8_t _X2, const uint8_t _Y2) {
+			// Control for Debug Mode
+			#ifdef _DEBUG_
 
-				// Control for Debug Mode
-			    #ifdef _DEBUG_
+				// Hardware Diagnostic Box Print Function.
+				void Diagnostic(const uint8_t _X1, const uint8_t _Y1, const uint8_t _X2, const uint8_t _Y2) {
 
 					// Draw Hardware Diagnostic Box
 					Console::Box(_X1, _Y1, _X2, _Y2, F("Hardware Diagnostic"), 1, false, false);
@@ -522,15 +638,10 @@
 					Console::Text(_X1 + 5, _Y1 + 2, _Console_WHITE_, F("I2C Battery Charger (0x6B)")); 	Console::Dot(_X1 + 5, _Y1 + 28, (_Y2 - 7) - (_Y1 + 28));	Console::Bracket(_X1 + 5, _Y2 - 7, 5);
 					Console::Text(_X1 + 6, _Y1 + 2, _Console_WHITE_, F("Energy Analyser")); 			Console::Dot(_X1 + 6, _Y1 + 17, (_Y2 - 7) - (_Y1 + 17)); 	Console::Bracket(_X1 + 6, _Y2 - 7, 5);
 
-				#endif
+				}
 
-			}
-
-			// Detail Box Print Function.
-			void Device_Detail(const uint8_t _X1, const uint8_t _Y1, const uint8_t _X2, const uint8_t _Y2) {
-
-				// Control for Debug Mode
-			    #ifdef _DEBUG_
+				// Detail Box Print Function.
+				void Device_Detail(const uint8_t _X1, const uint8_t _Y1, const uint8_t _X2, const uint8_t _Y2) {
 
 					// Draw Hardware Diagnostic Box
 					Console::Box(_X1, _Y1, _X2, _Y2, F("Hardware Detail"), 2, false, false);
@@ -543,15 +654,10 @@
 					Console::Text(_X1 + 5, _Y1 + 2, _Console_WHITE_, F("Module Humidity")); 	Console::Dot(_X1 + 5, _Y1 + 17, (_Y2 - 10) - (_Y1 + 17)); 	Console::Bracket(_X1 + 5, _Y2 - 10, 8); Console::Text(_X1 + 5, _Y2 - 3, _Console_WHITE_, F("%"));
 					Console::Text(_X1 + 6, _Y1 + 2, _Console_WHITE_, F("Send Interval"));		Console::Dot(_X1 + 6, _Y1 + 15, (_Y2 - 10) - (_Y1 + 15)); 	Console::Bracket(_X1 + 6, _Y2 - 10, 8); Console::Text(_X1 + 6, _Y2 - 5, _Console_WHITE_, F("Min"));
 
-				#endif
+				}
 
-			}
-
-			// Battery Print Function.
-			void Battery(const uint8_t _X1, const uint8_t _Y1, const uint8_t _X2, const uint8_t _Y2) {
-
-				// Control for Debug Mode
-			    #ifdef _DEBUG_
+				// Battery Print Function.
+				void Battery(const uint8_t _X1, const uint8_t _Y1, const uint8_t _X2, const uint8_t _Y2) {
 
 					// Draw Hardware Diagnostic Box
 					Console::Box(_X1, _Y1, _X2, _Y2, F("Battery"), 3, false, false);
@@ -564,15 +670,10 @@
 					Console::Text(_X1 + 5, _Y1 + 2, _Console_WHITE_, F("Instant Battery Capacity"));	Console::Dot(_X1 + 5, _Y1 + 26, (_Y2 - 10) - (_Y1 + 26)); 	Console::Bracket(_X1 + 5, _Y2 - 10, 8);		Console::Text(_X1 + 5, _Y2 - 4, _Console_WHITE_, F("mA"));
 					Console::Text(_X1 + 6, _Y1 + 2, _Console_WHITE_, F("Charge State")); 				Console::Dot(_X1 + 6, _Y1 + 14, (_Y2 - 15) - (_Y1 + 14)); 	Console::Bracket(_X1 + 6, _Y2 - 15, 13);
 
-				#endif
+				}
 
-			}
-
-			// GSM Detail Function.
-			void GSM_Hardware(const uint8_t _X1, const uint8_t _Y1, const uint8_t _X2, const uint8_t _Y2) {
-
-				// Control for Debug Mode
-			    #ifdef _DEBUG_
+				// GSM Detail Function.
+				void GSM_Hardware(const uint8_t _X1, const uint8_t _Y1, const uint8_t _X2, const uint8_t _Y2) {
 
 					// Draw GSM Connection Diagnostic Box
 					Console::Box(_X1, _Y1, _X2, _Y2, F("GSM Detail"), 4, false, false);
@@ -585,15 +686,10 @@
 					Console::Text(_X1 + 5, _Y1 + 2, _Console_WHITE_, F("Serial ID"));		Console::Dot(_X1 + 5, _Y1 + 11, (_Y2 - 13) - (_Y1 + 11)); 	Console::Bracket(_X1 + 5, _Y2 - 13, 11);
 					Console::Text(_X1 + 6, _Y1 + 2, _Console_WHITE_, F("ICCID"));			Console::Dot(_X1 + 6, _Y1 + 7, (_Y2 - 22) - (_Y1 + 7)); 	Console::Bracket(_X1 + 6, _Y2 - 22, 20);
 
-				#endif
+				}
 
-			}
-
-			// GSM Connection Detail Function.
-			void GSM_Operator(const uint8_t _X1, const uint8_t _Y1, const uint8_t _X2, const uint8_t _Y2) {
-
-				// Control for Debug Mode
-			    #ifdef _DEBUG_
+				// GSM Connection Detail Function.
+				void GSM_Operator(const uint8_t _X1, const uint8_t _Y1, const uint8_t _X2, const uint8_t _Y2) {
 
 					// Draw GSM Connection Diagnostic Box
 					Console::Box(_X1, _Y1, _X2, _Y2, F("GSM Connection"), 5, false, false);
@@ -606,15 +702,10 @@
 					Console::Text(_X1 + 5, _Y1 + 2, _Console_WHITE_, F("Connection Type"));	Console::Dot(_X1 + 5, _Y1 + 17, (_Y2 - 12) - (_Y1 + 17)); 	Console::Bracket(_X1 + 5, _Y2 - 12, 10);
 					Console::Text(_X1 + 6, _Y1 + 2, _Console_WHITE_, F("Socket"));			Console::Dot(_X1 + 6, _Y1 + 8, (_Y2 - 20) - (_Y1 + 8)); 	Console::Bracket(_X1 + 6, _Y2 - 20, 18);
 
-				#endif
+				}
 
-			}
-
-			// GSM FOTA
-			void GSM_FOTA_Detail(const uint8_t _X1, const uint8_t _Y1, const uint8_t _X2, const uint8_t _Y2) {
-
-				// Control for Debug Mode
-			    #ifdef _DEBUG_
+				// GSM FOTA
+				void GSM_FOTA_Detail(const uint8_t _X1, const uint8_t _Y1, const uint8_t _X2, const uint8_t _Y2) {
 
 					// Draw GSM Connection Diagnostic Box
 					Console::Box(_X1, _Y1, _X2, _Y2, F("FOTA"), 6, false, false);
@@ -627,15 +718,10 @@
 					Console::Text(_X1 + 5, _Y1 + 2, _Console_WHITE_, F("Download Percent"));	Console::Dot(_X1 + 5, _Y1 + 18, (_Y2 - 8) - (_Y1 + 18)); 	Console::Bracket(_X1 + 5, _Y2 - 8, 6);		Console::Text(_X1 + 5, _Y2 - 3, _Console_WHITE_, F("%"));
 					Console::Text(_X1 + 6, _Y1 + 2, _Console_WHITE_, F("Download Time"));		Console::Dot(_X1 + 6, _Y1 + 15, (_Y2 - 11) - (_Y1 + 15)); 	Console::Bracket(_X1 + 6, _Y2 - 11, 9);		Console::Text(_X1 + 6, _Y2 - 5, _Console_WHITE_, F("Sec"));
 
-				#endif
+				}
 
-			}
-
-			// Pressure Stats
-			void Pressure(const uint8_t _X1, const uint8_t _Y1, const uint8_t _X2, const uint8_t _Y2) {
-
-				// Control for Debug Mode
-			    #ifdef _DEBUG_
+				// Pressure Stats
+				void Pressure(const uint8_t _X1, const uint8_t _Y1, const uint8_t _X2, const uint8_t _Y2) {
 
 					// Draw GSM Connection Diagnostic Box
 					Console::Box(_X1, _Y1, _X2, _Y2, F("Pressure"), 7, false, false);
@@ -654,18 +740,13 @@
 					Console::Text(_X1 + 3, _Y1 + 16, _Console_WHITE_, F("[     Bar]"));
 					Console::Text(_X1 + 6, _Y1 + 20, _Console_WHITE_, F("[   %]"));
 
-				#endif
+				}
 
-			}
-
-			// PowerStat V4 Publish Bit Table
-			void Status_Detail(const uint8_t _X1, const uint8_t _Y1, const uint8_t _X2, const uint8_t _Y2) {
-
-				// Control for Debug Mode
-			    #ifdef _DEBUG_
+				// PowerStat V4 Publish Bit Table
+				void Status_Detail(const uint8_t _X1, const uint8_t _Y1, const uint8_t _X2, const uint8_t _Y2) {
 
 					// Draw GSM Connection Diagnostic Box
-					Console::Box(_X1, _Y1, _X2, _Y2, "", 0, false, false);
+					Console::Box(_X1, _Y1, _X2, _Y2, F(""), 0, false, false);
 
 					// Print Header
 					Console::Text(_X1 + 1, _Y1 + 23, _Console_WHITE_, F("S  CT CS CR -  II VI HF LF HI HV LV -  -  -  -  -  -  PR PD HP LP -  IN SA MP TH -  T  S  R  P"));
@@ -679,49 +760,24 @@
 					Console::Text(_X1 + 5, _Y1 + 2, _Console_WHITE_, F("Stop")); 
 					
 					// Print HEX
-					Console::Bracket(_X1 + 3, _Y1 + 10, 11); Console::Text(_X1 + 3, _Y1 + 11, _Console_GRAY_, F("0x"));
-					Console::Bracket(_X1 + 4, _Y1 + 10, 11); Console::Text(_X1 + 4, _Y1 + 11, _Console_GRAY_, F("0x"));
-					Console::Bracket(_X1 + 5, _Y1 + 10, 11); Console::Text(_X1 + 5, _Y1 + 11, _Console_GRAY_, F("0x"));
+					Console::Bracket(_X1 + 3, _Y1 + 10, 11);
+					Console::Bracket(_X1 + 4, _Y1 + 10, 11);
+					Console::Bracket(_X1 + 5, _Y1 + 10, 11);
 
 					// Print Status Placeholder
 					Console::Text(_X1 + 3, _Y1 + 23, _Console_GRAY_, F("X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X"));
 					Console::Text(_X1 + 4, _Y1 + 23, _Console_GRAY_, F("X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X"));
 					Console::Text(_X1 + 5, _Y1 + 23, _Console_GRAY_, F("X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X  X"));
 
-				#endif
-
-			}
-
-			// HEX to String Function
-			String toHexString(uint32_t value) {
-			
-				// Define HEX String
-				String _HEX_String = "";
-			
-				// Convert to HEX
-				for (int i = 7; i >= 0; i--) {
-					
-					// Get HEX Digit
-					char _HEX_Digit = (value >> (i * 4)) & 0xF;
-					
-					// Add to String
-					if (_HEX_Digit < 10) {_HEX_String += (char)('0' + _HEX_Digit);} else {_HEX_String += (char)('A' + _HEX_Digit - 10);}
-
 				}
 
-				// Return HEX String
-				return _HEX_String;
+			#endif
 
-			}
-		
 		// Private Context
 		public:
 
 			// Class Constructor
-			explicit PowerStat_Console(Stream &_Serial) : Console(_Serial) {
-
-
-			}
+			explicit PowerStat_Console(Stream &_Serial) : Console(_Serial) {}
 
 			// PowerStat V4 Batch Function.
 			void Begin(const uint8_t _X = 1, const uint8_t _Y = 1) {
@@ -733,7 +789,7 @@
 					Console::Begin();
 
 					// Draw Main Box
-					Console::Box(_X, _Y, _X + 46, _Y + 121, "", 0, true, true);
+					Console::Box(_X, _Y, _X + 46, _Y + 121, F(""), 0, true, true);
 
 					// Print Main Header Text
 					Console::Text_Format(_Console_BRIGHT_);
@@ -763,7 +819,8 @@
 					this->GSM_FOTA_Detail(_X + 11, _Y + 81, _X + 18, _Y + 120);
 
 					// Draw Command Box
-					Console::Box(_X + 19, _Y + 1, _X + 21, _Y + 120, "", 0, false, false);
+					Console::Box(_X + 19, _Y + 1, _X + 21, _Y + 80, F(""), 0, false, false);
+					Console::Box(_X + 19, _Y + 81, _X + 21, _Y + 120, F(""), 0, false, false);
 
 					// JSON Box
 					Console::Box(_X + 22, _Y + 1, _X + 30, _Y + 80, F("JSON"), 0, false, false);
@@ -775,10 +832,10 @@
 					Console::Box(_X + 31, _Y + 1, _X + 36, _Y + 40, F("Voltage"), 8, false, false);
 
 					// Draw Current Box
-					Console::Box(_X + 31, _Y + 41, _X + 36, _Y + 80, F("Current"), 8, false, false);
+					Console::Box(_X + 31, _Y + 41, _X + 36, _Y + 80, F("Current"), 9, false, false);
 
 					// Draw Power Box
-					Console::Box(_X + 31, _Y + 81, _X + 36, _Y + 120, F("Power"), 8, false, false);
+					Console::Box(_X + 31, _Y + 81, _X + 36, _Y + 120, F("Power"), 10, false, false);
 
 					// Draw Mask
 					this->Status_Detail(_X + 37, _Y + 1, _X + 43, _Y + 120);
@@ -806,514 +863,147 @@
 			}
 
 			// Set Status 
-			void Show_Status(uint8_t _Type, uint32_t _Register) {
+			void Show_Status(const uint8_t _Type, uint32_t _Register) {
 
-				// Print HEX Value
-				Console::Text(40+_Type, 15, _Console_GRAY_, String(this->toHexString(_Register)));
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
 
-				// Print Bits
-				if (bitRead(_Register, 0)) {Console::Text(40+_Type, 118, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 118, _Console_RED_, F("L"));}
-				if (bitRead(_Register, 1)) {Console::Text(40+_Type, 115, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 115, _Console_RED_, F("L"));}
-				if (bitRead(_Register, 2)) {Console::Text(40+_Type, 112, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 112, _Console_RED_, F("L"));}
-				if (bitRead(_Register, 3)) {Console::Text(40+_Type, 109, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 109, _Console_RED_, F("L"));}
-				if (bitRead(_Register, 4)) {Console::Text(40+_Type, 106, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 106, _Console_RED_, F("L"));}
-				if (bitRead(_Register, 5)) {Console::Text(40+_Type, 103, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 103, _Console_RED_, F("L"));}
-				if (bitRead(_Register, 6)) {Console::Text(40+_Type, 100, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 100, _Console_RED_, F("L"));}
-				if (bitRead(_Register, 7)) {Console::Text(40+_Type, 97, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 97, _Console_RED_, F("L"));}
-				if (bitRead(_Register, 8)) {Console::Text(40+_Type, 94, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 94, _Console_RED_, F("L"));}
-				if (bitRead(_Register, 9)) {Console::Text(40+_Type, 91, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 91, _Console_RED_, F("L"));}
-				if (bitRead(_Register, 10)) {Console::Text(40+_Type, 88, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 88, _Console_RED_, F("L"));}
-				if (bitRead(_Register, 11)) {Console::Text(40+_Type, 85, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 85, _Console_RED_, F("L"));}
-				if (bitRead(_Register, 12)) {Console::Text(40+_Type, 82, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 82, _Console_RED_, F("L"));}
-				if (bitRead(_Register, 13)) {Console::Text(40+_Type, 79, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 79, _Console_RED_, F("L"));}
-				if (bitRead(_Register, 14)) {Console::Text(40+_Type, 76, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 76, _Console_RED_, F("L"));}
-				if (bitRead(_Register, 15)) {Console::Text(40+_Type, 73, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 73, _Console_RED_, F("L"));}
-				if (bitRead(_Register, 16)) {Console::Text(40+_Type, 70, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 70, _Console_RED_, F("L"));}
-				if (bitRead(_Register, 17)) {Console::Text(40+_Type, 67, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 67, _Console_RED_, F("L"));}
-				if (bitRead(_Register, 18)) {Console::Text(40+_Type, 64, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 64, _Console_RED_, F("L"));}
-				if (bitRead(_Register, 19)) {Console::Text(40+_Type, 61, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 61, _Console_RED_, F("L"));}
-				if (bitRead(_Register, 20)) {Console::Text(40+_Type, 58, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 58, _Console_RED_, F("L"));}
-				if (bitRead(_Register, 21)) {Console::Text(40+_Type, 55, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 55, _Console_RED_, F("L"));}
-				if (bitRead(_Register, 22)) {Console::Text(40+_Type, 52, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 52, _Console_RED_, F("L"));}
-				if (bitRead(_Register, 23)) {Console::Text(40+_Type, 49, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 49, _Console_RED_, F("L"));}
-				if (bitRead(_Register, 24)) {Console::Text(40+_Type, 46, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 46, _Console_RED_, F("L"));}
-				if (bitRead(_Register, 25)) {Console::Text(40+_Type, 43, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 43, _Console_RED_, F("L"));}
-				if (bitRead(_Register, 26)) {Console::Text(40+_Type, 40, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 40, _Console_RED_, F("L"));}
-				if (bitRead(_Register, 27)) {Console::Text(40+_Type, 37, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 37, _Console_RED_, F("L"));}
-				if (bitRead(_Register, 28)) {Console::Text(40+_Type, 34, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 34, _Console_RED_, F("L"));}
-				if (bitRead(_Register, 29)) {Console::Text(40+_Type, 31, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 31, _Console_RED_, F("L"));}
-				if (bitRead(_Register, 30)) {Console::Text(40+_Type, 28, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 28, _Console_RED_, F("L"));}
-				if (bitRead(_Register, 31)) {Console::Text(40+_Type, 25, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 25, _Console_RED_, F("L"));}
+					// Print HEX Value
+					this->Print_HEX(40 + _Type, 13, _Console_GRAY_, _Register);
+
+					// Print Bits
+					if (bitRead(_Register, 0)) {Console::Text(40+_Type, 118, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 118, _Console_RED_, F("L"));}
+					if (bitRead(_Register, 1)) {Console::Text(40+_Type, 115, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 115, _Console_RED_, F("L"));}
+					if (bitRead(_Register, 2)) {Console::Text(40+_Type, 112, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 112, _Console_RED_, F("L"));}
+					if (bitRead(_Register, 3)) {Console::Text(40+_Type, 109, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 109, _Console_RED_, F("L"));}
+					if (bitRead(_Register, 4)) {Console::Text(40+_Type, 106, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 106, _Console_RED_, F("L"));}
+					if (bitRead(_Register, 5)) {Console::Text(40+_Type, 103, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 103, _Console_RED_, F("L"));}
+					if (bitRead(_Register, 6)) {Console::Text(40+_Type, 100, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 100, _Console_RED_, F("L"));}
+					if (bitRead(_Register, 7)) {Console::Text(40+_Type, 97, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 97, _Console_RED_, F("L"));}
+					if (bitRead(_Register, 8)) {Console::Text(40+_Type, 94, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 94, _Console_RED_, F("L"));}
+					if (bitRead(_Register, 9)) {Console::Text(40+_Type, 91, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 91, _Console_RED_, F("L"));}
+					if (bitRead(_Register, 10)) {Console::Text(40+_Type, 88, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 88, _Console_RED_, F("L"));}
+					if (bitRead(_Register, 11)) {Console::Text(40+_Type, 85, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 85, _Console_RED_, F("L"));}
+					if (bitRead(_Register, 12)) {Console::Text(40+_Type, 82, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 82, _Console_RED_, F("L"));}
+					if (bitRead(_Register, 13)) {Console::Text(40+_Type, 79, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 79, _Console_RED_, F("L"));}
+					if (bitRead(_Register, 14)) {Console::Text(40+_Type, 76, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 76, _Console_RED_, F("L"));}
+					if (bitRead(_Register, 15)) {Console::Text(40+_Type, 73, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 73, _Console_RED_, F("L"));}
+					if (bitRead(_Register, 16)) {Console::Text(40+_Type, 70, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 70, _Console_RED_, F("L"));}
+					if (bitRead(_Register, 17)) {Console::Text(40+_Type, 67, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 67, _Console_RED_, F("L"));}
+					if (bitRead(_Register, 18)) {Console::Text(40+_Type, 64, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 64, _Console_RED_, F("L"));}
+					if (bitRead(_Register, 19)) {Console::Text(40+_Type, 61, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 61, _Console_RED_, F("L"));}
+					if (bitRead(_Register, 20)) {Console::Text(40+_Type, 58, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 58, _Console_RED_, F("L"));}
+					if (bitRead(_Register, 21)) {Console::Text(40+_Type, 55, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 55, _Console_RED_, F("L"));}
+					if (bitRead(_Register, 22)) {Console::Text(40+_Type, 52, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 52, _Console_RED_, F("L"));}
+					if (bitRead(_Register, 23)) {Console::Text(40+_Type, 49, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 49, _Console_RED_, F("L"));}
+					if (bitRead(_Register, 24)) {Console::Text(40+_Type, 46, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 46, _Console_RED_, F("L"));}
+					if (bitRead(_Register, 25)) {Console::Text(40+_Type, 43, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 43, _Console_RED_, F("L"));}
+					if (bitRead(_Register, 26)) {Console::Text(40+_Type, 40, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 40, _Console_RED_, F("L"));}
+					if (bitRead(_Register, 27)) {Console::Text(40+_Type, 37, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 37, _Console_RED_, F("L"));}
+					if (bitRead(_Register, 28)) {Console::Text(40+_Type, 34, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 34, _Console_RED_, F("L"));}
+					if (bitRead(_Register, 29)) {Console::Text(40+_Type, 31, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 31, _Console_RED_, F("L"));}
+					if (bitRead(_Register, 30)) {Console::Text(40+_Type, 28, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 28, _Console_RED_, F("L"));}
+					if (bitRead(_Register, 31)) {Console::Text(40+_Type, 25, _Console_GREEN_, F("H"));} else {Console::Text(40+_Type, 25, _Console_RED_, F("L"));}
+
+				#endif
+
+			}
+
+			// Show Message
+			void Show_Message(const uint8_t _Color, const __FlashStringHelper *_Message) {
+
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
+
+					// Clear Message Area
+					Console::Space(_Console_Message_X_, _Console_Message_Y_, 75);
+
+					// Print Message
+					Console::Text(_Console_Message_X_, _Console_Message_Y_, _Color, _Message);
+
+				#endif
+
+			}
+			void Show_Message(const uint8_t _Color, const char _Message) {
+
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
+
+					// Clear Message Area
+					Console::Space(_Console_Message_X_, _Console_Message_Y_, 75);
+
+					// Print Message
+					Console::Text(_Console_Message_X_, _Console_Message_Y_, _Color, _Message);
+
+				#endif
+
+			}
+			void Show_Message(const uint8_t _Color, const char * _Message) {
+
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
+
+					// Clear Message Area
+					Console::Space(_Console_Message_X_, _Console_Message_Y_, 75);
+
+					// Print Message
+					Console::Text(_Console_Message_X_, _Console_Message_Y_, _Color, _Message);
+
+				#endif
 
 			}
 
 			// Show RSSI
 			void Show_RSSI(const uint8_t _X = 1, const uint8_t _Y = 1, const uint8_t _RSSI = 0) {
 
-				// Print RSSI
-				Console::Text(_X, _Y, _Console_WHITE_, F("[-   ]"));
-				Console::Text(_X, (_Y + 2), _Console_GRAY_, String(_RSSI));
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
+
+					// Declare Buffer
+					char _Buffer[7];
+
+					// [-999]
+
+					// Set RSSI
+					sprintf(_Buffer, "[-%3hhu]", _RSSI);
+
+					// Print RSSI
+					Console::Text(_X, _Y, _Console_WHITE_, _Buffer);
+
+				#endif
 
 			}
 
 			// Show Signal Quality
 			void Show_Signal_Quality(const uint8_t _X = 1, const uint8_t _Y = 1, const uint8_t _Quality = 0) {
 
-				// Print Signal Level Bar
-				Console::Text(_X, _Y, _Console_GRAY_, F("_____"));
-				for (uint8_t i = 1; i <= _Quality; i++) Console::Text(_X, (_Y - 1) + i, _Console_GRAY_, F("X"));
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
+
+					// Print Signal Level Placeholder
+					Console::Text(_X, _Y, _Console_GRAY_, F("_____"));
+
+					// Print Signal Level Bar
+					for (uint8_t i = 1; i <= _Quality; i++) Console::Text(_X, (_Y - 1) + i, _Console_GRAY_, F("X"));
+
+				#endif
 
 			}
 
 			// Connection Type Function
 			void Show_Connection_Type(const uint8_t _X = 1, const uint8_t _Y = 1, const uint8_t _Type = 0) {
 
-				// Print RED WDS Type
-				Console::Text(_X, _Y, _Console_RED_, F("2G"));
-				Console::Text(_X, (_Y + 3), _Console_RED_, F("3G"));
-				Console::Text(_X, (_Y + 6), _Console_RED_, F("LTE"));
-
-				// Print WDS Type
-				if (_Type == 12) {
-
-					// Print 2G WDS Type
-					Console::Text(_X, _Y, _Console_GREEN_, F("2G"));
-
-				} else if (_Type == 22) {
-
-					// Print 3G WDS Type
-					Console::Text(_X, (_Y + 3), _Console_GREEN_, F("3G"));
-
-				} else if (_Type == 25) {
-
-					// Print 2G WDS Type
-					Console::Text(_X, _Y, _Console_GREEN_, F("2G"));
-
-					// Print 3G WDS Type
-					Console::Text(_X, (_Y + 3), _Console_GREEN_, F("3G"));
-
-					// Print LTE WDS Type
-					Console::Text(_X, (_Y + 6), _Console_GREEN_, F("LTE"));
-
-				} else if (_Type == 28) {
-
-					// Print LTE WDS Type
-					Console::Text(_X, (_Y + 6), _Console_GREEN_, F("LTE"));
-
-				} else if (_Type == 29) {
-
-					// Print 2G WDS Type
-					Console::Text(_X, _Y, _Console_GREEN_, F("2G"));
-
-					// Print 3G WDS Type
-					Console::Text(_X, (_Y + 3), _Console_GREEN_, F("3G"));
-
-				} else if (_Type == 30) {
-
-					// Print 2G WDS Type
-					Console::Text(_X, _Y, _Console_GREEN_, F("2G"));
-
-					// Print LTE WDS Type
-					Console::Text(_X, (_Y + 6), _Console_GREEN_, F("LTE"));
-
-				} else if (_Type == 31) {
-
-					// Print 3G WDS Type
-					Console::Text(_X, (_Y + 3), _Console_GREEN_, F("3G"));
-
-					// Print LTE WDS Type
-					Console::Text(_X, (_Y + 6), _Console_GREEN_, F("LTE"));
-
-				} else {
-
-					// Print RED WDS Type
-					Console::Text(_X, _Y, _Console_RED_, F("2G"));
-					Console::Text(_X, (_Y + 3), _Console_RED_, F("3G"));
-					Console::Text(_X, (_Y + 6), _Console_RED_, F("LTE"));
-
-				}
-
-			}
-
-	};
-
-	// Console Class
-	class I2C_Scanner_Console : public Console {
-
-		// Private Context
-		public:
-
-			// Class Constructor
-			explicit I2C_Scanner_Console(Stream &_Serial) : Console(_Serial) {
-
-
-			}
-
-			// I2C Scanner Batch Function.
-			void Begin (void) {
-
-				// Start VT100 Console
-				Console::Begin();
-
-				// Draw Console Table Grid
-				for (uint8_t i = 1; i <= 23; i = i + 2) Console::Divider(HORIZONTAL, i, 1, 120, false);
-
-				// Draw Divider
-				Console::Divider(VERTICAL, 1, 1, 22);
-
-				// Draw Divider
-				for (uint8_t i = 9; i <= 120; i = i + 7) Console::Divider(VERTICAL, 3, i, 18);
-
-				// Draw Divider
-				Console::Divider(VERTICAL, 1, 121, 22);
-
-				// Draw Corners
-				Console::Text(1, 1, _Console_WHITE_, F("┌"));
-				Console::Text(1, 121, _Console_WHITE_, F("┐"));
-				Console::Text(23, 1, _Console_WHITE_, F("└"));
-				Console::Text(23, 121, _Console_WHITE_, F("┘"));
-
-				// Draw T
-				for (uint8_t i = 3; i <= 21; i = i + 2) {
-					
-					// Draw T Start
-					Console::Text(i, 1, _Console_WHITE_, F("├"));
-
-					// Draw T End
-					Console::Text(i, 121, _Console_WHITE_, F("┤"));
-
-				}
-
-				// Draw Cross Section
-				for (uint8_t i = 5; i <= 19; i = i + 2) for (uint8_t j = 9; j <= 120; j = j + 7) Console::Text(i, j, _Console_WHITE_, F("┼"));
-
-				// Draw T
-				for (uint8_t i = 9; i <= 114; i = i + 7) {
-					
-					// Draw T Start
-					Console::Text(3, i, _Console_WHITE_, F("┬"));
-
-					// Draw T End
-					Console::Text(21, i, _Console_WHITE_, F("┴"));
-
-				}
-
-
-				// Write Text
-				Console::Text(2, 50, _Console_CYAN_, F("I2C Device Explorer"));
-				Console::Text(22, 3, _Console_WHITE_, F("Total connected device :"));
-				Console::Text(22, 86, _Console_WHITE_, F("Current Mux Channel [0-8] :"));
-				Console::Text(24, 103, _Console_WHITE_, F("github.com/akkoyun"));
-
-				// Declare Column Variable
-				uint8_t _C = 0;
-
-				// Print Column Headers
-				for (uint8_t i = 6; i <= 21; i = i + 2) {
-					
-					// Print Column Headers
-					Console::Text(i, 3, _Console_YELLOW_, F("0x"));
-					Console::Text(i, 5, _Console_YELLOW_, String(_C, HEX));
-					Console::Text(i, 6, _Console_YELLOW_, F("_"));
-					
-					// Increment Column
-					_C++;
-
-				}
-
-				// Declare Row Variable
-				uint8_t _R = 0;
-
-				// Print Row Headers
-				for (uint8_t i = 11; i <= 121; i = i + 7) {
-					
-					// Print Row Headers
-					Console::Text(4, i, _Console_YELLOW_, F("0x_"));
-					Console::Text(4, i + 3, _Console_YELLOW_, String(_R, HEX));
-
-					// Increment Row
-					_R++;
-
-				}
-
-			}
-
-	};
-
-	// Console Class
-	class TH_Meter_Console : public Console {
-
-		// Private Context
-		public:
-
-			// Class Constructor
-			explicit TH_Meter_Console(Stream &_Serial) : Console(_Serial) {
-
-
-			}
-
-			// TH Meter Batch Function.
-			void Begin (void) {
-
-				// Draw Main Screen
-				Console::Box(1, 1, 8, 38, F("HDC2010 T/H Sensor"), 1, false, true);
-				Console::Text(3, 3, _Console_WHITE_, F("Temperature..........[         C ]"));
-				Console::Text(4, 3, _Console_WHITE_, F("Humidity.............[         % ]"));
-				Console::Text(7, 3, _Console_WHITE_, F("Function Time............[    ms ]"));
-
-			}
-
-	};
-
-	// Console Class
-	class Voltmeter_Console : public Console {
-
-		// Private Context
-		public:
-
-			// Class Constructor
-			explicit Voltmeter_Console(Stream &_Serial) : Console(_Serial) {
-
-
-			}
-
-			// Voltmeter Batch Function.
-			void Begin (void) {
-
-				// Draw Main Screen
-				Console::Box(1, 1, 14, 84, "", 0, true, true);
-
-				// Draw Voltage
-				Console::Box(5, 3, 10, 28, F("Phase R"), 1, false, false);
-				Console::Box(5, 30, 10, 55, F("Phase S"), 2, false, false);
-				Console::Box(5, 57, 10, 82, F("Phase T"), 3, false, false);
-
-				Console::Text(7, 5, _Console_WHITE_, F("VA_RMS......[       V]"));
-				Console::Text(8, 5, _Console_WHITE_, F("VA_MIN......[       V]"));
-				Console::Text(9, 5, _Console_WHITE_, F("VA_MAX......[       V]"));
-
-				Console::Text(7, 32, _Console_WHITE_, F("VB_RMS......[       V]"));
-				Console::Text(8, 32, _Console_WHITE_, F("VB_MIN......[       V]"));
-				Console::Text(9, 32, _Console_WHITE_, F("VB_MAX......[       V]"));
-
-				Console::Text(7, 59, _Console_WHITE_, F("VC_RMS......[       V]"));
-				Console::Text(8, 59, _Console_WHITE_, F("VC_MIN......[       V]"));
-				Console::Text(9, 59, _Console_WHITE_, F("VC_MAX......[       V]"));
-
-			}
-
-	};
-
-	// Console Class
-	class MAX78630_Console : public Console {
-
-		// Private Context
-		public:
-
-			// Class Constructor
-			explicit MAX78630_Console(Stream &_Serial) : Console(_Serial) {
-
-
-			}
-
-			// MAX78630 Batch Function.
-			void Begin (void) {
-
-				// Draw Main Screen
-				Console::Box(1, 1, 41, 160, "", 0, true, false);
-				Console::Text(2, 68, _Console_WHITE_, F("MAX78630 Energy Analyzer"));
-
-				// Draw Voltage
-				Console::Box(5, 2, 13, 77, F("Voltage"), 1, false, false);
-				Console::Text(7, 4, _Console_WHITE_, F("────────┬──────────┬──────────┬──────────┬──────────┬─────────┬─────────"));
-				Console::Text(8, 12, _Console_WHITE_, F("│          │          │          │          │         │"));
-				Console::Text(9, 12, _Console_WHITE_, F("│          │          │          │          │         │"));
-				Console::Text(10, 12, _Console_WHITE_, F("│          │          │          │          │         │"));
-				Console::Text(11, 12, _Console_WHITE_, F("│          │          │          │          │         │"));
-				Console::Text(12, 4, _Console_WHITE_, F("────────┴──────────┴──────────┴──────────┴──────────┴─────────┴─────────"));
-				Console::Text(8, 4, _Console_WHITE_, F("Phase R"));
-				Console::Text(9, 4, _Console_WHITE_, F("Phase S"));
-				Console::Text(10, 4, _Console_WHITE_, F("Phase T"));
-				Console::Text(11, 4, _Console_WHITE_, F("Average"));
-				Console::Text(6, 15, _Console_WHITE_, F("Instant"));
-				Console::Text(6, 28, _Console_WHITE_, F("RMS"));
-				Console::Text(6, 37, _Console_WHITE_, F("Fund."));
-				Console::Text(6, 48, _Console_WHITE_, F("Harm."));
-				Console::Text(6, 59, _Console_WHITE_, F("Offset"));
-				Console::Text(6, 70, _Console_WHITE_, F("Gain"));
-				Console::Text(11, 14, _Console_WHITE_, F("--------"));
-				Console::Text(11, 36, _Console_WHITE_, F("--------"));
-				Console::Text(11, 47, _Console_WHITE_, F("--------"));
-				Console::Text(11, 58, _Console_WHITE_, F("-------"));
-				Console::Text(11, 68, _Console_WHITE_, F("-------"));
-
-				// Draw Current
-				Console::Box(5, 78, 13, 159, F("Current"), 2, false, false);
-				Console::Text(7, 80, _Console_WHITE_, F("────────┬─────────┬─────────┬─────────┬─────────┬─────────┬─────────┬─────────"));
-				Console::Text(8, 88, _Console_WHITE_, F("│         │         │         │         │         │         │"));
-				Console::Text(9, 88, _Console_WHITE_, F("│         │         │         │         │         │         │"));
-				Console::Text(10, 88, _Console_WHITE_, F("│         │         │         │         │         │         │"));
-				Console::Text(11, 88, _Console_WHITE_, F("│         │         │         │         │         │         │"));
-				Console::Text(12, 80, _Console_WHITE_, F("────────┴─────────┴─────────┴─────────┴─────────┴─────────┴─────────┴─────────"));
-				Console::Text(8, 80, _Console_WHITE_, F("Phase R"));
-				Console::Text(9, 80, _Console_WHITE_, F("Phase S"));
-				Console::Text(10, 80, _Console_WHITE_, F("Phase T"));
-				Console::Text(11, 80, _Console_WHITE_, F("Average"));
-				Console::Text(6, 90, _Console_WHITE_, F("Instant"));
-				Console::Text(6, 101, _Console_WHITE_, F("Peak"));
-				Console::Text(6, 112, _Console_WHITE_, F("RMS"));
-				Console::Text(6, 121, _Console_WHITE_, F("Fund."));
-				Console::Text(6, 131, _Console_WHITE_, F("Harm."));
-				Console::Text(6, 141, _Console_WHITE_, F("Offset"));
-				Console::Text(6, 152, _Console_WHITE_, F("Gain"));
-				Console::Text(11, 90, _Console_WHITE_, F("-------"));
-				Console::Text(11, 100, _Console_WHITE_, F("-------"));
-				Console::Text(11, 120, _Console_WHITE_, F("-------"));
-				Console::Text(11, 130, _Console_WHITE_, F("-------"));
-				Console::Text(11, 140, _Console_WHITE_, F("-------"));
-				Console::Text(11, 150, _Console_WHITE_, F("-------"));
-
-				// Draw Power
-				Console::Box(15, 2, 22, 132, F("Power"), 3, false, false);
-				Console::Text(17, 4, _Console_WHITE_, F("────────┬──────────┬──────────┬──────────┬──────────┬──────────┬──────────┬──────────┬──────────┬─────────┬─────────┬──────────"));
-				Console::Text(18, 12, _Console_WHITE_, F("│          │          │          │          │          │          │          │          │         │         │"));
-				Console::Text(19, 12, _Console_WHITE_, F("│          │          │          │          │          │          │          │          │         │         │"));
-				Console::Text(20, 12, _Console_WHITE_, F("│          │          │          │          │          │          │          │          │         │         │"));
-				Console::Text(21, 12, _Console_WHITE_, F("│          │          │          │          │          │          │          │          │         │         │"));
-				Console::Text(18, 4, _Console_WHITE_, F("Phase R"));
-				Console::Text(19, 4, _Console_WHITE_, F("Phase S"));
-				Console::Text(20, 4, _Console_WHITE_, F("Phase T"));
-				Console::Text(21, 4, _Console_WHITE_, F("Average"));
-				Console::Text(16, 15, _Console_WHITE_, F("Active"));
-				Console::Text(16, 25, _Console_WHITE_, F("ReActive"));
-				Console::Text(16, 36, _Console_WHITE_, F("Apparent"));
-				Console::Text(16, 49, _Console_WHITE_, F("Harm."));
-				Console::Text(16, 60, _Console_WHITE_, F("Fund."));
-				Console::Text(16, 69, _Console_WHITE_, F("Harm.R."));
-				Console::Text(16, 80, _Console_WHITE_, F("Fund.R."));
-				Console::Text(16, 92, _Console_WHITE_, F("VAFUND"));
-				Console::Text(16, 102, _Console_WHITE_, F("Power F."));
-				Console::Text(16, 112, _Console_WHITE_, F("P. Offs."));
-				Console::Text(16, 123, _Console_WHITE_, F("Q. Offs."));
-				Console::Text(21, 47, _Console_WHITE_, F("--------"));
-				Console::Text(21, 58, _Console_WHITE_, F("--------"));
-				Console::Text(21, 69, _Console_WHITE_, F("--------"));
-				Console::Text(21, 80, _Console_WHITE_, F("--------"));
-				Console::Text(21, 91, _Console_WHITE_, F("--------"));
-				Console::Text(21, 113, _Console_WHITE_, F("-----"));
-				Console::Text(21, 124, _Console_WHITE_, F("-----"));
-
-				// Draw Device
-				Console::Box(15, 133, 22, 159, F("Device"), 4, false, false);
-				Console::Text(16, 135, _Console_WHITE_, F("Device Address:"));
-				Console::Text(17, 135, _Console_WHITE_, F("Firmware      :"));
-				Console::Text(18, 135, _Console_WHITE_, F("Baud          :"));
-				Console::Text(19, 135, _Console_WHITE_, F("Temperature   :"));
-				Console::Text(20, 135, _Console_WHITE_, F("VScale        :"));
-				Console::Text(21, 135, _Console_WHITE_, F("IScale        :"));
-
-				// Draw Min/Max Mask
-				Console::Box(24, 2, 29, 104, F("Min/Max Mask"), 5, false, false);
-				Console::Text(26, 4, _Console_WHITE_, F("──────────┬──────────┬──────────┬──────────┬──────────┬──────────┬──────────┬──────────┬──────────"));
-				Console::Text(27, 14, _Console_WHITE_, F("│          │          │          │          │          │          │          │"));
-				Console::Text(28, 14, _Console_WHITE_, F("│          │          │          │          │          │          │          │"));
-				Console::Text(27, 4, _Console_WHITE_, F("Minimum"));
-				Console::Text(28, 4, _Console_WHITE_, F("Maximum"));
-				Console::Text(25, 17, _Console_WHITE_, F("Mask-0"));
-				Console::Text(25, 28, _Console_WHITE_, F("Mask-1"));
-				Console::Text(25, 39, _Console_WHITE_, F("Mask-2"));
-				Console::Text(25, 50, _Console_WHITE_, F("Mask-3"));
-				Console::Text(25, 61, _Console_WHITE_, F("Mask-4"));
-				Console::Text(25, 72, _Console_WHITE_, F("Mask-5"));
-				Console::Text(25, 83, _Console_WHITE_, F("Mask-6"));
-				Console::Text(25, 94, _Console_WHITE_, F("Mask-7"));
-
-				// Draw Other
-				Console::Box(24, 105, 29, 123, F("Other"), 7, false, false);
-				Console::Text(25, 107, _Console_WHITE_, F("STICKY......[ ]"));
-				Console::Text(26, 107, _Console_WHITE_, F("FREQ....[     ]"));
-				Console::Text(27, 107, _Console_WHITE_, F("BUCKET_L [    ]"));
-				Console::Text(28, 107, _Console_WHITE_, F("BUCKET_H [    ]"));
-
-				// Draw Status Limits
-				Console::Box(30, 2, 34, 123, F("Status Limits"), 8, false, false);
-				Console::Text(32, 4, _Console_WHITE_, F("────────┬───────────┬───────────┬──────────┬──────────┬──────────┬──────────┬────────┬───────┬───────┬────────┬───────"));
-				Console::Text(33, 12, _Console_WHITE_, F("│           │           │          │          │          │          │        │       │       │        │"));
-				Console::Text(33, 4, _Console_WHITE_, F("Limit"));
-				Console::Text(31, 14, _Console_WHITE_, F("V_IMB_MAX"));
-				Console::Text(31, 26, _Console_WHITE_, F("I_IMB_MAX"));
-				Console::Text(31, 38, _Console_WHITE_, F("VRMS_MIN"));
-				Console::Text(31, 49, _Console_WHITE_, F("VRMS_MAX"));
-				Console::Text(31, 60, _Console_WHITE_, F("VSAG_LIM"));
-				Console::Text(31, 71, _Console_WHITE_, F("IRMS_MAX"));
-				Console::Text(31, 82, _Console_WHITE_, F("PF_MIN"));
-				Console::Text(31, 91, _Console_WHITE_, F("T_MIN"));
-				Console::Text(31, 99, _Console_WHITE_, F("T_MAX"));
-				Console::Text(31, 107, _Console_WHITE_, F("F_MIN"));
-				Console::Text(31, 116, _Console_WHITE_, F("F_MAX"));
-
-				// Draw Status
-				Console::Box(24, 124, 34, 159, F("Status"), 9, false, false);
-				Console::Text(25, 126, _Console_WHITE_, F("OV_VRMSA....[ ]"));
-				Console::Text(26, 126, _Console_WHITE_, F("UN_VRMSA....[ ]"));
-				Console::Text(27, 126, _Console_WHITE_, F("OV_VRMSB....[ ]"));
-				Console::Text(28, 126, _Console_WHITE_, F("UN_VRMSB....[ ]"));
-				Console::Text(29, 126, _Console_WHITE_, F("OV_VRMSC....[ ]"));
-				Console::Text(30, 126, _Console_WHITE_, F("UN_VRMSC....[ ]"));
-				Console::Text(31, 126, _Console_WHITE_, F("OV_IRMSA....[ ]"));
-				Console::Text(32, 126, _Console_WHITE_, F("OV_IRMSB....[ ]"));
-				Console::Text(33, 126, _Console_WHITE_, F("OV_IRMSC....[ ]"));
-				Console::Text(25, 144, _Console_WHITE_, F("OV_FREQ....[ ]"));
-				Console::Text(26, 144, _Console_WHITE_, F("UN_FREQ....[ ]"));
-				Console::Text(27, 144, _Console_WHITE_, F("UN_PFA.....[ ]"));
-				Console::Text(28, 144, _Console_WHITE_, F("UN_PFB.....[ ]"));
-				Console::Text(29, 144, _Console_WHITE_, F("UN_PFC.....[ ]"));
-				Console::Text(30, 144, _Console_WHITE_, F("VA_SAG.....[ ]"));
-				Console::Text(31, 144, _Console_WHITE_, F("VB_SAG.....[ ]"));
-				Console::Text(32, 144, _Console_WHITE_, F("VC_SAG.....[ ]"));
-				Console::Text(33, 144, _Console_WHITE_, F("V_IMBAL....[ ]"));
-
-				// Draw Energy
-				Console::Box(36, 2, 40, 159, F("Energy Counter"), 10, false, false);
-				Console::Text(38, 4, _Console_WHITE_, F("────────┬──────────┬──────────┬──────────┬──────────┬──────────┬──────────┬────────────┬────────────┬────────────┬────────────┬────────────┬─────────────"));
-				Console::Text(39, 12, _Console_WHITE_, F("│          │          │          │          │          │          │            │            │            │            │            │"));
-				Console::Text(37, 15, _Console_WHITE_, F("WHA_POS"));
-				Console::Text(37, 26, _Console_WHITE_, F("WHA_NEG"));
-				Console::Text(37, 37, _Console_WHITE_, F("WHB_POS"));
-				Console::Text(37, 48, _Console_WHITE_, F("WHB_NEG"));
-				Console::Text(37, 59, _Console_WHITE_, F("WHC_POS"));
-				Console::Text(37, 70, _Console_WHITE_, F("WHC_NEG"));
-				Console::Text(37, 81, _Console_WHITE_, F("VARHA_POS"));
-				Console::Text(37, 94, _Console_WHITE_, F("VARHA_NEG"));
-				Console::Text(37, 107, _Console_WHITE_, F("VARHB_POS"));
-				Console::Text(37, 120, _Console_WHITE_, F("VARHB_NEG"));
-				Console::Text(37, 133, _Console_WHITE_, F("VARHC_POS"));
-				Console::Text(37, 146, _Console_WHITE_, F("VARHC_NEG"));
-				
-			}
-
-	};
-
-	// Console Class
-	class Analog_Pressure_Console : public Console {
-
-		// Private Context
-		public:
-
-			// Class Constructor
-			explicit Analog_Pressure_Console(Stream &_Serial) : Console(_Serial) {
-
-
-			}
-
-			// Analog Pressure Meter
-			void Begin (void) {
-
-				// Draw Main Screen
-				Console::Box(1, 1, 8, 38, F("Analog P Sensor"), 1, false, true);
-				Console::Text(3, 3, _Console_WHITE_, F("Pressure...........[         Bar ]"));
-				Console::Text(4, 3, _Console_WHITE_, F("Deviation..............[         ]"));
-				Console::Text(7, 3, _Console_WHITE_, F("Function Time............[    ms ]"));
+				// Control for Debug Mode
+			    #ifdef _DEBUG_
+
+					// Print Connection Type
+					if (_Type == 0) this->Text(_X, _Y, _Console_RED_, F("---"));
+					else if (_Type == 1) this->Text(_X, _Y, _Console_GREEN_, F(" 2G"));
+					else if (_Type == 2) this->Text(_X, _Y, _Console_GREEN_, F(" 3G"));
+					else if (_Type == 3) this->Text(_X, _Y, _Console_GREEN_, F("LTE"));
+					else if (_Type == 4) this->Text(_X, _Y, _Console_GREEN_, F("TDS"));
+
+				#endif
 
 			}
 

@@ -1,3 +1,6 @@
+// Define Debug Mode
+#define _DEBUG_
+
 // Include Libraries
 #include <Console.h>
 
@@ -17,6 +20,6 @@ void setup() {
 void loop() {
 
 	// Print Terminal Text
-	Terminal.Text(2, 13, _Console_RED_, String(millis()));
+	Terminal.Text(2, 13, _Console_RED_, millis());
 	
 }
