@@ -692,7 +692,7 @@
 					Console::Box(_X1, _Y1, _X2, _Y2, F("FOTA"), 6, false, false);
 
 					// Print Text	
-					Console::Text(_X1 + 1, _Y1 + 2, _Console_WHITE_, F("File ID"));			Console::Dot(_X1 + 1, _Y1 + 9, (_Y2 - 9) - (_Y1 + 9)); 		Console::Bracket(_X1 + 1, _Y2 - 9, 7);
+					Console::Text(_X1 + 1, _Y1 + 2, _Console_WHITE_, F("File ID"));			Console::Dot(_X1 + 1, _Y1 + 9, (_Y2 - 16) - (_Y1 + 9)); 		Console::Bracket(_X1 + 1, _Y2 - 16, 14);
 					Console::Text(_X1 + 2, _Y1 + 2, _Console_WHITE_, F("Download Status"));	Console::Dot(_X1 + 2, _Y1 + 17, (_Y2 - 7) - (_Y1 + 17)); 	Console::Bracket(_X1 + 2, _Y2 - 7, 5);
 					Console::Text(_X1 + 3, _Y1 + 2, _Console_WHITE_, F("FTP File Size"));		Console::Dot(_X1 + 3, _Y1 + 15, (_Y2 - 10) - (_Y1 + 15)); 	Console::Bracket(_X1 + 3, _Y2 - 10, 8);
 					Console::Text(_X1 + 4, _Y1 + 2, _Console_WHITE_, F("SD File Size"));		Console::Dot(_X1 + 4, _Y1 + 14, (_Y2 - 10) - (_Y1 + 14)); 	Console::Bracket(_X1 + 4, _Y2 - 10, 8);
@@ -779,7 +779,7 @@
 
 					// Header Titles
 					Console::Text(_X + 1, _Y + 2, _Console_WHITE_, F("Up Time :"));
-					Console::Text(_X + 1, _Y + 98, _Console_WHITE_, F("Send Time (mS) :"));
+//					Console::Text(_X + 1, _Y + 98, _Console_WHITE_, F("Send Time (mS) :"));
 
 					// Draw Hardware Diagnostic
 					this->Diagnostic(_X + 3, _Y + 1, _X + 10, _Y + 40);
