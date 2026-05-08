@@ -1,14 +1,17 @@
 {
 	"name": "Console",
-	"version": "1.8.6",
-	"keywords": "Console, Serial, VT100, UART, Color, Terminal",
-	"description": "Virtual terminal sequences are control character sequences that can control cursor movement, color/font mode, and other operations when written to the output stream. Sequences may also be received on the input stream in response to an output stream query information sequence or as an encoding of user input when the appropriate mode is set. Arduino based VT100 comparable serial console library.",
+	"version": "2.0.1",
+	"keywords": "Console, Serial, VT100, ANSI, UART, Color, Terminal",
+	"description": "Arduino VT100/ANSI compatible serial console library. Controls cursor movement, foreground/background colors, text formatting, and terminal layout using escape sequences. Optimized for AVR — all string constants are stored in PROGMEM to minimize SRAM usage.",
 	"authors":
-	{
-		"name": "Mehmet Günce Akkoyun",
-		"email": "akkoyun@me.com",
-		"url": "https://github.com/akkoyun"
-	},
+	[
+		{
+			"name": "Mehmet Gunce Akkoyun",
+			"email": "akkoyun@me.com",
+			"url": "https://github.com/akkoyun",
+			"maintainer": true
+		}
+	],
 	"license": "MIT",
 	"frameworks": "arduino",
 	"headers": "Console.h",
@@ -22,12 +25,30 @@
 		"type": "git",
 		"url": "https://github.com/akkoyun/Console.git"
 	},
-	"examples": [
+	"examples":
+	[
 		{
-			"name": "PowerStat",
-			"base": "examples/PowerStat",
-			"files": [
-				"PowerStat.ino"
+			"name": "Basic",
+			"base": "examples/Basic",
+			"files":
+			[
+				"Basic.ino"
+			]
+		},
+		{
+			"name": "Dashboard",
+			"base": "examples/Dashboard",
+			"files":
+			[
+				"Dashboard.ino"
+			]
+		},
+		{
+			"name": "HEX_Monitor",
+			"base": "examples/HEX_Monitor",
+			"files":
+			[
+				"HEX_Monitor.ino"
 			]
 		}
 	]
